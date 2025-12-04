@@ -557,81 +557,48 @@
                                     }
                                 }
                             }">
-                            <div class="product-default inner-quickview inner-icon appear-animate" data-animation-name="fadeInRightShorter">
-                                <figure>
-                                    <a href="demo6-product.html">
-                                        <img src="assets/images/demoes/demo6/products/product-1.jpg" alt="product" width="400" height="400" />
-                                    </a>
-                                    <div class="btn-icon-group">
-                                        <a href="#" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
-                                                class="icon-shopping-cart"></i></a>
-                                    </div>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="category-wrap">
-                                        <div class="category-list">
-                                            <a href="demo6-shop.html" class="product-category">Albums</a>,
-                                            <a href="demo6-shop.html" class="product-category">shoes</a>,
-                                            <a href="demo6-shop.html" class="product-category">watches</a>
-                                        </div>
-                                        <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i
-                                                class="icon-heart"></i></a>
-                                    </div>
-                                    <h3 class="product-title"> <a href="demo6-product.html">Girl Black Blouse</a> </h3>
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:0%"></span>
-                                            <!-- End .ratings -->
-                                            <span class="tooltiptext tooltip-top"></span>
-                                        </div>
-                                        <!-- End .product-ratings -->
-                                    </div>
-                                    <!-- End .product-container -->
-                                    <div class="price-box">
-                                        <span class="product-price">$49.00</span>
-                                    </div>
-                                    <!-- End .price-box -->
+                            <div class="product-default inner-quickview inner-icon appear-animate animated fadeInRightShorter appear-animation-visible"
+                                 data-animation-name="fadeInRightShorter"
+                                 style="animation-duration: 1000ms;"
+                                 th:each="p : ${femaleProducts}"> <figure>
+                                <a th:href="@{/product/{id}(id=${p.id})}">
+                                    <img th:src="|/assets/images/demoes/demo6/products/${p.imageUrl}|"
+                                         th:alt="${p.name}"
+                                         width="400"
+                                         height="400">
+                                </a>
+                                <div class="btn-icon-group">
+                                    <a th:href="@{/cart/add/{id}(id=${p.id})}" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i></a>
                                 </div>
-                                <!-- End .product-details -->
-                            </div>
-                            <div class="product-default inner-quickview inner-icon appear-animate" data-animation-delay="500" data-animation-name="fadeInRightShorter">
-                                <figure>
-                                    <a href="demo6-product.html">
-                                        <img src="assets/images/demoes/demo6/products/product-2.jpg" width="400" height="400" alt="product" />
-                                    </a>
-                                    <div class="btn-icon-group">
-                                        <a href="#" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
-                                                class="icon-shopping-cart"></i></a>
-                                    </div>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-                                </figure>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
+                            </figure>
                                 <div class="product-details">
+
                                     <div class="category-wrap">
                                         <div class="category-list">
-                                            <a href="demo6-shop.html" class="product-category">Albums</a>
+                                            <a href="demo6-shop.html" class="product-category">Category 1</a>,
                                         </div>
-                                        <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i
-                                                class="icon-heart"></i></a>
+                                        <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i class="icon-heart"></i></a>
                                     </div>
-                                    <h3 class="product-title"> <a href="demo6-product.html">Porto White Girl Shirt</a>
+
+                                    <h3 class="product-title">
+                                        <a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">Tên Sản Phẩm Mẫu</a>
                                     </h3>
+
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:0%"></span>
-                                            <!-- End .ratings -->
-                                            <span class="tooltiptext tooltip-top"></span>
+                <span class="ratings"
+                      th:style="'width: ' + ${p.rating * 20} + '%'"></span>
+                                            <span class="tooltiptext tooltip-top" th:text="${p.rating} + ' Sao'"></span>
                                         </div>
-                                        <!-- End .product-ratings -->
                                     </div>
-                                    <!-- End .product-container -->
+
                                     <div class="price-box">
-                                        <span class="product-price">$101.00</span>
+                                        <span class="product-price" th:text="${#numbers.formatDecimal(p.price, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">$49.00</span>
                                     </div>
-                                    <!-- End .price-box -->
                                 </div>
-                                <!-- End .product-details -->
                             </div>
+
                         </div>
                         <!-- End .products-slider -->
                     </div>
@@ -667,18 +634,20 @@
                                     }
                                 }
                             }">
-                            <div class="product-default inner-quickview inner-icon appear-animate">
-                                <figure>
-                                    <a href="demo6-product.html">
-                                        <img src="assets/images/demoes/demo6/products/product-4.jpg" alt="product" width="400" height="400" />
-                                        <img src="assets/images/demoes/demo6/products/product-3.jpg" alt="product" width="400" height="400" />
-                                    </a>
-                                    <div class="btn-icon-group">
-                                        <a href="#" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
-                                                class="icon-shopping-cart"></i></a>
-                                    </div>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-                                </figure>
+                            <div class="product-default inner-quickview inner-icon appear-animate"
+                                 data-animation-delay="500"
+                                 th:each="p : ${maleProducts}"> <figure>
+                                <a th:href="@{/product/{id}(id=${p.id})}"> <img th:src="|/assets/images/demoes/demo6/products/${p.imageUrl}|"
+                                                                                th:alt="${p.name}"
+                                                                                width="400"
+                                                                                height="400" />
+                                </a>
+                                <div class="btn-icon-group">
+                                    <a th:href="@{/cart/add/{id}(id=${p.id})}" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
+                                            class="icon-shopping-cart"></i></a>
+                                </div>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
+                            </figure>
                                 <div class="product-details">
                                     <div class="category-wrap">
                                         <div class="category-list">
@@ -688,61 +657,19 @@
                                         <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i
                                                 class="icon-heart"></i></a>
                                     </div>
-                                    <h3 class="product-title"> <a href="demo6-product.html">Men White Shirt</a> </h3>
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:100%"></span>
-                                            <!-- End .ratings -->
-                                            <span class="tooltiptext tooltip-top"></span>
-                                        </div>
-                                        <!-- End .product-ratings -->
-                                    </div>
-                                    <!-- End .product-container -->
-                                    <div class="price-box">
-                                        <span class="product-price">$39.00</span>
-                                    </div>
-                                    <!-- End .price-box -->
-                                </div>
-                                <!-- End .product-details -->
-                            </div>
-                            <div class="product-default inner-quickview inner-icon appear-animate" data-animation-delay="500">
-                                <figure>
-                                    <a href="demo6-product.html">
-                                        <img src="assets/images/demoes/demo6/products/product-3.jpg" width="400" height="400" alt="product" />
-                                        <img src="assets/images/demoes/demo6/products/product-4.jpg" width="400" height="400" alt="product" />
-                                    </a>
-                                    <div class="btn-icon-group">
-                                        <a href="#" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
-                                                class="icon-shopping-cart"></i></a>
-                                    </div>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="category-wrap">
-                                        <div class="category-list">
-                                            <a href="demo6-shop.html" class="product-category">caps</a>,
-                                            <a href="demo6-shop.html" class="product-category">shoes</a>
-                                        </div>
-                                        <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i
-                                                class="icon-heart"></i></a>
-                                    </div>
-                                    <h3 class="product-title"> <a href="demo6-product.html">Porto Sports Shirts</a>
+                                    <h3 class="product-title">
+                                        <a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">Tên Sản Phẩm Nam</a>
                                     </h3>
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:0%"></span>
-                                            <!-- End .ratings -->
-                                            <span class="tooltiptext tooltip-top"></span>
+                                            <span class="ratings" th:style="'width: ' + ${p.rating * 20} + '%'"></span>
+                                            <span class="tooltiptext tooltip-top" th:text="${p.rating} + ' Sao'"></span>
                                         </div>
-                                        <!-- End .product-ratings -->
                                     </div>
-                                    <!-- End .product-container -->
                                     <div class="price-box">
-                                        <span class="product-price">$101.00</span>
+                                        <span class="product-price" th:text="${#numbers.formatDecimal(p.price, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">$101.00</span>
                                     </div>
-                                    <!-- End .price-box -->
                                 </div>
-                                <!-- End .product-details -->
                             </div>
                         </div>
                         <!-- End .products-slider -->
