@@ -129,7 +129,7 @@
 							<i class="fas fa-bars"></i>
 						</button>
                         <a href="demo4.html" class="logo">
-                            <img src="assets/images/logo.png" width="111" height="44" alt="Porto Logo">
+                            <img th:src="@{/assets/images/logo.png" width="111" height="44" alt="Porto Logo">
                         </a>
                     </div>
                     <!-- End .header-left -->
@@ -209,7 +209,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/product-1.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-1.jpg" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -231,7 +231,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/product-2.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-2.jpg" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -253,7 +253,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/product-3.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-3.jpg" alt="product" width="80" height="80">
                                                 </a>
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
                                             </figure>
@@ -333,7 +333,7 @@
                                         <div class="col-lg-4 p-0">
                                             <div class="menu-banner">
                                                 <figure>
-                                                    <img src="assets/images/menu-banner.jpg" width="192" height="313" alt="Menu banner">
+                                                    <img th:src="@{/assets/images/menu-banner.jpg" width="192" height="313" alt="Menu banner">
                                                 </figure>
                                                 <div class="banner-content">
                                                     <h4>
@@ -386,7 +386,7 @@
                                         <div class="col-lg-4 p-0">
                                             <div class="menu-banner menu-banner-2">
                                                 <figure>
-                                                    <img src="assets/images/menu-banner-1.jpg" width="182" height="317" alt="Menu banner" class="product-promo">
+                                                    <img th:src="@{/assets/images/menu-banner-1.jpg" width="182" height="317" alt="Menu banner" class="product-promo">
                                                 </figure>
                                                 <i>OFF</i>
                                                 <div class="banner-content">
@@ -583,7 +583,7 @@
                                 <div class="col-lg-12 col-md-6">
                                     <div class="product-item">
                                         <div class="inner">
-                                            <img src="assets/images/products/zoom/product-1-big.jpg" data-zoom-image="assets/images/products/zoom/product-1-big.jpg" width="580" height="580" alt="proudct-img">
+                                            <img th:src="@{/assets/images/products/zoom/product-1-big.jpg" data-zoom-image="assets/images/products/zoom/product-1-big.jpg" width="580" height="580" alt="proudct-img">
                                             <span class="prod-full-screen">
 												<i class="icon-plus"></i>
 											</span>
@@ -595,7 +595,7 @@
                                 <div class="col-lg-12 col-md-6">
                                     <div class="product-item">
                                         <div class="inner">
-                                            <img src="assets/images/products/zoom/product-2-big.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg" width="580" height="580" alt="proudct-img">
+                                            <img th:src="@{/assets/images/products/zoom/product-2-big.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg" width="580" height="580" alt="proudct-img">
                                             <span class="prod-full-screen">
 												<i class="icon-plus"></i>
 											</span>
@@ -607,7 +607,7 @@
                                 <div class="col-lg-12 col-md-6">
                                     <div class="product-item">
                                         <div class="inner">
-                                            <img src="assets/images/products/zoom/product-3-big.jpg" data-zoom-image="assets/images/products/zoom/product-3-big.jpg" width="580" height="580" alt="proudct-img">
+                                            <img th:src="@{/assets/images/products/zoom/product-3-big.jpg" data-zoom-image="assets/images/products/zoom/product-3-big.jpg" width="580" height="580" alt="proudct-img">
                                             <span class="prod-full-screen">
 												<i class="icon-plus"></i>
 											</span>
@@ -619,7 +619,7 @@
                                 <div class="col-lg-12 col-md-6">
                                     <div class="product-item">
                                         <div class="inner">
-                                            <img src="assets/images/products/zoom/product-4-big.jpg" data-zoom-image="assets/images/products/zoom/product-4-big.jpg" width="580" height="580" alt="proudct-img">
+                                            <img th:src="@{/assets/images/products/zoom/product-4-big.jpg" data-zoom-image="assets/images/products/zoom/product-4-big.jpg" width="580" height="580" alt="proudct-img">
                                             <span class="prod-full-screen">
 												<i class="icon-plus"></i>
 											</span>
@@ -640,19 +640,19 @@
                                             <ul class="config-size-list config-color-list">
                                                 <li>
                                                     <a href="javascript:;" class="d-flex align-items-center justify-content-center p-0">
-                                                        <img src="assets/images/products/zoom/product-1.jpg" width="30" height="30" alt="filter-img" />
+                                                        <img th:src="@{/assets/images/products/zoom/product-1.jpg" width="30" height="30" alt="filter-img" />
                                                     </a>
                                                 </li>
 
                                                 <li>
                                                     <a href="javascript:;" class="d-flex align-items-center justify-content-center p-0">
-                                                        <img src="assets/images/products/zoom/product-2.jpg" width="30" height="30" alt="filter-img" />
+                                                        <img th:src="@{/assets/images/products/zoom/product-2.jpg" width="30" height="30" alt="filter-img" />
                                                     </a>
                                                 </li>
 
                                                 <li class="">
                                                     <a href="javascript:;" class="d-flex align-items-center justify-content-center p-0">
-                                                        <img src="assets/images/products/zoom/product-3.jpg" width="30" height="30" alt="filter-img" />
+                                                        <img th:src="@{/assets/images/products/zoom/product-3.jpg" width="30" height="30" alt="filter-img" />
                                                     </a>
                                                 </li>
                                             </ul>
@@ -750,7 +750,7 @@
                             <div class="product-size-content">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img src="assets/images/products/single/body-shape.png" alt="body shape" width="217" height="398">
+                                        <img th:src="@{/assets/images/products/single/body-shape.png" alt="body shape" width="217" height="398">
                                     </div>
                                     <!-- End .col-md-4 -->
 
@@ -818,7 +818,7 @@
                                 <div class="comment-list">
                                     <div class="comments">
                                         <figure class="img-thumbnail">
-                                            <img src="assets/images/blog/author.jpg" alt="author" width="80" height="80">
+                                            <img th:src="@{/assets/images/blog/author.jpg" alt="author" width="80" height="80">
                                         </figure>
 
                                         <div class="comment-block">
@@ -959,8 +959,8 @@
                         <div class="product-default">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-1.jpg" width="280" height="280" alt="product">
-                                    <img src="assets/images/products/product-1-2.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-1.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-1-2.jpg" width="280" height="280" alt="product">
                                 </a>
                                 <div class="label-group">
                                     <div class="product-label label-hot">HOT</div>
@@ -1004,8 +1004,8 @@
                         <div class="product-default">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-3.jpg" width="280" height="280" alt="product">
-                                    <img src="assets/images/products/product-3-2.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-3.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-3-2.jpg" width="280" height="280" alt="product">
                                 </a>
                                 <div class="label-group">
                                     <div class="product-label label-hot">HOT</div>
@@ -1049,8 +1049,8 @@
                         <div class="product-default">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-7.jpg" width="280" height="280" alt="product">
-                                    <img src="assets/images/products/product-7-2.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-7.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-7-2.jpg" width="280" height="280" alt="product">
                                 </a>
                                 <div class="label-group">
                                     <div class="product-label label-hot">HOT</div>
@@ -1094,8 +1094,8 @@
                         <div class="product-default">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-6.jpg" width="280" height="280" alt="product">
-                                    <img src="assets/images/products/product-6-2.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-6.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-6-2.jpg" width="280" height="280" alt="product">
                                 </a>
                                 <div class="label-group">
                                     <div class="product-label label-hot">HOT</div>
@@ -1139,8 +1139,8 @@
                         <div class="product-default">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/product-4.jpg" width="280" height="280" alt="product">
-                                    <img src="assets/images/products/product-4-2.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-4.jpg" width="280" height="280" alt="product">
+                                    <img th:src="@{/assets/images/products/product-4-2.jpg" width="280" height="280" alt="product">
                                 </a>
                                 <div class="label-group">
                                     <div class="product-label label-hot">HOT</div>
@@ -1193,8 +1193,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-1.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-1-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-1.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-1-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1223,8 +1223,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-2.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-2-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-2-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1252,8 +1252,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-3.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-3-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-3.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-3-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1284,8 +1284,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-4.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-4-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-4.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-4-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1314,8 +1314,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-5.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-5-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-5.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-5-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1343,8 +1343,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-6.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-6-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-6.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-6-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1375,8 +1375,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-7.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-7-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-7.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-7-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1404,8 +1404,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-8.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-8-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-8.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-8-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1434,8 +1434,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-9.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-9-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-9.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-9-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1466,8 +1466,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-10.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-10-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-10.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-10-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1495,8 +1495,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-11.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-11-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-11.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-11-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1524,8 +1524,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/small/product-12.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/products/small/product-12-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-12.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/products/small/product-12-2.jpg" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 

@@ -26,4 +26,15 @@ public class Product {
     private Double rating;
 
     private String gender;
+
+    // Thêm trường reviewCount
+    private Integer reviewCount;
+
+    public String getImageUrl() {
+        // Đảm bảo loại bỏ khoảng trắng thừa ở đầu và cuối chuỗi
+        if (this.imageUrl != null) {
+            return this.imageUrl.trim();
+        }
+        return this.imageUrl;
+    }
 }

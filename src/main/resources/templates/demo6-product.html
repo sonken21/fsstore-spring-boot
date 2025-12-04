@@ -27,7 +27,7 @@
         (function(d) {
             var wf = d.createElement('script'),
                 s = d.scripts[0];
-            wf.src = 'assets/js/webfont.js';
+            wf.src = '[[@{/assets/js/webfont.js}]]';
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
@@ -94,7 +94,7 @@
                                             <div class="col-lg-4 p-0">
                                                 <div class="menu-banner">
                                                     <figure>
-                                                        <img src="assets/images/menu-banner.jpg" alt="Menu banner" width="300" height="300">
+                                                        <img th:src="@{/assets/images/menu-banner.jpg}" alt="Menu banner" width="300" height="300">
                                                     </figure>
                                                     <div class="banner-content">
                                                         <h4>
@@ -148,7 +148,7 @@
                                             <div class="col-lg-4 p-0">
                                                 <div class="menu-banner menu-banner-2">
                                                     <figure>
-                                                        <img src="assets/images/menu-banner-1.jpg" alt="Menu banner" class="product-promo" width="380" height="790">
+                                                        <img th:src="@{/assets/images/menu-banner-1.jpg}" alt="Menu banner" class="product-promo" width="380" height="790">
                                                     </figure>
                                                     <i>OFF</i>
                                                     <div class="banner-content">
@@ -196,7 +196,7 @@
 
                     <div class="header-center ml-0 ml-xl-auto">
                         <a href="demo6.html" class="logo logo-transition">
-                            <img src="assets/images/logo-black.png" width="113" height="46" alt="Porto" />
+                            <img th:src="@{/assets/images/logo-black.png}" width="113" height="46" alt="Porto" />
                         </a>
                     </div>
                     <!-- End .header-center -->
@@ -307,7 +307,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/product-1.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-1.jpg}" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -329,7 +329,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/product-2.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-2.jpg}" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -351,7 +351,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/product-3.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-3.jpg}" alt="product" width="80" height="80">
                                                 </a>
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
                                             </figure>
@@ -408,7 +408,6 @@
                                     <div class="product-slider-container">
                                         <div class="label-group">
                                             <div class="product-label label-hot">HOT</div>
-                                            <!---->
                                             <div class="product-label label-sale">
                                                 -16%
                                             </div>
@@ -416,202 +415,85 @@
 
                                         <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
                                             <div class="product-item">
-                                                <img class="product-single-image" src="assets/images/demoes/demo6/products/zoom/product-1-big.jpg" data-zoom-image="assets/images/demoes/demo6/products/zoom/product-1-big.jpg" width="468" height="468" alt="product" />
-                                            </div>
-                                            <div class="product-item">
-                                                <img class="product-single-image" src="assets/images/demoes/demo6/products/zoom/product-2-big.jpg" data-zoom-image="assets/images/demoes/demo6/products/zoom/product-2-big.jpg" width="468" height="468" alt="product" />
-                                            </div>
-                                            <div class="product-item">
-                                                <img class="product-single-image" src="assets/images/demoes/demo6/products/zoom/product-3-big.jpg" data-zoom-image="assets/images/demoes/demo6/products/zoom/product-3-big.jpg" width="468" height="468" alt="product" />
-                                            </div>
-                                            <div class="product-item">
-                                                <img class="product-single-image" src="assets/images/demoes/demo6/products/zoom/product-4-big.jpg" data-zoom-image="assets/images/demoes/demo6/products/zoom/product-4-big.jpg" width="468" height="468" alt="product" />
-                                            </div>
-                                            <div class="product-item">
-                                                <img class="product-single-image" src="assets/images/demoes/demo6/products/zoom/product-5-big.jpg" data-zoom-image="assets/images/demoes/demo6/products/zoom/product-5-big.jpg" width="468" height="468" alt="product" />
+                                                <img class="product-single-image"
+                                                     th:src="@{/assets/images/demoes/demo6/products/{fileName}(fileName=${product.imageUrl})}"
+                                                     width="468"
+                                                     height="468"
+                                                     th:alt="${product.name}" />
                                             </div>
                                         </div>
-                                        <!-- End .product-single-carousel -->
                                         <span class="prod-full-screen">
-                                            <i class="icon-plus"></i>
-                                        </span>
+            <i class="icon-plus"></i>
+        </span>
                                     </div>
 
                                     <div class="prod-thumbnail owl-dots">
                                         <div class="owl-dot">
-                                            <img src="assets/images/demoes/demo6/products/zoom/product-1.jpg" width="110" height="110" alt="product-thumbnail" />
-                                        </div>
-                                        <div class="owl-dot">
-                                            <img src="assets/images/demoes/demo6/products/zoom/product-2.jpg" width="110" height="110" alt="product-thumbnail" />
-                                        </div>
-                                        <div class="owl-dot">
-                                            <img src="assets/images/demoes/demo6/products/zoom/product-3.jpg" width="110" height="110" alt="product-thumbnail" />
-                                        </div>
-                                        <div class="owl-dot">
-                                            <img src="assets/images/demoes/demo6/products/zoom/product-4.jpg" width="110" height="110" alt="product-thumbnail" />
-                                        </div>
-                                        <div class="owl-dot">
-                                            <img src="assets/images/demoes/demo6/products/zoom/product-5.jpg" width="110" height="110" alt="product-thumbnail" />
+                                            <img th:src="@{/assets/images/demoes/demo6/products/{fileName}(fileName=${product.imageUrl})}"
+                                                 width="110"
+                                                 height="110"
+                                                 th:alt="${product.name}" />
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End .product-single-gallery -->
 
                                 <div class="col-md-6 product-single-details">
-                                    <h1 class="product-title">Black Girl Blouse</h1>
+                                    <h1 class="product-title" th:text="${product.name}">Black Girl Blouse</h1>
 
                                     <div class="product-nav">
-                                        <div class="product-prev">
-                                            <a href="#">
-                                                <span class="product-link"></span>
-
-                                                <span class="product-popup">
-                                                    <span class="box-content">
-                                                        <img alt="product" width="150" height="150"
-                                                            src="assets/images/products/product-3.jpg"
-                                                            style="padding-top: 0px;">
-
-                                                        <span>Circled Ultimate 3D Speaker</span>
-                                                </span>
-                                                </span>
-                                            </a>
-                                        </div>
-
-                                        <div class="product-next">
-                                            <a href="#">
-                                                <span class="product-link"></span>
-
-                                                <span class="product-popup">
-                                                    <span class="box-content">
-                                                        <img alt="product" width="150" height="150"
-                                                            src="assets/images/products/product-4.jpg"
-                                                            style="padding-top: 0px;">
-
-                                                        <span>Blue Backpack for the Young</span>
-                                                </span>
-                                                </span>
-                                            </a>
-                                        </div>
                                     </div>
 
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:60%"></span>
-                                            <!-- End .ratings -->
-                                            <span class="tooltiptext tooltip-top"></span>
+                                            <span class="ratings" th:style="'width:' + ${product.rating * 20} + '%'"></span>
+                                            <span class="tooltiptext tooltip-top" th:text="${product.rating}"></span>
                                         </div>
-                                        <!-- End .product-ratings -->
-
-                                        <a href="#" class="rating-link">( 6 Reviews )</a>
+                                        <a href="#product-reviews-content" class="rating-link" th:text="'( ' + ${product.reviewCount != null ? product.reviewCount : 0} + ' Reviews )'">( 6 Reviews )</a>
                                     </div>
-                                    <!-- End .ratings-container -->
 
                                     <hr class="short-divider">
 
                                     <div class="price-box">
-                                        <span class="old-price">$1,999.00</span>
-                                        <span class="new-price">$1,699.00</span>
+                                        <span class="new-price" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">$1,699.00</span>
                                     </div>
-                                    <!-- End .price-box -->
 
                                     <div class="product-desc">
-                                        <p>
-                                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris
-                                            placerat eleifend leo.
+                                        <p th:text="${product.description}">
+                                            Pellentesque habitant morbi tristique senectus...
                                         </p>
                                     </div>
-                                    <!-- End .product-desc -->
 
                                     <ul class="single-info-list">
-                                        <!---->
                                         <li>
-                                            SKU:
-                                            <strong>654613612</strong>
+                                            SKU: <strong><span th:text="${product.id}">654613612</span></strong>
                                         </li>
 
                                         <li>
                                             CATEGORY:
                                             <strong>
-                                                <a href="#" class="product-category">SHOES</a>
+                                                <a href="#" class="product-category" th:text="${product.gender}">SHOES</a>
                                             </strong>
-                                        </li>
-
-                                        <li>
-                                            TAGs:
-                                            <strong><a href="#" class="product-category">CLOTHES</a></strong>,
-                                            <strong><a href="#" class="product-category">SWEATER</a></strong>
                                         </li>
                                     </ul>
 
-                                    <div class="product-filters-container">
-                                        <div class="product-single-filter"><label>Color:</label>
-                                            <ul class="config-size-list config-color-list config-filter-list">
-                                                <li class="">
-                                                    <a href="javascript:;" class="filter-color border-0" style="background-color: rgb(1, 136, 204);"></a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="javascript:;" class="filter-color border-0 initial disabled" style="background-color: rgb(221, 181, 119);"></a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="javascript:;" class="filter-color border-0" style="background-color: rgb(96, 133, 165);"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="product-single-filter">
-                                            <label>Size:</label>
-                                            <ul class="config-size-list">
-                                                <li><a href="javascript:;" class="d-flex align-items-center justify-content-center">Extra
-                                                        Large</a>
-                                                </li>
-                                                <li class=""><a href="javascript:;" class="d-flex align-items-center justify-content-center">Large</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="product-single-filter">
-                                            <label></label>
-                                            <a class="font1 text-uppercase clear-btn" href="#">Clear</a>
-                                        </div>
-                                        <!---->
-                                    </div>
-
                                     <div class="product-action">
-                                        <div class="price-box product-filtered-price">
-                                            <del class="old-price"><span>$286.00</span></del>
-                                            <span class="product-price">$245.00</span>
-                                        </div>
-
                                         <div class="product-single-qty">
-                                            <input class="horizontal-quantity form-control" type="text">
+                                            <input class="horizontal-quantity form-control" type="text" value="1">
                                         </div>
-                                        <!-- End .product-single-qty -->
 
-                                        <a href="javascript:;" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add to
-                                            Cart</a>
+                                        <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add to Cart</a>
 
                                         <a href="cart.html" class="btn btn-gray view-cart d-none">View cart</a>
                                     </div>
-                                    <!-- End .product-action -->
 
-                                    <hr class="divider mb-0 mt-0">
-
-                                    <div class="product-single-share mb-2">
-                                        <label class="sr-only">Share:</label>
-
-                                        <div class="social-icons mr-2">
-                                            <a href="#" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
-                                            <a href="#" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
-                                            <a href="#" class="social-icon social-linkedin fab fa-linkedin-in" target="_blank" title="Linkedin"></a>
-                                            <a href="#" class="social-icon social-gplus fab fa-google-plus-g" target="_blank" title="Google +"></a>
-                                            <a href="#" class="social-icon social-mail icon-mail-alt" target="_blank" title="Mail"></a>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
+                                            <div class="product-desc-content mb-0">
+                                                <p class="mb-2" th:text="${product.description}"></p>
+                                            </div>
                                         </div>
-                                        <!-- End .social-icons -->
-
-                                        <a href="wishlist.html" class="btn-icon-wish add-wishlist" title="Add to Wishlist"><i class="icon-wishlist-2"></i><span>Add to
-                                                Wishlist</span></a>
                                     </div>
-                                    <!-- End .product single-share -->
                                 </div>
                                 <!-- End .product-single-details -->
                             </div>
@@ -662,7 +544,7 @@
                                     <div class="product-size-content">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <img src="assets/images/products/single/body-shape.png" alt="body shape">
+                                                <img th:src="@{/assets/images/products/single/body-shape.png}" alt="body shape">
                                             </div>
                                             <!-- End .col-md-4 -->
 
@@ -757,7 +639,7 @@
                                         <div class="comment-list">
                                             <div class="comments">
                                                 <figure class="img-thumbnail">
-                                                    <img src="assets/images/blog/author.jpg" alt="author" width="80" height="80">
+                                                    <img th:src="@{/assets/images/blog/author.jpg}" alt="author" width="80" height="80">
                                                 </figure>
 
                                                 <div class="comment-block">
@@ -887,7 +769,7 @@
                             <div class="widget">
                                 <div class="maga-sale-container">
                                     <figure class="mega-image">
-                                        <img src="assets/images/demoes/demo6/banners/banner-sidebar.png" class="w-100" alt="Banner Desc">
+                                        <img th:src="@{/assets/images/demoes/demo6/banners/banner-sidebar.png}" class="w-100" alt="Banner Desc">
                                     </figure>
 
                                     <div class="mega-content">
@@ -914,8 +796,8 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo6-product.html">
-                                                        <img src="assets/images/demoes/demo6/products/small/product-4.jpg" width="75" height="75" alt="product-widget" />
-                                                        <img src="assets/images/demoes/demo6/products/small/product-4-2.jpg" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-4.jpg}" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-4-2.jpg}" width="75" height="75" alt="product-widget" />
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
@@ -941,8 +823,8 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo6-product.html">
-                                                        <img src="assets/images/demoes/demo6/products/small/product-5.jpg" width="75" height="75" alt="product-widget" />
-                                                        <img src="assets/images/demoes/demo6/products/small/product-5-2.jpg" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-5.jpg}" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-5-2.jpg}" width="75" height="75" alt="product-widget" />
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
@@ -968,8 +850,8 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo6-product.html">
-                                                        <img src="assets/images/demoes/demo6/products/small/product-6.jpg" width="75" height="75" alt="product-widget" />
-                                                        <img src="assets/images/demoes/demo6/products/small/product-6-2.jpg" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-6.jpg}" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-6-2.jpg}" width="75" height="75" alt="product-widget" />
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
@@ -998,8 +880,8 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo6-product.html">
-                                                        <img src="assets/images/demoes/demo6/products/small/product-1.jpg" width="75" height="75" alt="product-widget" />
-                                                        <img src="assets/images/demoes/demo6/products/small/product-1-2.jpg" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-1.jpg}" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-1-2.jpg}" width="75" height="75" alt="product-widget" />
                                                     </a>
                                                 </figure>
 
@@ -1026,8 +908,8 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo6-product.html">
-                                                        <img src="assets/images/demoes/demo6/products/small/product-2.jpg" width="75" height="75" alt="product-widget" />
-                                                        <img src="assets/images/demoes/demo6/products/small/product-2-2.jpg" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-2.jpg}" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-2-2.jpg}" width="75" height="75" alt="product-widget" />
                                                     </a>
                                                 </figure>
 
@@ -1054,8 +936,8 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo6-product.html">
-                                                        <img src="assets/images/demoes/demo6/products/small/product-3.jpg" width="75" height="75" alt="product-widget" />
-                                                        <img src="assets/images/demoes/demo6/products/small/product-3-2.jpg" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-3.jpg}" width="75" height="75" alt="product-widget" />
+                                                        <img th:src="@{/assets/images/demoes/demo6/products/small/product-3-2.jpg}" width="75" height="75" alt="product-widget" />
                                                     </a>
                                                 </figure>
 
@@ -1101,8 +983,8 @@
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/product-15.jpg" width="400" height="400" alt="product" />
-                                    <img src="assets/images/demoes/demo6/products/product-15-2.jpg" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-15.jpg}" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-15-2.jpg}" width="400" height="400" alt="product" />
                                 </a>
                                 <div class="btn-icon-group">
                                     <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
@@ -1142,8 +1024,8 @@
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/product-5.jpg" width="400" height="400" alt="product" />
-                                    <img src="assets/images/demoes/demo6/products/product-5-2.jpg" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-5.jpg}" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-5-2.jpg}" width="400" height="400" alt="product" />
                                 </a>
                                 <div class="btn-icon-group">
                                     <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
@@ -1184,8 +1066,8 @@
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/product-1.jpg" width="400" height="400" alt="product" />
-                                    <img src="assets/images/demoes/demo6/products/product-2.jpg" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-1.jpg}" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-2.jpg}" width="400" height="400" alt="product" />
                                 </a>
                                 <div class="btn-icon-group">
                                     <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
@@ -1225,8 +1107,8 @@
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/product-9.jpg" width="400" height="400" alt="product" />
-                                    <img src="assets/images/demoes/demo6/products/product-13.jpg" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-9.jpg}" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-13.jpg}" width="400" height="400" alt="product" />
                                 </a>
                                 <div class="btn-icon-group">
                                     <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
@@ -1267,8 +1149,8 @@
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/product-16.jpg" width="400" height="400" alt="product" />
-                                    <img src="assets/images/demoes/demo6/products/product-16-2.jpg" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-16.jpg}" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-16-2.jpg}" width="400" height="400" alt="product" />
                                 </a>
                                 <div class="btn-icon-group">
                                     <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
@@ -1309,8 +1191,8 @@
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/product-17.jpg" width="400" height="400" alt="product" />
-                                    <img src="assets/images/demoes/demo6/products/product-12.jpg" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-17.jpg}" width="400" height="400" alt="product" />
+                                    <img th:src="@{/assets/images/demoes/demo6/products/product-12.jpg}" width="400" height="400" alt="product" />
                                 </a>
                                 <div class="btn-icon-group">
                                     <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
@@ -1361,8 +1243,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-1.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-1-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-1.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-1-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1390,8 +1272,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-2.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-2-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-2.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-2-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1419,8 +1301,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-3.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-3-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-3.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-3-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1451,8 +1333,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-4.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-4-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-4.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-4-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1480,8 +1362,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-5.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-5-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-5.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-5-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1509,8 +1391,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-6.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-6-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-6.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-6-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1541,8 +1423,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-7.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-7-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-7.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-7-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1570,8 +1452,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-8.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-8-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-8.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-8-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1599,8 +1481,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-9.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-9-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-9.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-9-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1631,8 +1513,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-10.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-10-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-10.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-10-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1660,8 +1542,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-11.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-11-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-11.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-11-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -1689,8 +1571,8 @@
                         <div class="product-default left-details product-widget">
                             <figure>
                                 <a href="demo6-product.html">
-                                    <img src="assets/images/demoes/demo6/products/small/product-12.jpg" width="74" height="74" alt="product">
-                                    <img src="assets/images/demoes/demo6/products/small/product-12-2.jpg" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-12.jpg}" width="74" height="74" alt="product">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/small/product-12-2.jpg}" width="74" height="74" alt="product">
                                 </a>
                             </figure>
 
@@ -2078,14 +1960,14 @@
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
     <!-- Plugins JS File -->
-    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/jquery.appear.min.js"></script>
+    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/plugins.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.appear.min.js}"></script>
 
     <!-- Main JS File -->
-    <script src="assets/js/main.min.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83b5461ff70fc2',t:'MTc2NDc3MTY2MQ=='};var a=document.createElement('script');a.src='../../cdn-cgi/challenge-platform/h/b/scripts/jsd/13c98df4ef2d/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+    <script th:src="@{/assets/js/main.min.js}"></script>
+
 </body>
 
 
