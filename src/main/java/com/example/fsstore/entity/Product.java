@@ -27,8 +27,21 @@ public class Product {
 
     private String gender;
 
-    // Thêm trường reviewCount
     private Integer reviewCount;
+
+    @Column(name = "product_type")
+    private String productType;
+    // ... constructors, getters và setters cho các thuộc tính hiện tại ...
+
+    // Thêm getters và setters cho productType:
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 
     public String getImageUrl() {
         // Đảm bảo loại bỏ khoảng trắng thừa ở đầu và cuối chuỗi

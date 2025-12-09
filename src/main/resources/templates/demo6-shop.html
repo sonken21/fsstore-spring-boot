@@ -95,7 +95,7 @@
                                             <div class="col-lg-4 p-0">
                                                 <div class="menu-banner">
                                                     <figure>
-                                                        <img th:src="@{/assets/images/menu-banner.jpg" alt="Menu banner" width="300" height="300">
+                                                        <img th:src="@{/assets/images/menu-banner.jpg}" alt="Menu banner" width="300" height="300">
                                                     </figure>
                                                     <div class="banner-content">
                                                         <h4>
@@ -149,7 +149,7 @@
                                             <div class="col-lg-4 p-0">
                                                 <div class="menu-banner menu-banner-2">
                                                     <figure>
-                                                        <img th:src="@{/assets/images/menu-banner-1.jpg" alt="Menu banner" class="product-promo" width="380" height="790">
+                                                        <img th:src="@{/assets/images/menu-banner-1.jpg}" alt="Menu banner" class="product-promo" width="380" height="790">
                                                     </figure>
                                                     <i>OFF</i>
                                                     <div class="banner-content">
@@ -197,7 +197,7 @@
 
                     <div class="header-center ml-0 ml-xl-auto">
                         <a href="demo6.html" class="logo logo-transition">
-                            <img th:src="@{/assets/images/logo-black.png" width="113" height="46" alt="Porto" />
+                            <img th:src="@{/assets/images/logo-black.png}" width="113" height="46" alt="Porto" />
                         </a>
                     </div>
                     <!-- End .header-center -->
@@ -248,34 +248,23 @@
                         <a href="#" class="header-icon"><i class="icon-wishlist-2"></i></a>
                         <div class="header-search header-search-popup header-search-category d-none d-sm-block">
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-                            <form action="#" method="get">
+                            <form th:action="@{/shop}" method="get">
                                 <div class="header-search-wrapper">
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="I'm searching for..." required="">
+                                    <input type="search"
+                                           class="form-control"
+                                           name="keyword"
+                                           id="keyword"
+                                           th:value="${keyword}"
+                                           placeholder="I'm searching for..."
+                                           required="">
+
                                     <div class="select-custom">
                                         <select id="cat" name="cat">
                                             <option value="">All Categories</option>
-                                            <option value="4">Fashion</option>
-                                            <option value="12">- Women</option>
-                                            <option value="13">- Men</option>
-                                            <option value="66">- Jewellery</option>
-                                            <option value="67">- Kids Fashion</option>
-                                            <option value="5">Electronics</option>
-                                            <option value="21">- Smart TVs</option>
-                                            <option value="22">- Cameras</option>
-                                            <option value="63">- Games</option>
-                                            <option value="7">Home &amp; Garden</option>
-                                            <option value="11">Motors</option>
-                                            <option value="31">- Cars and Trucks</option>
-                                            <option value="32">- Motorcycles &amp; Powersports</option>
-                                            <option value="33">- Parts &amp; Accessories</option>
-                                            <option value="34">- Boats</option>
-                                            <option value="57">- Auto Tools &amp; Supplies</option>
                                         </select>
                                     </div>
-                                    <!-- End .select-custom -->
                                     <button class="btn icon-search-3" type="submit"></button>
                                 </div>
-                                <!-- End .header-search-wrapper -->
                             </form>
                         </div>
                         <div class="dropdown cart-dropdown">
@@ -308,7 +297,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-1.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-1.jpg}" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -330,7 +319,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-2.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-2.jpg}" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -352,7 +341,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-3.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-3.jpg}" alt="product" width="80" height="80">
                                                 </a>
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
                                             </figure>
@@ -435,58 +424,59 @@
                     <aside class="toolbox-left sidebar-shop mobile-sidebar">
                         <div class="toolbox-item toolbox-sort select-custom">
                             <a class="sort-menu-trigger" href="#">Categories</a>
+
                             <ul class="sort-list cat-list">
-                                <li>
-                                    <a href="#widget-category-1" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-1">
-                                        Accessories
-                                        <span class="toggle"></span>
+
+                                <li th:classappend="${catValue == null or catValue == ''} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}">
+                                        Tất Cả Sản Phẩm
                                     </a>
-                                    <div class="collapse" id="widget-category-1">
-                                        <ul class="cat-sublist">
-                                            <li>Caps</li>
-                                            <li>Watches</li>
-                                        </ul>
-                                    </div>
                                 </li>
-                                <li>
-                                    <a href="#widget-category-2" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-2">
-                                        Dress
-                                        <span class="toggle"></span>
+
+                                <li th:classappend="${catValue == 'Nam'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Nam')}">
+                                        Nam
                                     </a>
-                                    <div class="collapse" id="widget-category-2">
-                                        <ul class="cat-sublist">
-                                            <li>Clothing</li>
-                                        </ul>
-                                    </div>
                                 </li>
-                                <li>
-                                    <a href="#widget-category-3" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-3">
-                                        Electronics
-                                        <span class="toggle"></span>
+                                <li th:classappend="${catValue == 'Nữ'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Nữ')}">
+                                        Nữ
                                     </a>
-                                    <div class="collapse" id="widget-category-3">
-                                        <ul class="cat-sublist">
-                                            <li>Headphone</li>
-                                            <li>Watch</li>
-                                        </ul>
-                                    </div>
                                 </li>
-                                <li>
-                                    <a href="#widget-category-4" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-4">
-                                        Fashion
-                                        <span class="toggle"></span>
-                                    </a>
-                                    <div class="collapse" id="widget-category-4">
-                                        <ul class="cat-sublist">
-                                            <li>Shoes</li>
-                                            <li>Bag</li>
-                                        </ul>
-                                    </div>
+
+                                <li><hr class="mt-0 mb-0"></li>
+
+                                <li th:classappend="${catValue == 'Áo'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Áo')}">Áo</a>
                                 </li>
-                                <li><a href="#">Music</a></li>
+                                <li th:classappend="${catValue == 'Quần'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Quần')}">Quần</a>
+                                </li>
+                                <li th:classappend="${catValue == 'Váy'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Váy')}">Váy</a>
+                                </li>
+                                <li th:classappend="${catValue == 'Giày'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Giày')}">Giày</a>
+                                </li>
+                                <li th:classappend="${catValue == 'Tất'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Tất')}">Tất</a>
+                                </li>
+
+                                <li th:classappend="${catValue == 'Túi xách'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Túi xách')}">Túi xách</a>
+                                </li>
+                                <li th:classappend="${catValue == 'Đồng hồ'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Đồng hồ')}">Đồng hồ</a>
+                                </li>
+                                <li th:classappend="${catValue == 'Cà Vạt'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Cà Vạt')}">Cà Vạt</a>
+                                </li>
+                                <li th:classappend="${catValue == 'Thắt lưng'} ? 'active' : ''">
+                                    <a th:href="@{/shop(page=0, size=${productPage.size}, keyword=${keyword}, cat='Thắt lưng')}">Thắt lưng</a>
+                                </li>
+
                             </ul>
                         </div>
-                        <!-- End .toolbox-item -->
 
                         <div class="toolbox-item toolbox-sort select-custom">
                             <a class="sort-menu-trigger" href="#">Select Size</a>
@@ -568,13 +558,16 @@
                 </nav>
 
                 <div class="row">
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
+                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col" th:each="product : ${products}">
                         <div class="product-default inner-quickview inner-icon">
                             <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-15.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-15-2.jpg" width="400" height="400" alt="product" />
+                                <a th:href="@{/product/{id}(id=${product.id})}">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/{image}(image=${product.imageUrl})}"
+                                         width="400" height="400"
+                                         th:alt="${product.name}" />
+
                                 </a>
+
                                 <div class="btn-icon-group">
                                     <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
                                             class="icon-shopping-cart"></i></a>
@@ -585,459 +578,99 @@
                             <div class="product-details">
                                 <div class="category-wrap">
                                     <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">clothing</a>,
-                                        <a href="demo6-shop.html" class="product-category">trousers</a>
+                                        <a href="demo6-shop.html" class="product-category">clothing</a>
                                     </div>
                                     <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
                                             class="icon-heart"></i></a>
                                 </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Black Gril Blouse</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$149.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
 
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-5.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-5-2.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">headphone</a>,
-                                        <a href="demo6-shop.html" class="product-category">trousers</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Blue Jacket</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$101.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
+                                <h3 class="product-title">
+                                    <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}">Tên sản phẩm</a>
+                                </h3>
 
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-1.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-2.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">headphone</a>,
-                                        <a href="demo6-shop.html" class="product-category">trousers</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Girl Black Blouse</a> </h3>
                                 <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
+                                    <div class="ratings-container">
+                                        <div class="product-ratings">
+        <span class="ratings"
+              th:if="${product.rating != null}"
+              th:style="'width:' + (${product.rating} * 20) + '%'">
+        </span>
+                                            <span class="ratings"
+                                                  th:unless="${product.rating != null}"
+                                                  style="width: 0%">
+        </span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
                                     </div>
-                                    <!-- End .product-ratings -->
                                 </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$109.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
 
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-9.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-13.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">clothing</a>,
-                                        <a href="demo6-shop.html" class="product-category">t-shirts</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Black Jacket</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
                                 <div class="price-box">
-                                    <span class="product-price">$259.00</span>
+                <span class="product-price"
+                      th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'POINT') + ' VNĐ'}">
+                    $149.00
+                </span>
                                 </div>
-                                <!-- End .price-box -->
                             </div>
-                            <!-- End .product-details -->
                         </div>
                     </div>
                     <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-16.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-16-2.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">caps</a>,
-                                        <a href="demo6-shop.html" class="product-category">shoes</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Jacket</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$101.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-17.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-12.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">caps</a>,
-                                        <a href="demo6-shop.html" class="product-category">shoes</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Long T-Shirt</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$101.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-14.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-14-2.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">category</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Sports T-Shirt</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="old-price">$90.00</span>
-                                    <span class="product-price">$70.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-4.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-3.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">category</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men White Shirt</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="old-price">$90.00</span>
-                                    <span class="product-price">$70.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-3.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-4.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">category</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Porto Sports Shirts</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="old-price">$90.00</span>
-                                    <span class="product-price">$70.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-5col">
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-2.jpg" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-1.jpg" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-30%</div>
-                                </div>
-                                <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">category</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Porto White Girl Shirt</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="old-price">$90.00</span>
-                                    <span class="product-price">$70.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-                </div>
                 <!-- End .row -->
 
-                <nav class="toolbox toolbox-pagination">
-                    <div class="toolbox-item toolbox-show">
-                        <label>Show:</label>
+                    <nav class="toolbox toolbox-pagination">
+                        <div class="toolbox-item toolbox-show">
+                            <label>Show:</label>
 
-                        <div class="select-custom">
-                            <select name="count" class="form-control">
-                                <option value="12">12</option>
-                                <option value="24">24</option>
-                                <option value="36">36</option>
-                            </select>
+                            <div class="select-custom">
+                                <select name="count" class="form-control"
+                                        id="pageSizeSelector"
+                                        onchange="changePageSize()">
+
+                                    <option value="10" th:selected="${productPage.size == 10}">10</option>
+                                    <option value="20" th:selected="${productPage.size == 20}">20</option>
+                                    <option value="30" th:selected="${productPage.size == 30}">30</option>
+                                </select>
+                            </div>
                         </div>
-                        <!-- End .select-custom -->
-                    </div>
-                    <!-- End .toolbox-item -->
+                        <div class="toolbox-item toolbox-show">
+                            <label th:if="${productPage.totalElements > 0}"
+                                   th:text="'Hiển thị ' + (${productPage.number * productPage.size + 1}) +
+                       '–' + (${productPage.number * productPage.size + productPage.numberOfElements}) +
+                       ' trên tổng số ' + ${productPage.totalElements} + ' kết quả'">
+                                Showing 1–12 of 60 results
+                            </label>
+                            <label th:unless="${productPage.totalElements > 0}">
+                                Không tìm thấy sản phẩm nào.
+                            </label>
+                        </div>
 
-                    <ul class="pagination toolbox-item">
-                        <li class="page-item disabled">
-                            <a class="page-link page-link-btn" href="#"><i class="icon-angle-left"></i></a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><span class="page-link">...</span></li>
-                        <li class="page-item">
-                            <a class="page-link page-link-btn" href="#"><i class="icon-angle-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+                        <ul class="pagination toolbox-item">
+                            <th:block th:if="${totalPages > 0}">
+                                <li th:class="${productPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+                                    <a class="page-link page-link-btn"
+                                       th:href="@{/shop(page=${productPage.number - 1}, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}"
+                                       aria-label="Previous">
+                                        <i class="icon-angle-left"></i>
+                                    </a>
+                                </li>
+
+                                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                    th:classappend="${currentPage == i} ? 'active'"
+                                    class="page-item">
+                                    <a class="page-link"
+                                       th:href="@{/shop(page=${i}, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}"
+                                       th:text="${i + 1}">1</a>
+                                </li>
+
+                                <li th:class="${productPage.hasNext()} ? 'page-item' : 'page-item disabled'">
+                                    <a class="page-link page-link-btn"
+                                       th:href="@{/shop(page=${productPage.number + 1}, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}"
+                                       aria-label="Next">
+                                        <i class="icon-angle-right"></i>
+                                    </a>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </nav>
             </div>
             <!-- End .container -->
         </main>
@@ -1395,6 +1028,39 @@
     </div>
 
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // 1. Lấy URL cơ sở /shop
+        var shopUrl = /*[[@{/shop}]]*/;
+
+        // 2. Lấy tham số tìm kiếm và lọc hiện tại từ Model
+        var currentKeyword = /*[[${keyword}]]*/;
+        var currentCat = /*[[${catValue}]]*/; // <-- THAM SỐ LỌC MỚI
+
+        function changePageSize() {
+            var selector = document.getElementById('pageSizeSelector');
+            var newSize = selector.value;
+
+            // Bắt đầu bằng việc reset về trang 0 và thêm size mới
+            let newUrl = shopUrl + "?page=0&size=" + newSize;
+
+            // 3. Giữ lại Keyword (nếu có)
+            if (currentKeyword && currentKeyword !== "") {
+                // Sử dụng encodeURIComponent để xử lý khoảng trắng và ký tự đặc biệt
+                newUrl += "&keyword=" + encodeURIComponent(currentKeyword);
+            }
+
+            // 4. Giữ lại Giá trị Lọc (catValue) (nếu có)
+            if (currentCat && currentCat !== "") {
+                newUrl += "&cat=" + encodeURIComponent(currentCat); // <-- THÊM THAM SỐ CAT
+            }
+
+            // 5. Chuyển hướng người dùng đến URL mới
+            window.location.href = newUrl;
+        }
+        /*]]>*/
+    </script>
 
     <!-- Plugins JS File -->
     <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
