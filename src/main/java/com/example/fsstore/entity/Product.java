@@ -27,6 +27,9 @@ public class Product {
 
     private String gender;
 
+    @Column(name = "stock", nullable = false)
+    private Integer stock = 0;
+
     private Integer reviewCount;
 
     @Column(name = "product_type")
@@ -34,13 +37,20 @@ public class Product {
     // ... constructors, getters và setters cho các thuộc tính hiện tại ...
 
     // Thêm getters và setters cho productType:
-
     public String getProductType() {
         return productType;
     }
-
     public void setProductType(String productType) {
         this.productType = productType;
+    }
+
+    // Thêm getter và setter cho 'stock'
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public String getImageUrl() {

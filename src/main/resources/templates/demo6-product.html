@@ -398,10 +398,6 @@
                 <div class="row">
                     <div class="col-lg-9 main-content product-sidebar-right">
                         <div class="product-single-container product-single-default">
-                            <div class="cart-message d-none">
-                                <strong class="single-cart-notice">“Men Black Sports Shoes”</strong>
-                                <span>has been added to your cart.</span>
-                            </div>
 
                             <div class="row">
                                 <div class="col-md-6 product-single-gallery">
@@ -423,8 +419,8 @@
                                             </div>
                                         </div>
                                         <span class="prod-full-screen">
-            <i class="icon-plus"></i>
-        </span>
+                        <i class="icon-plus"></i>
+                        </span>
                                     </div>
 
                                     <div class="prod-thumbnail owl-dots">
@@ -465,26 +461,75 @@
                                     </div>
 
                                     <ul class="single-info-list">
+
                                         <li>
-                                            SKU: <strong><span th:text="${product.id}">654613612</span></strong>
+                                            ID: <strong><span th:text="${product.id}">654613612</span></strong>
                                         </li>
 
                                         <li>
-                                            CATEGORY:
+                                            GIỚI TÍNH:
                                             <strong>
-                                                <a href="#" class="product-category" th:text="${product.gender}">SHOES</a>
+                                                <span th:text="${product.gender}">Nam/Nữ</span>
+                                            </strong>
+                                        </li>
+
+                                        <li>
+                                            LOẠI:
+                                            <strong>
+                                                <span th:text="${product.productType}">Áo/Quần/Giày</span>
+                                            </strong>
+                                        </li>
+
+                                        <li th:with="stock=${product.stock}">
+                                            SỐ LƯỢNG:
+                                            <strong th:if="${stock > 0}" class="text-success">
+                                                <span th:text="${stock}">15</span>
+                                            </strong>
+                                            <strong th:if="${stock <= 0}" class="text-danger">
+                                                HẾT HÀNG
                                             </strong>
                                         </li>
                                     </ul>
 
                                     <div class="product-action">
-                                        <div class="product-single-qty">
-                                            <input class="horizontal-quantity form-control" type="text" value="1">
-                                        </div>
 
-                                        <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add to Cart</a>
+                                        <form th:action="@{/cart/add}" method="post" class="add-to-cart-form d-flex align-items-center">
+                                            <div class="product-single-qty">
+                                                <input class="horizontal-quantity form-control"
+                                                       type="number"
+                                                       name="quantity"
+                                                       value="1"
+                                                       min="1"
+                                                       th:max="${product.stock}"
+                                                       th:disabled="${product.stock <= 0}">
+                                            </div>
 
-                                        <a href="cart.html" class="btn btn-gray view-cart d-none">View cart</a>
+                                            <input type="hidden" name="productId" th:value="${product.id}" />
+                                            <input type="hidden" name="productName" th:value="${product.name}" />
+                                            <button type="submit"
+                                                    class="btn btn-dark add-cart mr-2"
+                                                    title="Add to Cart"
+                                                    th:disabled="${product.stock <= 0}"> <span th:text="${product.stock <= 0 ? 'HẾT HÀNG' : 'Add to Cart'}">Add to Cart</span>
+                                            </button>
+
+                                            <a th:href="@{/cart/view}" class="btn btn-gray view-cart d-none">View cart</a>
+                                        </form>
+                                    </div>
+
+                                    <div th:if="${success}" class="alert alert-success mt-3" role="alert">
+
+                                        <p th:text="${success}"></p>
+
+                                    </div>
+
+                                    <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
+
+                                        <p th:text="${error}"></p>
+
+                                    </div>
+
+                                    <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
+                                        <p th:text="${error}"></p>
                                     </div>
 
                                     <div class="tab-content">

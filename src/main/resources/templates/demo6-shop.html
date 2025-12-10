@@ -258,11 +258,6 @@
                                            placeholder="I'm searching for..."
                                            required="">
 
-                                    <div class="select-custom">
-                                        <select id="cat" name="cat">
-                                            <option value="">All Categories</option>
-                                        </select>
-                                    </div>
                                     <button class="btn icon-search-3" type="submit"></button>
                                 </div>
                             </form>
@@ -478,58 +473,23 @@
                             </ul>
                         </div>
 
-                        <div class="toolbox-item toolbox-sort select-custom">
-                            <a class="sort-menu-trigger" href="#">Select Size</a>
-                            <ul class="sort-list">
-                                <li><a href="#">Extra Large</a></li>
-                                <li><a href="#">Large</a></li>
-                                <li><a href="#">Medium</a></li>
-                                <li><a href="#">Small</a></li>
-                            </ul>
-                        </div>
-                        <!-- End .toolbox-item -->
-
-                        <div class="toolbox-item toolbox-sort select-custom">
-                            <a class="sort-menu-trigger" href="#">Select Color</a>
-                            <ul class="sort-list">
-                                <li><a href="#">Black</a></li>
-                                <li><a href="#">Blue</a></li>
-                                <li><a href="#">Brown</a></li>
-                                <li><a href="#">Green</a></li>
-                                <li><a href="#">Indigo</a></li>
-                                <li><a href="#">Light Blue</a></li>
-                                <li><a href="#">Red</a></li>
-                                <li><a href="#">Yellow</a></li>
-                            </ul>
-                        </div>
-                        <!-- End .toolbox-item -->
-
                         <div class="toolbox-item toolbox-sort price-sort select-custom">
                             <a class="sort-menu-trigger" href="#">Select Price</a>
                             <div class="sort-list">
-                                <form class="filter-price-form d-flex align-items-center m-0">
-                                    <input class="input-price mr-2" name="min_price" placeholder="55" /> -
-                                    <input class="input-price mx-2" name="max_price" placeholder="111" />
+                                <form th:action="@{/shop}" method="get" class="filter-price-form d-flex align-items-center m-0">
+                                    <input class="input-price mr-2" name="min_price" placeholder="Min" th:value="${minPrice}" /> -
+                                    <input class="input-price mx-2" name="max_price" placeholder="Max" th:value="${maxPrice}" />
                                     <button type="submit" class="btn btn-primary ml-3">Filter</button>
+
+                                    <input type="hidden" name="keyword" th:value="${keyword}" />
+                                    <input type="hidden" name="cat" th:value="${catValue}" />
+
                                 </form>
                             </div>
                         </div>
                         <!-- End .toolbox-item -->
                     </aside>
                     <!-- End .toolbox-left -->
-
-
-                    <div class="toolbox-item toolbox-sort select-custom">
-                        <select name="orderby" class="form-control">
-                            <option value="menu_order" selected="selected">Default sorting</option>
-                            <option value="popularity">Sort by popularity</option>
-                            <option value="rating">Sort by average rating</option>
-                            <option value="date">Sort by newness</option>
-                            <option value="price">Sort by price: low to high</option>
-                            <option value="price-desc">Sort by price: high to low</option>
-                        </select>
-                    </div>
-                    <!-- End .toolbox-item -->
 
                     <div class="toolbox-item toolbox-show ml-auto">
                         <label>Show:</label>
@@ -647,7 +607,12 @@
                             <th:block th:if="${totalPages > 0}">
                                 <li th:class="${productPage.hasPrevious()} ? 'page-item' : 'page-item disabled'">
                                     <a class="page-link page-link-btn"
-                                       th:href="@{/shop(page=${productPage.number - 1}, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}"
+                                       th:href="@{/shop(page=${productPage.number - 1},
+                                                        size=${productPage.size},
+                                                        keyword=${keyword},
+                                                        cat=${catValue},
+                                                        min_price=${minPrice},
+                                                        max_price=${maxPrice})}"
                                        aria-label="Previous">
                                         <i class="icon-angle-left"></i>
                                     </a>
@@ -657,13 +622,23 @@
                                     th:classappend="${currentPage == i} ? 'active'"
                                     class="page-item">
                                     <a class="page-link"
-                                       th:href="@{/shop(page=${i}, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}"
+                                       th:href="@{/shop(page=${i},
+                                                size=${productPage.size},
+                                                keyword=${keyword},
+                                                cat=${catValue},
+                                                min_price=${minPrice},
+                                                max_price=${maxPrice})}"
                                        th:text="${i + 1}">1</a>
                                 </li>
 
                                 <li th:class="${productPage.hasNext()} ? 'page-item' : 'page-item disabled'">
                                     <a class="page-link page-link-btn"
-                                       th:href="@{/shop(page=${productPage.number + 1}, size=${productPage.size}, keyword=${keyword}, cat=${catValue})}"
+                                       th:href="@{/shop(page=${productPage.number + 1},
+                                                size=${productPage.size},
+                                                keyword=${keyword},
+                                                cat=${catValue},
+                                                min_price=${minPrice},
+                                                max_price=${maxPrice})}"
                                        aria-label="Next">
                                         <i class="icon-angle-right"></i>
                                     </a>
@@ -1031,12 +1006,11 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        // 1. Lấy URL cơ sở /shop
         var shopUrl = /*[[@{/shop}]]*/;
-
-        // 2. Lấy tham số tìm kiếm và lọc hiện tại từ Model
         var currentKeyword = /*[[${keyword}]]*/;
-        var currentCat = /*[[${catValue}]]*/; // <-- THAM SỐ LỌC MỚI
+        var currentCat = /*[[${catValue}]]*/;
+        var currentMinPrice = /*[[${minPrice}]]*/; // Lấy minPrice từ Model
+        var currentMaxPrice = /*[[${maxPrice}]]*/; // Lấy maxPrice từ Model
 
         function changePageSize() {
             var selector = document.getElementById('pageSizeSelector');
@@ -1045,18 +1019,24 @@
             // Bắt đầu bằng việc reset về trang 0 và thêm size mới
             let newUrl = shopUrl + "?page=0&size=" + newSize;
 
-            // 3. Giữ lại Keyword (nếu có)
+            // Giữ lại Keyword
             if (currentKeyword && currentKeyword !== "") {
-                // Sử dụng encodeURIComponent để xử lý khoảng trắng và ký tự đặc biệt
                 newUrl += "&keyword=" + encodeURIComponent(currentKeyword);
             }
 
-            // 4. Giữ lại Giá trị Lọc (catValue) (nếu có)
+            // Giữ lại Category
             if (currentCat && currentCat !== "") {
-                newUrl += "&cat=" + encodeURIComponent(currentCat); // <-- THÊM THAM SỐ CAT
+                newUrl += "&cat=" + encodeURIComponent(currentCat);
             }
 
-            // 5. Chuyển hướng người dùng đến URL mới
+            // THÊM: Giữ lại Lọc Giá
+            if (currentMinPrice) {
+                newUrl += "&min_price=" + currentMinPrice;
+            }
+            if (currentMaxPrice) {
+                newUrl += "&max_price=" + currentMaxPrice;
+            }
+
             window.location.href = newUrl;
         }
         /*]]>*/

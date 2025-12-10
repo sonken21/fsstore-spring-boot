@@ -24,7 +24,7 @@ public class ShopController {
 
     /**
      * Xử lý request cho Trang Danh mục Sản phẩm (Shop Page)
-     * Hỗ trợ phân trang, tìm kiếm bằng từ khóa, và lọc theo Category/Gender.
+     * Hỗ trợ phân trang, tìm kiếm, và lọc theo Category/Gender/Giá.
      */
     @GetMapping("/shop")
     public String showShopPage(
@@ -34,15 +34,19 @@ public class ShopController {
             // Tham số tìm kiếm
             @RequestParam(value = "keyword", required = false) String keyword,
 
-            // THAM SỐ LỌC MỚI (Category/Gender/Type)
-            // Nhận giá trị từ tham số URL 'cat' (ví dụ: ?cat=Nam hoặc ?cat=Áo)
+            // Tham số lọc Category/Gender/Type
             @RequestParam(value = "cat", required = false) String catValue,
+
+            // THAM SỐ LỌC GIÁ MỚI
+            @RequestParam(value = "min_price", required = false) Double minPrice,
+            @RequestParam(value = "max_price", required = false) Double maxPrice,
 
             Model model) {
 
-        // 1. GỌI SERVICE với CẢ Pageable, keyword VÀ catValue
-        // Lưu ý: ProductService đã được sửa để nhận 3 tham số này
-        Page<Product> productPage = productService.findPaginatedProducts(pageable, keyword, catValue);
+        // 1. GỌI SERVICE với TẤT CẢ 5 tham số lọc/phân trang
+        Page<Product> productPage = productService.findPaginatedProducts(
+                pageable, keyword, catValue, minPrice, maxPrice
+        );
 
         // 2. Đưa đối tượng Page<Product> và nội dung vào Model
         model.addAttribute("productPage", productPage);
@@ -52,9 +56,11 @@ public class ShopController {
         model.addAttribute("currentPage", productPage.getNumber());
         model.addAttribute("totalPages", productPage.getTotalPages());
 
-        // 4. TRUYỀN CẢ HAI THAM SỐ LỌC/TÌM KIẾM VÀO MODEL
+        // 4. TRUYỀN CÁC THAM SỐ LỌC/TÌM KIẾM VÀO MODEL
         model.addAttribute("keyword", keyword);
-        model.addAttribute("catValue", catValue); // <-- QUAN TRỌNG: Dùng biến này trong Thymeleaf
+        model.addAttribute("catValue", catValue);
+        model.addAttribute("minPrice", minPrice); // <-- THÊM
+        model.addAttribute("maxPrice", maxPrice); // <-- THÊM
 
         return "demo6-shop";
     }

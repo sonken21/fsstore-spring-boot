@@ -21,10 +21,6 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    // Phương thức findPaginatedProducts(Pageable pageable) cũ đã được thay thế
-    // bởi phương thức mới có 2 tham số keyword và filterValue.
-    // Nếu bạn muốn giữ lại hàm cũ, bạn có thể làm quá tải (overload) phương thức.
-
     // (Giữ nguyên các phương thức tiện ích)
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -35,37 +31,44 @@ public class ProductService {
         return product.orElse(null);
     }
 
-    // --- PHƯƠNG THỨC MỚI ĐỂ LỌC SẢN PHẨM THEO GIỚI TÍNH VÀ RATING ---
     public List<Product> findTopRatedProductsByGender(String gender, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return productRepository.findByGenderOrderByRatingDesc(gender, pageable);
     }
 
-    // --- PHƯƠNG THỨC CHÍNH: HỖ TRỢ PHÂN TRANG, TÌM KIẾM VÀ LỌC ---
+    // --- PHƯƠNG THỨC CHÍNH ĐÃ SỬA ĐỔI: THÊM LỌC GIÁ ---
     /**
-     * Tìm kiếm và phân trang sản phẩm, hỗ trợ tìm kiếm bằng Từ khóa VÀ Giá trị Lọc (Category/Gender).
+     * Tìm kiếm và phân trang sản phẩm, hỗ trợ tìm kiếm bằng Từ khóa, Giá trị Lọc, VÀ Khoảng Giá.
      * @param pageable Tham số phân trang (page, size, sort)
      * @param keyword Từ khóa tìm kiếm (tên sản phẩm)
      * @param filterValue Giá trị lọc chung ('Nam', 'Nữ', 'Áo', 'Quần',...)
+     * @param minPrice Giá tối thiểu
+     * @param maxPrice Giá tối đa
      * @return Page<Product>
      */
-    public Page<Product> findPaginatedProducts(Pageable pageable, String keyword, String filterValue) {
+    public Page<Product> findPaginatedProducts(
+            Pageable pageable,
+            String keyword,
+            String filterValue,
+            Double minPrice,
+            Double maxPrice) {
 
         boolean hasKeyword = keyword != null && !keyword.isEmpty();
         boolean hasFilter = filterValue != null && !filterValue.isEmpty();
+        boolean hasPriceFilter = (minPrice != null) || (maxPrice != null);
 
         // Nếu có bất kỳ điều kiện lọc hoặc tìm kiếm nào, gọi phương thức tùy chỉnh
-        if (hasKeyword || hasFilter) {
-            // SỬ DỤNG PHƯƠNG THỨC @Query MỚI TỪ REPOSITORY
+        if (hasKeyword || hasFilter || hasPriceFilter) {
             return productRepository.findFilteredProducts(
                     keyword,
                     filterValue,
+                    minPrice,
+                    maxPrice,
                     pageable
             );
         }
 
         // Nếu không có điều kiện lọc nào, trả về tất cả sản phẩm
-        // Lưu ý: Nếu có phân trang (page, size) thì phân trang vẫn được áp dụng
         return productRepository.findAll(pageable);
     }
 }
