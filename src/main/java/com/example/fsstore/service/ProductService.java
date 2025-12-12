@@ -1,3 +1,5 @@
+// src/main/java/com/example/fsstore/service/ProductService.java
+
 package com.example.fsstore.service;
 
 import com.example.fsstore.entity.Product;
@@ -7,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Nên thêm vào nếu sử dụng @Transactional
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,19 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    // (Giữ nguyên các phương thức tiện ích)
+    // -----------------------------------------------------------
+    // PHƯƠNG THỨC MỚI DÀNH CHO CART SERVICE (AN TOÀN BẰNG OPTIONAL)
+    // -----------------------------------------------------------
+
+    @Transactional(readOnly = true)
+    public Optional<Product> findOptionalProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    // -----------------------------------------------------------
+    // CÁC PHƯƠNG THỨC HIỆN TẠI KHÁC
+    // -----------------------------------------------------------
+
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
@@ -36,16 +51,6 @@ public class ProductService {
         return productRepository.findByGenderOrderByRatingDesc(gender, pageable);
     }
 
-    // --- PHƯƠNG THỨC CHÍNH ĐÃ SỬA ĐỔI: THÊM LỌC GIÁ ---
-    /**
-     * Tìm kiếm và phân trang sản phẩm, hỗ trợ tìm kiếm bằng Từ khóa, Giá trị Lọc, VÀ Khoảng Giá.
-     * @param pageable Tham số phân trang (page, size, sort)
-     * @param keyword Từ khóa tìm kiếm (tên sản phẩm)
-     * @param filterValue Giá trị lọc chung ('Nam', 'Nữ', 'Áo', 'Quần',...)
-     * @param minPrice Giá tối thiểu
-     * @param maxPrice Giá tối đa
-     * @return Page<Product>
-     */
     public Page<Product> findPaginatedProducts(
             Pageable pageable,
             String keyword,
@@ -57,8 +62,8 @@ public class ProductService {
         boolean hasFilter = filterValue != null && !filterValue.isEmpty();
         boolean hasPriceFilter = (minPrice != null) || (maxPrice != null);
 
-        // Nếu có bất kỳ điều kiện lọc hoặc tìm kiếm nào, gọi phương thức tùy chỉnh
         if (hasKeyword || hasFilter || hasPriceFilter) {
+            // Giả định ProductRepository có phương thức findFilteredProducts
             return productRepository.findFilteredProducts(
                     keyword,
                     filterValue,
@@ -68,7 +73,6 @@ public class ProductService {
             );
         }
 
-        // Nếu không có điều kiện lọc nào, trả về tất cả sản phẩm
         return productRepository.findAll(pageable);
     }
 }

@@ -1,15 +1,26 @@
 package com.example.fsstore.entity;
 
-import jakarta.persistence.*; // Dùng jakarta.persistence cho Spring Boot 3/4 trở lên
-import lombok.Data; // Cần có dependency Lombok
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode; // Cần import này
+import lombok.ToString; // Cần import này
 
-@Entity // <--- Đánh dấu đây là một Entity (ánh xạ với bảng DB)
-@Table(name = "product") // <--- Tên bảng trong database
-@Data // <--- Annotation của Lombok để tạo Getter/Setter/ToString tự động
+@Entity
+@Table(name = "product")
+@Getter // Tạo getters cho tất cả fields
+@Setter // Tạo setters cho tất cả fields
+@NoArgsConstructor // Thêm constructor không đối số
+@AllArgsConstructor // Thêm constructor đầy đủ đối số
+// ⭐ FIX LOMBOK: Ngăn Lombok tạo toString/equals/hashCode nguy hiểm (mặc dù Product không có Lazy fields, đây là thói quen tốt)
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
 public class Product {
 
-    @Id // <--- Khóa chính
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // <--- Tự tăng (Auto Increment)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", length = 255, nullable = false)
@@ -34,7 +45,9 @@ public class Product {
 
     @Column(name = "product_type")
     private String productType;
-    // ... constructors, getters và setters cho các thuộc tính hiện tại ...
+
+    // Lưu ý: Các phương thức Getter/Setter tùy chỉnh của bạn ở dưới
+    // vẫn được giữ nguyên và sẽ ghi đè lên các hàm do Lombok tạo nếu có.
 
     // Thêm getters và setters cho productType:
     public String getProductType() {

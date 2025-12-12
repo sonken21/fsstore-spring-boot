@@ -493,7 +493,7 @@
 
                                     <div class="product-action">
 
-                                        <form th:action="@{/cart/add}" method="post" class="add-to-cart-form d-flex align-items-center">
+                                        <form th:action="@{/cart/add}" method="post" class="custom-add-to-cart-form d-flex align-items-center">
                                             <div class="product-single-qty">
                                                 <input class="horizontal-quantity form-control"
                                                        type="number"
@@ -506,16 +506,32 @@
 
                                             <input type="hidden" name="productId" th:value="${product.id}" />
                                             <input type="hidden" name="productName" th:value="${product.name}" />
+
                                             <button type="submit"
-                                                    class="btn btn-dark add-cart mr-2"
+                                                    class="btn btn-dark submit-cart-manual mr-2"
                                                     title="Add to Cart"
-                                                    th:disabled="${product.stock <= 0}"> <span th:text="${product.stock <= 0 ? 'HẾT HÀNG' : 'Add to Cart'}">Add to Cart</span>
+                                                    th:disabled="${product.stock <= 0}">
+                                                <span th:text="${product.stock <= 0 ? 'HẾT HÀNG' : 'Add to Cart'}">Add to Cart</span>
                                             </button>
 
-                                            <a th:href="@{/cart/view}" class="btn btn-gray view-cart d-none">View cart</a>
+                                            <a th:href="@{/cart}" class="btn btn-gray view-cart d-none">View cart</a>
                                         </form>
                                     </div>
+                                    <div th:if="${message}" class="alert alert-success alert-rounded mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span th:text="${message}">Đã thêm sản phẩm vào giỏ hàng thành công!</span>
+                                            <a th:href="@{/cart}" class="btn btn-sm btn-dark">
+                                                <i class="icon-shopping-cart"></i> View Cart
+                                            </a>
+                                        </div>
+                                    </div>
 
+                                    <div th:if="${error}" class="alert alert-danger alert-rounded mb-3">
+                                        <span th:text="${error}"></span>
+                                    </div>
+
+                                    <form th:action="@{/cart/add}" method="post" class="custom-add-to-cart-form d-flex align-items-center">
+                                    </form>
                                     <div th:if="${success}" class="alert alert-success mt-3" role="alert">
 
                                         <p th:text="${success}"></p>
@@ -1789,10 +1805,10 @@
 
                                 <div class="footer-right ml-auto mt-1 mt-sm-0">
                                     <div class="payment-icons mr-0">
-                                        <span class="payment-icon visa" style="background-image: url(assets/images/payments/payment-visa.svg)"></span>
-                                        <span class="payment-icon paypal" style="background-image: url(assets/images/payments/payment-paypal.svg)"></span>
-                                        <span class="payment-icon stripe" style="background-image: url(assets/images/payments/payment-stripe.png)"></span>
-                                        <span class="payment-icon verisign" style="background-image:  url(assets/images/payments/payment-verisign.svg)"></span>
+                                        <span class="payment-icon visa" style="background-image: url(/assets/images/payments/payment-visa.svg)"></span>
+                                        <span class="payment-icon paypal" style="background-image: url(/assets/images/payments/payment-paypal.svg)"></span>
+                                        <span class="payment-icon stripe" style="background-image: url(/assets/images/payments/payment-stripe.png)"></span>
+                                        <span class="payment-icon verisign" style="background-image:  url(/assets/images/payments/payment-verisign.svg)"></span>
                                     </div>
                                 </div>
                             </div>

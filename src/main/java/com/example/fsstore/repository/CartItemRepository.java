@@ -1,16 +1,16 @@
+// src/main/java/com/example/fsstore/repository/CartItemRepository.java
+
 package com.example.fsstore.repository;
 
-import com.example.fsstore.entity.Cart;
 import com.example.fsstore.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    /**
-     * Tìm kiếm một CartItem dựa trên Cart và ID của Product.
-     * Đây là truy vấn quan trọng để kiểm tra sản phẩm đã có trong giỏ hàng chưa.
-     */
-    Optional<CartItem> findByCartAndProductId(Cart cart, Long productId);
+    // Tìm CartItem dựa trên Cart ID và Product ID
+    Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId);
 }
