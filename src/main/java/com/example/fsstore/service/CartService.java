@@ -145,4 +145,14 @@ public class CartService {
         }
         return false;
     }
+    @Transactional
+    public void deleteCart(Long cartId) {
+        if (cartId != null) {
+            // Sử dụng CartRepository đã được inject để xóa Cart
+            // Giả định rằng bạn đã cấu hình CascadeType.ALL/orphanRemoval=true
+            // trong Cart Entity để tự động xóa CartItem khi xóa Cart.
+            cartRepository.deleteById(cartId);
+            System.out.println("DEBUG: [deleteCart] Đã xóa Cart ID: " + cartId);
+        }
+    }
 }

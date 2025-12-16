@@ -28,7 +28,7 @@
         (function(d) {
             var wf = d.createElement('script'),
                 s = d.scripts[0];
-            wf.src = 'assets/js/webfont.js';
+            wf.src = '/assets/js/webfont.js';
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
@@ -130,7 +130,7 @@
                             <i class="fas fa-bars"></i>
                         </button>
                         <a href="demo4.html" class="logo">
-                            <img th:src="@{/assets/images/logo.png" width="111" height="44" alt="Porto Logo">
+                            <img th:src="@{/assets/images/logo.png}" width="111" height="44" alt="Porto Logo">
                         </a>
                     </div>
                     <!-- End .header-left -->
@@ -171,7 +171,7 @@
                         <!-- End .header-search -->
 
                         <div class="header-contact d-none d-lg-flex pl-4 pr-4">
-                            <img alt="phone" src="assets/images/phone.png" width="30" height="30" class="pb-1">
+                            <img alt="phone" th:src="@{/assets/images/phone.png}" width="30" height="30" class="pb-1">
                             <h6><span>Call us now</span><a href="tel:#" class="text-dark font1">+123 5678 890</a></h6>
                         </div>
 
@@ -209,7 +209,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-1.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-1.jpg}" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -231,7 +231,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-2.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-2.jpg}" alt="product" width="80" height="80">
                                                 </a>
 
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
@@ -253,7 +253,7 @@
 
                                             <figure class="product-image-container">
                                                 <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-3.jpg" alt="product" width="80" height="80">
+                                                    <img th:src="@{/assets/images/products/product-3.jpg}" alt="product" width="80" height="80">
                                                 </a>
                                                 <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
                                             </figure>
@@ -333,7 +333,7 @@
                                         <div class="col-lg-4 p-0">
                                             <div class="menu-banner">
                                                 <figure>
-                                                    <img th:src="@{/assets/images/menu-banner.jpg" width="192" height="313" alt="Menu banner">
+                                                    <img th:src="@{/assets/images/menu-banner.jpg}" width="192" height="313" alt="Menu banner">
                                                 </figure>
                                                 <div class="banner-content">
                                                     <h4>
@@ -386,7 +386,7 @@
                                         <div class="col-lg-4 p-0">
                                             <div class="menu-banner menu-banner-2">
                                                 <figure>
-                                                    <img th:src="@{/assets/images/menu-banner-1.jpg" alt="Menu banner" class="product-promo">
+                                                    <img th:src="@{/assets/images/menu-banner-1.jpg}" alt="Menu banner" class="product-promo">
                                                 </figure>
                                                 <i>OFF</i>
                                                 <div class="banner-content">
@@ -530,195 +530,60 @@
                             <li>
                                 <h2 class="step-title">Billing details</h2>
 
-                                <form action="#" id="checkout-form">
+                                <form th:action="@{/order/place-order}" method="post" id="checkout-form" th:object="${order}">
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First name
-                                                    <abbr class="required" title="required">*</abbr>
-                                                </label>
-                                                <input type="text" class="form-control" required />
+                                                <label>First name <abbr class="required" title="required">*</abbr></label>
+                                                <input type="text" class="form-control" th:field="*{firstName}" required />
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last name
-                                                    <abbr class="required" title="required">*</abbr></label>
-                                                <input type="text" class="form-control" required />
+                                                <label>Last name <abbr class="required" title="required">*</abbr></label>
+                                                <input type="text" class="form-control" th:field="*{lastName}" required />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Company name (optional)</label>
-                                        <input type="text" class="form-control" />
+                                    <div class="select-custom">
+                                        <label>Country / Region <abbr class="required" title="required">*</abbr></label>
+                                        <input type="text" class="form-control" value="Việt Nam" readonly>
                                     </div>
 
-                                    <div class="select-custom">
-                                        <label>Country / Region
-                                            <abbr class="required" title="required">*</abbr></label>
-                                        <select name="orderby" class="form-control">
-                                            <option value="" selected="selected">Vanuatu
-                                            </option>
-                                            <option value="1">Brunei</option>
-                                            <option value="2">Bulgaria</option>
-                                            <option value="3">Burkina Faso</option>
-                                            <option value="4">Burundi</option>
-                                            <option value="5">Cameroon</option>
-                                        </select>
+                                    <div class="form-group">
+                                        <label>Town / City (Tỉnh/Thành phố) <abbr class="required" title="required">*</abbr></label>
+
+                                        <div class="select-custom">
+                                            <select class="form-control" th:field="*{city}" required>
+                                                <option value="" selected disabled>-- Chọn Tỉnh / Thành phố --</option>
+
+                                                <option th:each="province : ${provinces}"
+                                                        th:value="${province}"
+                                                        th:text="${province}">
+                                                    Tỉnh Mặc Định
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="form-group mb-1 pb-2">
-                                        <label>Street address
-                                            <abbr class="required" title="required">*</abbr></label>
-                                        <input type="text" class="form-control" placeholder="House number and street name" required />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Apartment, suite, unite, etc. (optional)" required />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Town / City
-                                            <abbr class="required" title="required">*</abbr></label>
-                                        <input type="text" class="form-control" required />
-                                    </div>
-
-                                    <div class="select-custom">
-                                        <label>State / County <abbr class="required" title="required">*</abbr></label>
-                                        <select name="orderby" class="form-control">
-                                            <option value="" selected="selected">NY</option>
-                                            <option value="1">Brunei</option>
-                                            <option value="2">Bulgaria</option>
-                                            <option value="3">Burkina Faso</option>
-                                            <option value="4">Burundi</option>
-                                            <option value="5">Cameroon</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Postcode / Zip
-                                            <abbr class="required" title="required">*</abbr></label>
-                                        <input type="text" class="form-control" required />
+                                        <label>Street address (Địa chỉ chi tiết) <abbr class="required" title="required">*</abbr></label>
+                                        <input type="text" class="form-control" placeholder="Số nhà, tên đường, khu vực..." th:field="*{streetAddress}" required />
                                     </div>
 
                                     <div class="form-group">
                                         <label>Phone <abbr class="required" title="required">*</abbr></label>
-                                        <input type="tel" class="form-control" required />
+                                        <input type="tel" class="form-control" th:field="*{phone}" required />
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Email address
-                                            <abbr class="required" title="required">*</abbr></label>
-                                        <input type="email" class="form-control" required />
+                                        <label>Email address <abbr class="required" title="required">*</abbr></label>
+                                        <input type="email" class="form-control" th:field="*{email}" required />
                                     </div>
 
-                                    <div class="form-group mb-1">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="create-account" />
-                                            <label class="custom-control-label" data-toggle="collapse" data-target="#collapseThree" aria-controls="collapseThree" for="create-account">Create an
-                                                account?</label>
-                                        </div>
-                                    </div>
-
-                                    <div id="collapseThree" class="collapse">
-                                        <div class="form-group">
-                                            <label>Create account password
-                                                <abbr class="required" title="required">*</abbr></label>
-                                            <input type="password" placeholder="Password" class="form-control" required />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox mt-0">
-                                            <input type="checkbox" class="custom-control-input" id="different-shipping" />
-                                            <label class="custom-control-label" data-toggle="collapse" data-target="#collapseFour" aria-controls="collapseFour" for="different-shipping">Ship to a
-                                                different
-                                                address?</label>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div id="collapseFour" class="collapse">
-                                        <div class="shipping-info">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>First name <abbr class="required"
-                                                                title="required">*</abbr></label>
-                                                        <input type="text" class="form-control" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Last name <abbr class="required"
-                                                                title="required">*</abbr></label>
-                                                        <input type="text" class="form-control" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Company name (optional)</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-
-                                            <div class="select-custom">
-                                                <label>Country / Region <span class="required">*</span></label>
-                                                <select name="orderby" class="form-control">
-                                                    <option value="" selected="selected">Vanuatu</option>
-                                                    <option value="1">Brunei</option>
-                                                    <option value="2">Bulgaria</option>
-                                                    <option value="3">Burkina Faso</option>
-                                                    <option value="4">Burundi</option>
-                                                    <option value="5">Cameroon</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group mb-1 pb-2">
-                                                <label>Street address <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <input type="text" class="form-control" placeholder="House number and street name" required />
-                                            </div>
-
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)" required />
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Town / City <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <input type="text" class="form-control" required />
-                                            </div>
-
-                                            <div class="select-custom">
-                                                <label>State / County <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <select name="orderby" class="form-control">
-                                                    <option value="" selected="selected">NY</option>
-                                                    <option value="1">Brunei</option>
-                                                    <option value="2">Bulgaria</option>
-                                                    <option value="3">Burkina Faso</option>
-                                                    <option value="4">Burundi</option>
-                                                    <option value="5">Cameroon</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Postcode / ZIP <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <input type="text" class="form-control" required />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="order-comments">Order notes (optional)</label>
-                                        <textarea class="form-control" placeholder="Notes about your order, e.g. special notes for delivery." required></textarea>
-                                    </div>
                                 </form>
                             </li>
                         </ul>
@@ -731,80 +596,63 @@
 
                             <table class="table table-mini-cart">
                                 <thead>
-                                    <tr>
-                                        <th colspan="2">Product</th>
-                                    </tr>
+                                <tr>
+                                    <th colspan="2">Product</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="product-col">
-                                            <h3 class="product-title">
-                                                Circled Ultimate 3D Speaker ×
-                                                <span class="product-qty">4</span>
-                                            </h3>
-                                        </td>
+                                <tr th:each="item : ${cart.items}">
+                                    <td class="product-col">
+                                        <h3 class="product-title">
+                                            <span th:text="${item.product.name}">Product Name</span> ×
+                                            <span class="product-qty" th:text="${item.quantity}">4</span>
+                                        </h3>
+                                    </td>
 
-                                        <td class="price-col">
-                                            <span>$1,040.00</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="product-col">
-                                            <h3 class="product-title">
-                                                Fashion Computer Bag ×
-                                                <span class="product-qty">2</span>
-                                            </h3>
-                                        </td>
-
-                                        <td class="price-col">
-                                            <span>$418.00</span>
-                                        </td>
-                                    </tr>
+                                    <td class="price-col">
+                                        <span th:text="${#numbers.formatDecimal(item.subTotal, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}">$1,040.00</span>
+                                    </td>
+                                </tr>
                                 </tbody>
                                 <tfoot>
-                                    <tr class="cart-subtotal">
-                                        <td>
-                                            <h4>Subtotal</h4>
-                                        </td>
+                                <tr class="cart-subtotal">
+                                    <td>
+                                        <h4>Subtotal</h4>
+                                    </td>
 
-                                        <td class="price-col">
-                                            <span>$1,458.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="order-shipping">
-                                        <td class="text-left" colspan="2">
-                                            <h4 class="m-b-sm">Shipping</h4>
+                                    <td class="price-col">
+                                        <span th:text="${#numbers.formatDecimal(cart.total, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}">$1,458.00</span>
+                                    </td>
+                                </tr>
 
-                                            <div class="form-group form-group-custom-control">
-                                                <div class="custom-control custom-radio d-flex">
-                                                    <input type="radio" class="custom-control-input" name="radio" checked />
-                                                    <label class="custom-control-label">Local Pickup</label>
-                                                </div>
-                                                <!-- End .custom-checkbox -->
+                                <tr class="order-shipping">
+                                    <td class="text-left" colspan="2">
+                                        <h4 class="m-b-sm">Shipping</h4>
+                                        <div class="form-group form-group-custom-control">
+                                            <div class="custom-control custom-radio d-flex">
+                                                <input type="radio" class="custom-control-input" name="shipping" checked readonly disabled />
+                                                <label class="custom-control-label">
+                                                    Phí vận chuyển:
+                                                    <span th:text="${#numbers.formatDecimal(30000.0, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}">30,000 VNĐ</span>
+                                                </label>
                                             </div>
-                                            <!-- End .form-group -->
+                                        </div>
+                                    </td>
+                                </tr>
 
-                                            <div class="form-group form-group-custom-control mb-0">
-                                                <div class="custom-control custom-radio d-flex mb-0">
-                                                    <input type="radio" name="radio" class="custom-control-input">
-                                                    <label class="custom-control-label">Flat Rate</label>
-                                                </div>
-                                                <!-- End .custom-checkbox -->
-                                            </div>
-                                            <!-- End .form-group -->
-                                        </td>
-
-                                    </tr>
-
-                                    <tr class="order-total">
-                                        <td>
-                                            <h4>Total</h4>
-                                        </td>
-                                        <td>
-                                            <b class="total-price"><span>$1,603.80</span></b>
-                                        </td>
-                                    </tr>
+                                <tr class="order-total">
+                                    <td>
+                                        <h4>Total</h4>
+                                    </td>
+                                    <td>
+                                        <b class="total-price">
+                    <span th:with="orderTotal=${cart.total + 30000.0}"
+                          th:text="${#numbers.formatDecimal(orderTotal, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}">
+                          $1,603.80
+                    </span>
+                                        </b>
+                                    </td>
+                                </tr>
                                 </tfoot>
                             </table>
 
@@ -1148,12 +996,13 @@
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
     <!-- Plugins JS File -->
-    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins.min.js"></script>
+    <script data-cfasync="false" th:src="@{/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/plugins.min.js}"></script>
 
     <!-- Main JS File -->
-    <script src="assets/js/main.min.js"></script>
+    <script th:src="@{/assets/js/main.min.js}"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83b562dedb0a04',t:'MTc2NDc3MTY2Ng=='};var a=document.createElement('script');a.src='../../cdn-cgi/challenge-platform/h/b/scripts/jsd/13c98df4ef2d/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
