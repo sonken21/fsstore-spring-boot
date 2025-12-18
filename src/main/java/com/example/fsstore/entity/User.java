@@ -19,12 +19,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Các trường cơ bản
+    @Column(unique = true, nullable = false)
     private String username;
-    private String email;
+
+    @Column(nullable = false)
     private String password;
 
-    // Các trường khác có thể cần thiết cho thông tin giao hàng
+    private String role; // "ROLE_USER" hoặc "ROLE_ADMIN"
+
+    private String email;
     private String firstName;
     private String lastName;
     private String phone;

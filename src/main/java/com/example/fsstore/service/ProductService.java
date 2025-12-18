@@ -51,6 +51,10 @@ public class ProductService {
         return productRepository.findByGenderOrderByRatingDesc(gender, pageable);
     }
 
+    public List<Product> getTopRatedProducts(int limit) {
+        return productRepository.findTop10ByOrderByRatingDesc();
+    }
+
     public Page<Product> findPaginatedProducts(
             Pageable pageable,
             String keyword,

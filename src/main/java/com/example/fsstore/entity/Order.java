@@ -50,6 +50,8 @@ public class Order {
 
     private LocalDateTime orderDate = LocalDateTime.now();
 
+    private String paymentMethod; // Giá trị sẽ là "COD" hoặc "ONLINE"
+
     // --- LIÊN KẾT ---
 
     @ManyToOne(fetch = FetchType.LAZY)

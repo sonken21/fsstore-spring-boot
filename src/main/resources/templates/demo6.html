@@ -103,7 +103,7 @@
                                                             <b class="">50%</b>
                                                             <i>OFF</i>
                                                         </h4>
-                                                        <a href="category.html" class="btn btn-sm btn-dark">SHOP NOW</a>
+                                                        <a th:href="@{/shop}" class="btn btn-sm btn-dark">SHOP NOW</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,7 +158,7 @@
                                                             <b class="">50%</b>
                                                         </h4>
                                                     </div>
-                                                    <a href="category.html" class="btn btn-sm btn-dark">SHOP NOW</a>
+                                                    <a th:href="@{/shop}" class="btn btn-sm btn-dark">SHOP NOW</a>
                                                 </div>
                                             </div>
                                             <!-- End .col-lg-4 -->
@@ -388,9 +388,7 @@
                             <h5 class="coupon-sale-text text-left text-light appear-animate" data-animation-delay="2200" data-animation-duration="1200" data-animation-name="fadeIn">
                                 $<b>199</b>99</h5>
                             <div class="mb-0 p-t-2 appear-animate" data-animation-delay="2500" data-animation-name="fadeInUpShorter">
-                                <a href="demo6-shop.html" class="btn btn-borders btn-xl btn-outline-dark ls-10">
-                                    SHOP NOW
-                                </a>
+                                <a th:href="@{/shop}" class="btn btn-borders btn-xl btn-outline-dark ls-10">SHOP NOW</a>
                             </div>
                         </div>
                         <!-- End .home-slide-content -->
@@ -411,9 +409,7 @@
                             <h4 class="pl-2 font-weight-light mb-0 text-left text-uppercase">prices up to</h4>
                             <h3 class="mb-0 text-sale m-l-n-xs text-left text-uppercase">80%<small>OFF</small></h3>
                             <div class="mb-0 pl-2">
-                                <a href="demo6-shop.html" class="btn btn-modern btn-xl btn-primary">
-                                    SHOP NOW
-                                </a>
+                                <a th:href="@{/shop}" class="btn btn-modern btn-xl btn-primary">SHOP NOW</a>
                             </div>
                         </div>
                     </div>
@@ -496,7 +492,7 @@
                                 </div>
                                 <div class="col-5">
                                     <div class="mb-0">
-                                        <a href="demo6-shop.html" class="btn btn-modern btn-md btn-dark">
+                                        <a th:href="@{/shop}" class="btn btn-modern btn-md btn-dark">
                                             Shop Now
                                         </a>
                                     </div>
@@ -513,12 +509,12 @@
 
             <div class="half-section">
                 <div class="d-flex flex-wrap">
-                    <div class="col-md-6 col-12 order-md-last half-img banner banner-md-vw-small banner-5 bg-img d-flex align-items-center appear-animate" data-animation-duration="1200" style="background-image: url('assets/images/demoes/demo6/bg-1.jpg');">
+                    <div class="col-md-6 col-12 order-md-last half-img banner banner-md-vw-small banner-5 bg-img d-flex align-items-center appear-animate" data-animation-duration="1200" style="background-image: url('/assets/images/demoes/demo6/bg-1.jpg');">
                         <div class="banner-content">
                             <h3 class="ls-n-10 m-b-3 text-left">WOMEN'S<br />COLLECTION</h3>
                             <p class="line-height-1 m-b-4 text-left">Check out this week's hottest styles.</p>
                             <div class="mb-0">
-                                <a href="demo6-shop.html" class="btn btn-borders btn-lg btn-outline-dark ls-10">
+                                <a th:href="@{/shop}" class="btn btn-borders btn-lg btn-outline-dark ls-10">
                                     SHOP NOW
                                 </a>
                             </div>
@@ -590,12 +586,12 @@
             <!-- End .half-section -->
             <div class="half-section">
                 <div class="d-flex flex-wrap">
-                    <div class="col-md-6 col-12 half-img banner banner-md-vw-small xbanner banner-5 bg-img d-flex align-items-center justify-content-end" style="background-image: url('assets/images/demoes/demo6/bg-2.jpg');">
+                    <div class="col-md-6 col-12 half-img banner banner-md-vw-small xbanner banner-5 bg-img d-flex align-items-center justify-content-end" style="background-image: url('/assets/images/demoes/demo6/bg-2.jpg');">
                         <div class="banner-content">
                             <h3 class="ls-n-10 m-b-3 text-right">MEN'S<br />COLLECTION</h3>
                             <p class="line-height-1 m-b-4 text-right">Check out this week's hottest styles.</p>
                             <div class="mb-0 text-right">
-                                <a href="demo6-shop.html" class="btn btn-borders btn-lg btn-outline-dark">
+                                <a th:href="@{/shop}" class="btn btn-borders btn-lg btn-outline-dark">
                                     SHOP NOW
                                 </a>
                             </div>
@@ -731,260 +727,49 @@
                     <div class="title-group text-center mb-2 mt-4 p-t-3">
                         <h2 class="section-title text-uppercase ls-n-10">Featured Products</h2>
                     </div>
-                    <div class="featured-products owl-carousel owl-theme nav-outer show-nav-hover" data-owl-options="{
-                        'dots': false,
-                        'margin': 20,
-                        'nav': true,
-                        'navText': [ '<i class=icon-left-open-big>', '<i class=icon-right-open-big>' ],
-                        'responsive' : {
-                            '992' : {
-                                'items' : 4
-                            },
-                            '1200': {
-                                'items':5
-                            }
-                        }
-                    }">
-                        <div class="product-default inner-quickview inner-icon">
+
+                    <div class="featured-products owl-carousel owl-theme nav-outer show-nav-hover"
+                         data-owl-options="{
+            'dots': false,
+            'margin': 20,
+            'nav': true,
+            'responsive' : { '992' : { 'items' : 4 }, '1200': { 'items': 5 } }
+         }">
+
+                        <div th:each="p : ${featuredProducts}" class="product-default inner-quickview inner-icon">
                             <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-15.jpg}" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-15-2.jpg}" width="400" height="400" alt="product" />
+                                <a th:href="@{/product/detail/{id}(id=${p.id})}">
+                                    <img th:src="@{/assets/images/demoes/demo6/products/{imgName}(imgName=${p.imageUrl})}"
+                                         width="400" height="400" th:alt="${p.name}" />
                                 </a>
                                 <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
+                                    <a href="#" class="btn-icon btn-add-cart"><i class="icon-shopping-cart"></i></a>
                                 </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
                             </figure>
+
                             <div class="product-details">
                                 <div class="category-wrap">
                                     <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">clothing</a>,
-                                        <a href="demo6-shop.html" class="product-category">trousers</a>
+                                        <a href="/shop" class="product-category" th:text="${p.gender + ' - ' + p.productType}">Category</a>
                                     </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
                                 </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Black Gril Blouse</a> </h3>
+
+                                <h3 class="product-title">
+                                    <a th:href="@{/product/detail/{id}(id=${p.id})}" th:text="${p.name}">Product Name</a>
+                                </h3>
+
                                 <div class="ratings-container">
                                     <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
+                                        <span class="ratings" th:style="'width:' + (${p.rating} * 20) + '%'"></span>
                                     </div>
-                                    <!-- End .product-ratings -->
                                 </div>
-                                <!-- End .product-container -->
+
                                 <div class="price-box">
-                                    <span class="product-price">$149.00</span>
+                                    <span class="product-price" th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"></span>
                                 </div>
-                                <!-- End .price-box -->
                             </div>
-                            <!-- End .product-details -->
-                        </div>
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-5.jpg}" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-5-2.jpg}" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">headphone</a>,
-                                        <a href="demo6-shop.html" class="product-category">trousers</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Blue Jacket</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$101.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-1.jpg}" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-2.jpg}" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">headphone</a>,
-                                        <a href="demo6-shop.html" class="product-category">trousers</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Girl Black Blouse</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$99.00 – $109.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-9.jpg}" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-13.jpg}" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">clothing</a>,
-                                        <a href="demo6-shop.html" class="product-category">t-shirts</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Black Jacket</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$209.00 – $259.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-16.jpg}" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-16-2.jpg}" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">caps</a>,
-                                        <a href="demo6-shop.html" class="product-category">shoes</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Jacket</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$101.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                        <div class="product-default inner-quickview inner-icon">
-                            <figure>
-                                <a href="demo6-product.html">
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-17.jpg}" width="400" height="400" alt="product" />
-                                    <img th:src="@{/assets/images/demoes/demo6/products/product-12.jpg}" width="400" height="400" alt="product" />
-                                </a>
-                                <div class="btn-icon-group">
-                                    <a href="demo6-product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">caps</a>,
-                                        <a href="demo6-shop.html" class="product-category">shoes</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
-                                <h3 class="product-title"> <a href="demo6-product.html">Men Long T-Shirt</a> </h3>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:0%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-                                <div class="price-box">
-                                    <span class="product-price">$101.00</span>
-                                </div>
-                                <!-- End .price-box -->
-                            </div>
-                            <!-- End .product-details -->
                         </div>
                     </div>
-                    <!-- End .featured-products -->
                 </div>
             </div>
             <!-- End .container-fluid -->
@@ -1132,10 +917,10 @@
 
                                 <div class="footer-right ml-auto mt-1 mt-sm-0">
                                     <div class="payment-icons mr-0">
-                                        <span class="payment-icon visa" style="background-image: url(assets/images/payments/payment-visa.svg)"></span>
-                                        <span class="payment-icon paypal" style="background-image: url(assets/images/payments/payment-paypal.svg)"></span>
-                                        <span class="payment-icon stripe" style="background-image: url(assets/images/payments/payment-stripe.png)"></span>
-                                        <span class="payment-icon verisign" style="background-image:  url(assets/images/payments/payment-verisign.svg)"></span>
+                                        <span class="payment-icon visa" style="background-image: url(/assets/images/payments/payment-visa.svg)"></span>
+                                        <span class="payment-icon paypal" style="background-image: url(/assets/images/payments/payment-paypal.svg)"></span>
+                                        <span class="payment-icon stripe" style="background-image: url(/assets/images/payments/payment-stripe.png)"></span>
+                                        <span class="payment-icon verisign" style="background-image:  url(/assets/images/payments/payment-verisign.svg)"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1337,7 +1122,7 @@
         </div>
     </div>
 
-    <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(assets/images/newsletter_popup_bg.jpg)">
+    <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(/assets/images/newsletter_popup_bg.jpg)">
         <div class="newsletter-popup-content">
             <img th:src="@{/assets/images/logo_black.png}" alt="Logo" class="logo-newsletter" width="111" height="44">
             <h2>Subscribe to newsletter</h2>
@@ -1372,15 +1157,14 @@
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
     <!-- Plugins JS File -->
-    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/jquery.appear.min.js"></script>
-    <!-- Main JS File -->
-    <script src="assets/js/main.min.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83b5186d190a04',t:'MTc2NDc3MTY1NA=='};var a=document.createElement('script');a.src='../../cdn-cgi/challenge-platform/h/b/scripts/jsd/13c98df4ef2d/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-</body>
+<!--    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/plugins.min.js}"></script>
 
+    <!-- Main JS File -->
+    <script th:src="@{/assets/js/main.min.js}"></script>
+</body>
 
 <!-- Mirrored from portotheme.com/html/porto_ecommerce/demo6.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:33 GMT -->
 </html>

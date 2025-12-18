@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // (Giữ nguyên các phương thức cũ)
     List<Product> findByGenderOrderByRatingDesc(String gender, Pageable pageable);
     Page<Product> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
-
+    // Lấy top sản phẩm dựa theo Rating giảm dần
+    List<Product> findTop10ByOrderByRatingDesc();
     // PHƯƠNG THỨC ĐÃ TỐI ƯU: Sử dụng LOWER() cho các điều kiện String
     @Query("SELECT p FROM Product p WHERE " +
             // Điều kiện 1: Tìm kiếm theo Keyword (sử dụng LOWER() cho cả hai)

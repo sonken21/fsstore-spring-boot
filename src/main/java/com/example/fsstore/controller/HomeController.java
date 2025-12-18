@@ -35,7 +35,10 @@ public class HomeController {
         // 4. Đặt danh sách Nam vào Model với tên biến mới
         model.addAttribute("maleProducts", maleFeaturedProducts);
 
-        // --- KẾT THÚC THAY ĐỔI ---
+        // Lấy 10 sản phẩm có rating cao nhất (không phân biệt giới tính)
+        List<Product> allFeaturedProducts = productService.getTopRatedProducts(10);
+
+        model.addAttribute("featuredProducts", allFeaturedProducts);
 
         return "demo6";
     }

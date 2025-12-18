@@ -439,6 +439,7 @@
 
         <main class="main main-test">
             <div class="container checkout-container">
+                <form th:action="@{/order/place-order}" method="post" id="checkout-form" th:object="${order}">
                 <ul class="checkout-progress-bar d-flex justify-content-center flex-wrap">
                     <li>
                         <a href="cart.html">Shopping Cart</a>
@@ -450,87 +451,11 @@
                         <a href="#">Order Complete</a>
                     </li>
                 </ul>
-
-                <div class="login-form-container">
-                    <h4>Returning customer?
-                        <button data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="btn btn-link btn-toggle">Login</button>
-                    </h4>
-
-                    <div id="collapseOne" class="collapse">
-                        <div class="login-section feature-box">
-                            <div class="feature-box-content">
-                                <form action="#" id="login-form">
-                                    <p>
-                                        If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing & Shipping section.
-                                    </p>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="mb-0 pb-1">Username or email <span
-                                                        class="required">*</span></label>
-                                                <input type="email" class="form-control" required />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="mb-0 pb-1">Password <span
-                                                        class="required">*</span></label>
-                                                <input type="password" class="form-control" required />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn">LOGIN</button>
-
-                                    <div class="form-footer mb-1">
-                                        <div class="custom-control custom-checkbox mb-0 mt-0">
-                                            <input type="checkbox" class="custom-control-input" id="lost-password" />
-                                            <label class="custom-control-label mb-0" for="lost-password">Remember
-                                                me</label>
-                                        </div>
-
-                                        <a href="forgot-password.html" class="forget-password">Lost your password?</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="checkout-discount">
-                    <h4>Have a coupon?
-                        <button data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne" class="btn btn-link btn-toggle">ENTER YOUR CODE</button>
-                    </h4>
-
-                    <div id="collapseTwo" class="collapse">
-                        <div class="feature-box">
-                            <div class="feature-box-content">
-                                <p>If you have a coupon code, please apply it below.</p>
-
-                                <form action="#">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control form-control-sm w-auto" placeholder="Coupon code" required="" />
-                                        <div class="input-group-append">
-                                            <button class="btn btn-sm mt-0" type="submit">
-                                                Apply Coupon
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-lg-7">
                         <ul class="checkout-steps">
                             <li>
                                 <h2 class="step-title">Billing details</h2>
-
-                                <form th:action="@{/order/place-order}" method="post" id="checkout-form" th:object="${order}">
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -583,8 +508,6 @@
                                         <label>Email address <abbr class="required" title="required">*</abbr></label>
                                         <input type="email" class="form-control" th:field="*{email}" required />
                                     </div>
-
-                                </form>
                             </li>
                         </ul>
                     </div>
@@ -656,12 +579,19 @@
                                 </tfoot>
                             </table>
 
-                            <div class="payment-methods">
-                                <h4 class="">Payment methods</h4>
-                                <div class="info-box with-icon p-0">
-                                    <p>
-                                        Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.
-                                    </p>
+                            <div class="checkout-payment">
+                                <h2 class="step-title">Payment Methods</h2>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="cod" name="paymentMethod" class="custom-control-input"
+                                           th:field="*{paymentMethod}" value="COD" checked>
+                                    <label class="custom-control-label" for="cod">Thanh toán khi nhận hàng (COD)</label>
+                                </div>
+
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="online" name="paymentMethod" class="custom-control-input"
+                                           th:field="*{paymentMethod}" value="ONLINE">
+                                    <label class="custom-control-label" for="online">Thanh toán Online (VNPay / Ngân hàng)</label>
                                 </div>
                             </div>
 
@@ -673,6 +603,7 @@
                     </div>
                     <!-- End .col-lg-4 -->
                 </div>
+                </form>
                 <!-- End .row -->
             </div>
             <!-- End .container -->
@@ -785,10 +716,10 @@
 
                         <div class="footer-right ml-auto mt-1 mt-sm-0">
                             <div class="payment-icons">
-                                <span class="payment-icon visa" style="background-image: url(assets/images/payments/payment-visa.svg)"></span>
-                                <span class="payment-icon paypal" style="background-image: url(assets/images/payments/payment-paypal.svg)"></span>
-                                <span class="payment-icon stripe" style="background-image: url(assets/images/payments/payment-stripe.png)"></span>
-                                <span class="payment-icon verisign" style="background-image:  url(assets/images/payments/payment-verisign.svg)"></span>
+                                <span class="payment-icon visa" style="background-image: url(/assets/images/payments/payment-visa.svg)"></span>
+                                <span class="payment-icon paypal" style="background-image: url(/assets/images/payments/payment-paypal.svg)"></span>
+                                <span class="payment-icon stripe" style="background-image: url(/assets/images/payments/payment-stripe.png)"></span>
+                                <span class="payment-icon verisign" style="background-image:  url(/assets/images/payments/payment-verisign.svg)"></span>
                             </div>
                         </div>
                     </div>
@@ -996,15 +927,14 @@
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
     <!-- Plugins JS File -->
-    <script data-cfasync="false" th:src="@{/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
+<!--    <script data-cfasync="false" th:src="@{/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>-->
     <script th:src="@{/assets/js/jquery.min.js}"></script>
     <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/assets/js/plugins.min.js}"></script>
 
     <!-- Main JS File -->
     <script th:src="@{/assets/js/main.min.js}"></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83b562dedb0a04',t:'MTc2NDc3MTY2Ng=='};var a=document.createElement('script');a.src='../../cdn-cgi/challenge-platform/h/b/scripts/jsd/13c98df4ef2d/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+?</body>
 
 
 <!-- Mirrored from portotheme.com/html/porto_ecommerce/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:22:51 GMT -->
