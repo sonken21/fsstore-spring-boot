@@ -1,7 +1,9 @@
 package com.example.fsstore.controller;
 
+import com.example.fsstore.entity.Order;
 import com.example.fsstore.entity.Product;
 import com.example.fsstore.entity.User;
+import com.example.fsstore.repository.OrderRepository;
 import com.example.fsstore.service.OrderService;
 import com.example.fsstore.service.ProductService;
 import com.example.fsstore.service.UserService;
@@ -13,6 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,47 +30,95 @@ public class AdminController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private OrderRepository orderRepository;
     // ==========================================
-    // 1. DASHBOARD TỔNG QUÁT
+    // 1. DASHBOARD TỔNG QUÁT (CẬP NHẬT BIỂU ĐỒ)
     // ==========================================
     @GetMapping("/dashboard")
-    public String adminDashboard(Model model) {
-        // Bạn có thể thêm thống kê số lượng nếu muốn
-        model.addAttribute("totalUsers", userService.getAllUsers().size());
-        model.addAttribute("totalProducts", productService.getAllProducts().size());
+    public String adminDashboard(@RequestParam(name = "days", defaultValue = "7") int days, Model model) {
+        try {
+            // 1. Thống kê tổng quát
+            List<Order> allOrders = orderService.getAllOrders();
+            model.addAttribute("totalUsers", userService.getAllUsers().size());
+            model.addAttribute("totalProducts", productService.getAllProducts().size());
+            model.addAttribute("totalOrders", allOrders.size());
+
+            double totalRevenue = allOrders.stream()
+                    .mapToDouble(o -> o.getOrderTotal() != null ? o.getOrderTotal() : 0.0)
+                    .sum();
+            model.addAttribute("totalRevenue", totalRevenue);
+
+            // 2. Doanh thu tháng trước
+            LocalDate firstDayLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+            LocalDate lastDayLastMonth = LocalDate.now().withDayOfMonth(1).minusDays(1);
+            double lastMonthRevenue = allOrders.stream()
+                    .filter(o -> o.getOrderDate() != null)
+                    .filter(o -> {
+                        LocalDate d = o.getOrderDate().toLocalDate();
+                        return !d.isBefore(firstDayLastMonth) && !d.isAfter(lastDayLastMonth);
+                    })
+                    .mapToDouble(o -> o.getOrderTotal() != null ? o.getOrderTotal() : 0.0)
+                    .sum();
+            model.addAttribute("lastMonthRevenue", lastMonthRevenue);
+
+            // 3. Đơn hàng PENDING
+            long pendingOrdersCount = allOrders.stream()
+                    .filter(o -> "PENDING".equalsIgnoreCase(o.getStatus()))
+                    .count();
+            model.addAttribute("pendingOrdersCount", pendingOrdersCount);
+
+            // 4. Biểu đồ (Labels thực tế)
+            List<String> labels = new ArrayList<>();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+            for (int i = days - 1; i >= 0; i--) {
+                labels.add(LocalDate.now().minusDays(i).format(formatter));
+            }
+            model.addAttribute("chartLabels", labels);
+            model.addAttribute("revenueData", orderService.getRevenueDataByDays(days));
+            model.addAttribute("orderData", orderService.getOrderCountsByDays(days));
+            model.addAttribute("selectedDays", days);
+
+            // 5. Best Seller (Top 10)
+            List<Object[]> bestSellersData = orderRepository.findTop10BestSellers();
+            model.addAttribute("bestSellers", bestSellersData != null ? bestSellersData : new ArrayList<>());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Đảm bảo các biến model không bị thiếu nếu có lỗi xảy ra
+            model.addAttribute("totalRevenue", 0.0);
+            model.addAttribute("lastMonthRevenue", 0.0);
+            model.addAttribute("pendingOrdersCount", 0);
+            model.addAttribute("bestSellers", new ArrayList<>());
+        }
         return "admin/dashboard";
     }
 
     // ==========================================
     // 2. QUẢN LÝ NGƯỜI DÙNG (USER)
     // ==========================================
-
-    // Danh sách người dùng
     @GetMapping("/users")
     public String manageUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "admin/user-list";
     }
 
-    // Chi tiết người dùng
     @GetMapping("/users/detail/{id}")
     public String userDetail(@PathVariable Long id, Model model) {
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.getUserById(id));
         return "admin/user-detail";
     }
 
-    // Xóa người dùng
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable Long id, RedirectAttributes ra, Principal principal) {
         User userToDelete = userService.getUserById(id);
-
-        // Ngăn chặn admin tự xóa chính mình
         if (userToDelete.getUsername().equals(principal.getName())) {
             ra.addFlashAttribute("error", "Bạn không thể tự xóa chính mình!");
             return "redirect:/admin/users";
         }
-
         userService.deleteUser(id);
         ra.addFlashAttribute("message", "Đã xóa người dùng thành công!");
         return "redirect:/admin/users";
@@ -73,22 +127,18 @@ public class AdminController {
     // ==========================================
     // 3. QUẢN LÝ SẢN PHẨM (PRODUCT)
     // ==========================================
-
-    // Danh sách sản phẩm
     @GetMapping("/products")
     public String listProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
         return "admin/product-list";
     }
 
-    // Form thêm sản phẩm mới
     @GetMapping("/products/add")
     public String showAddProductForm(Model model) {
         model.addAttribute("product", new Product());
         return "admin/product-add";
     }
 
-    // Xử lý lưu sản phẩm (Thêm mới hoặc Cập nhật)
     @PostMapping("/products/save")
     public String saveProduct(@ModelAttribute("product") Product product,
                               @RequestParam("imageFile") MultipartFile imageFile,
@@ -102,7 +152,6 @@ public class AdminController {
         return "redirect:/admin/products";
     }
 
-    // Xóa sản phẩm
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id, RedirectAttributes ra) {
         try {
@@ -114,12 +163,12 @@ public class AdminController {
         return "redirect:/admin/products";
     }
 
-    @Autowired
-    private OrderService orderService;
-
+    // ==========================================
+    // 4. QUẢN LÝ ĐƠN HÀNG (ORDER)
+    // ==========================================
     @GetMapping("/orders")
     public String listOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders()); // Gọi hàm getAllOrders mới thêm
+        model.addAttribute("orders", orderService.getAllOrders());
         return "admin/order-list";
     }
 
@@ -131,7 +180,7 @@ public class AdminController {
 
     @PostMapping("/orders/update-status")
     public String updateStatus(@RequestParam Long orderId, @RequestParam String status, RedirectAttributes ra) {
-        orderService.updateStatus(orderId, status); // Gọi hàm updateStatus mới thêm
+        orderService.updateStatus(orderId, status);
         ra.addFlashAttribute("message", "Cập nhật trạng thái thành công!");
         return "redirect:/admin/orders";
     }

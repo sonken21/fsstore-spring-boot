@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,7 +21,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
 
-    // Giữ nguyên phí vận chuyển cố định của bạn
     private static final Double SHIPPING_FEE = 30000.0;
 
     @Autowired
@@ -28,8 +29,31 @@ public class OrderService {
         this.cartService = cartService;
     }
 
-    // ===========================================================
-    // PHƯƠNG THỨC MỚI DÀNH CHO ADMIN
+    // --- CÁC PHƯƠNG THỨC MỚI LẤY DỮ LIỆU THỰC TẾ CHO BIỂU ĐỒ ---
+
+    public List<Double> getRevenueDataByDays(int days) {
+        List<Double> revenues = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for (int i = days - 1; i >= 0; i--) {
+            LocalDate date = today.minusDays(i);
+            Double dailyRevenue = orderRepository.getTotalRevenueByDate(date);
+            revenues.add(dailyRevenue != null ? dailyRevenue : 0.0);
+        }
+        return revenues;
+    }
+
+    public List<Integer> getOrderCountsByDays(int days) {
+        List<Integer> counts = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for (int i = days - 1; i >= 0; i--) {
+            LocalDate date = today.minusDays(i);
+            Long dailyCount = orderRepository.countOrdersByDate(date);
+            counts.add(dailyCount != null ? dailyCount.intValue() : 0);
+        }
+        return counts;
+    }
+
+    // --- CÁC PHƯƠNG THỨC ADMIN CŨ ---
 
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
@@ -49,46 +73,30 @@ public class OrderService {
                 .orElseThrow(() -> new NoSuchElementException("Không tìm thấy đơn hàng #" + orderId));
     }
 
-    // ===========================================================
-    // PHƯƠNG THỨC CŨ CỦA BẠN (GIỮ NGUYÊN LOGIC)
-    // ===========================================================
+    // --- PHƯƠNG THỨC TẠO ĐƠN HÀNG (GIỮ NGUYÊN) ---
 
     @Transactional
     public Order createOrderFromCart(Long cartId, Order order) {
         Cart cart = cartService.getOrCreateCart(cartId);
-
-        // 1. Kiểm tra giỏ hàng
         if (cart.getItems().isEmpty() || cart.getTotal() == null || cart.getTotal() <= 0.0) {
-            throw new IllegalArgumentException("Giỏ hàng trống hoặc tổng tiền bằng 0. Không thể tạo đơn hàng.");
+            throw new IllegalArgumentException("Giỏ hàng trống.");
         }
-
-        // 2. Thiết lập thông tin Order
         order.setOrderDate(LocalDateTime.now());
         Double subTotal = cart.getTotal();
-
         order.setSubTotal(subTotal);
         order.setShippingFee(SHIPPING_FEE);
-
-        Double orderTotal = subTotal + SHIPPING_FEE;
-        order.setOrderTotal(orderTotal);
-
+        order.setOrderTotal(subTotal + SHIPPING_FEE);
         order.setStatus("PENDING");
 
-        // 3. Tạo OrderDetails từ CartItems
         for (CartItem item : cart.getItems()) {
             OrderDetail detail = new OrderDetail();
             detail.setProduct(item.getProduct());
             detail.setQuantity(item.getQuantity());
-            detail.setPrice(item.getPriceAtPurchase()); // Giữ nguyên lấy giá từ CartItem
+            detail.setPrice(item.getPriceAtPurchase());
             order.addOrderDetail(detail);
         }
-
-        // 4. Lưu Order
         Order savedOrder = orderRepository.save(order);
-
-        // 5. Xóa giỏ hàng sau khi đặt hàng thành công
         cartService.deleteCart(cartId);
-
         return savedOrder;
     }
 }

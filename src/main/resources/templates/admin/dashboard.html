@@ -2,95 +2,149 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard - FS Store</title>
+    <title>FS Store - Admin Dashboard</title>
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .admin-card { transition: all 0.3s; border: none; border-radius: 15px; }
-        .admin-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .icon-box { font-size: 3.5rem; margin-bottom: 15px; }
-        .card-users { color: #007bff; }
-        .card-products { color: #28a745; }
-        .card-orders { color: #ffc107; }
+        :root { --sidebar-bg: #ffffff; --main-bg: #f8f9fc; --primary-color: #4e73df; }
+        body { background-color: var(--main-bg); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
+        .wrapper { display: flex; align-items: stretch; }
+        #sidebar { min-width: 250px; max-width: 250px; background: var(--sidebar-bg); min-height: 100vh; border-right: 1px solid #e3e6f0; position: sticky; top: 0; }
+        #sidebar .sidebar-header { padding: 20px; text-align: center; border-bottom: 1px solid #f8f9fa; }
+        #sidebar ul li a { padding: 15px 25px; display: block; color: #858796; text-decoration: none; transition: 0.3s; }
+        #sidebar ul li a:hover, #sidebar ul li.active a { color: var(--primary-color); background: #f8f9fc; border-left: 4px solid var(--primary-color); }
+        #content { width: 100%; padding: 30px; }
+        .card-stat { border: none; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
+        .chart-container { position: relative; height: 350px; width: 100%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
     </style>
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" th:href="@{/admin/dashboard}">
-            <i class="fas fa-user-shield mr-2"></i> Hệ thống Quản trị FS Store
-        </a>
-        <div class="d-flex align-items-center">
-            <span class="text-light mr-3" th:text="'Xin chào, ' + ${#authentication.name}">Admin</span>
-            <form th:action="@{/logout}" method="post" class="m-0">
-                <button type="submit" class="btn btn-outline-danger btn-sm">
-                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+<body>
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header"><h4 class="text-primary font-weight-bold"><i class="fas fa-shopping-bag mr-2"></i>FS Admin</h4></div>
+        <ul class="list-unstyled components">
+            <li class="active"><a th:href="@{/admin/dashboard}"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a th:href="@{/admin/users}"><i class="fas fa-user-friends"></i> Quản lý Người dùng</a></li>
+            <li><a th:href="@{/admin/products}"><i class="fas fa-box"></i> Quản lý Sản phẩm</a></li>
+            <li><a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="font-weight-bold text-gray-800">eCommerce Overview</h3>
+            <div class="dropdown">
+                <button class="btn btn-white shadow-sm dropdown-toggle" type="button" id="filterDate" data-toggle="dropdown">
+                    <i class="fas fa-calendar-alt fa-sm text-primary mr-2"></i>
+                    Lọc: <span th:text="${selectedDays == 7 ? '7 Ngày qua' : '30 Ngày qua'}"></span>
                 </button>
-            </form>
-        </div>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="row">
-        <div class="col-12 mb-4">
-            <h2 class="font-weight-bold">Bảng điều khiển</h2>
-            <p class="text-muted">Chào mừng bạn đến với trang quản trị hệ thống FS Store.</p>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card admin-card text-center py-4 shadow-sm">
-                <div class="card-body">
-                    <div class="icon-box card-users"><i class="fas fa-users"></i></div>
-                    <h5 class="card-title font-weight-bold">Quản lý Người dùng</h5>
-                    <p class="card-text text-muted">Xem danh sách, kiểm tra thông tin chi tiết và quản lý tài khoản khách hàng.</p>
-                    <a th:href="@{/admin/users}" class="btn btn-primary px-4">Truy cập</a>
+                <div class="dropdown-menu dropdown-menu-right shadow border-0">
+                    <a class="dropdown-item" th:href="@{/admin/dashboard(days=7)}">7 Ngày qua</a>
+                    <a class="dropdown-item" th:href="@{/admin/dashboard(days=30)}">30 Ngày qua</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card admin-card text-center py-4 shadow-sm">
-                <div class="card-body">
-                    <div class="icon-box card-products"><i class="fas fa-box-open"></i></div>
-                    <h5 class="card-title font-weight-bold">Quản lý Sản phẩm</h5>
-                    <p class="card-text text-muted">Thêm mới sản phẩm, cập nhật giá, hình ảnh và quản lý tồn kho sản phẩm.</p>
-                    <a th:href="@{/admin/products}" class="btn btn-success px-4">Truy cập</a>
+        <div class="row mb-4">
+            <div class="col-md-3"><div class="card card-stat p-3 border-left-primary"><div class="small font-weight-bold text-primary text-uppercase mb-1">Khách hàng</div><div class="h5 mb-0 font-weight-bold" th:text="${totalUsers}"></div></div></div>
+            <div class="col-md-3"><div class="card card-stat p-3 border-left-success"><div class="small font-weight-bold text-success text-uppercase mb-1">Đơn hàng</div><div class="h5 mb-0 font-weight-bold" th:text="${totalOrders}"></div></div></div>
+            <div class="col-md-3"><div class="card card-stat p-3 border-left-info"><div class="small font-weight-bold text-info text-uppercase mb-1">Doanh thu</div><div class="h5 mb-0 font-weight-bold" th:text="${totalRevenue != null ? #numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT') : '0'} + ' đ'"></div></div></div>
+            <div class="col-md-3"><div class="card card-stat p-3 border-left-warning"><div class="small font-weight-bold text-warning text-uppercase mb-1">Sản phẩm</div><div class="h5 mb-0 font-weight-bold" th:text="${totalProducts}"></div></div></div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="chart-container">
+                    <h6 class="font-weight-bold text-primary mb-3">Doanh thu & Đơn hàng</h6>
+                    <canvas id="combinedChart"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 bg-white border-bottom-0"><h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-bell mr-2"></i> Thông báo hệ thống</h6></div>
+                    <div class="card-body p-0">
+                        <div class="p-3 border-bottom border-left-info shadow-sm m-2 rounded bg-light">
+                            <div class="small text-gray-500">Doanh thu tháng trước</div>
+                            <div class="font-weight-bold text-info"><i class="fas fa-money-bill-wave mr-2"></i><span th:text="${#numbers.formatDecimal(lastMonthRevenue, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span></div>
+                        </div>
+                        <div class="p-3 border-bottom border-left-warning shadow-sm m-2 rounded bg-light">
+                            <div class="small text-gray-500">Đơn hàng cần xử lý</div>
+                            <div class="font-weight-bold text-warning"><i class="fas fa-exclamation-triangle mr-2"></i>Bạn có <span th:text="${pendingOrdersCount}">0</span> đơn hàng chờ xác nhận</div>
+                            <a th:href="@{/admin/orders}" class="btn btn-sm btn-outline-warning mt-2 btn-block text-decoration-none">Đi tới xác nhận</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card admin-card text-center py-4 shadow-sm">
-                <div class="card-body">
-                    <div class="icon-box card-orders"><i class="fas fa-shopping-basket"></i></div>
-                    <h5 class="card-title font-weight-bold">Quản lý Đơn hàng</h5>
-                    <p class="card-text text-muted">Theo dõi đơn hàng mới, cập nhật trạng thái giao hàng và lịch sử mua bán.</p>
-                    <a th:href="@{/admin/orders}" class="btn btn-warning px-4 text-white">Truy cập</a>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center"><h6 class="m-0 font-weight-bold text-dark">Best Seller (Top 10)</h6></div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="text-muted small uppercase" style="background-color: #f9f9f9;">
+                                <tr>
+                                    <th class="pl-4 border-0">Sản phẩm</th>
+                                    <th class="border-0">Giá bán</th> <th class="border-0 text-center">Số lượng bán</th>
+                                    <th class="border-0 text-right pr-4">Hành động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item : ${bestSellers}" class="border-bottom">
+                                    <td class="pl-4 py-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <img th:src="@{'/assets/images/demoes/demo6/products/' + ${item[2]}}"
+                                                     width="60" height="60" style="object-fit: cover;" class="rounded border">
+                                            </div>
+                                            <div>
+                                                <div class="font-weight-bold text-dark mb-0" th:text="${item[1]}"></div>
+                                                <small class="text-muted">ID: #<span th:text="${item[0]}"></span></small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                    <span class="font-weight-bold text-dark"
+                          th:text="${item[4] != null ? #numbers.formatDecimal(item[4], 0, 'COMMA', 0, 'POINT') : '0'} + ' đ'">
+                    </span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <div class="font-weight-bold text-success" th:text="${item[3]} + ' đơn'"></div>
+                                    </td>
+                                    <td class="align-middle text-right pr-4">
+                                        <a th:href="@{/admin/products}" class="btn btn-sm btn-outline-primary rounded-circle">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="alert alert-info shadow-sm">
-                <i class="fas fa-info-circle mr-2"></i> Hiện đang có <strong th:text="${totalUsers}">0</strong> người dùng trong hệ thống.
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="alert alert-success shadow-sm">
-                <i class="fas fa-check-circle mr-2"></i> Hệ thống đang vận hành ổn định với <strong th:text="${totalProducts}">0</strong> sản phẩm.
             </div>
         </div>
     </div>
 </div>
 
-<footer class="text-center text-muted mt-5 py-3">
-    <small>&copy; 2026 FS Store Management System. All Rights Reserved.</small>
-</footer>
-
-<script th:src="@{/assets/js/jquery.min.js}"></script>
-<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:inline="javascript">
+    const ctxCombined = document.getElementById('combinedChart').getContext('2d');
+    new Chart(ctxCombined, {
+        type: 'line',
+        data: {
+            labels: [[${chartLabels}]],
+            datasets: [
+                { label: 'Doanh thu', data: [[${revenueData}]], borderColor: '#4e73df', backgroundColor: 'rgba(78, 115, 223, 0.1)', fill: true, tension: 0.4, yAxisID: 'y' },
+                { label: 'Đơn hàng', data: [[${orderData}]], borderColor: '#1cc88a', tension: 0.4, yAxisID: 'y1' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { position: 'left' }, y1: { position: 'right', grid: { drawOnChartArea: false } } } }
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

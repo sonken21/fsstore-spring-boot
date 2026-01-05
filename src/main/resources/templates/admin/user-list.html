@@ -5,50 +5,117 @@
     <title>Quản lý người dùng - Admin</title>
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+    <style>
+        :root { --sidebar-bg: #ffffff; --main-bg: #f8f9fc; --primary-color: #4e73df; }
+        body { background-color: var(--main-bg); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
+
+        /* Layout Sidebar */
+        .wrapper { display: flex; align-items: stretch; }
+        #sidebar { min-width: 250px; max-width: 250px; background: var(--sidebar-bg); min-height: 100vh; border-right: 1px solid #e3e6f0; position: sticky; top: 0; }
+        #sidebar .sidebar-header { padding: 20px; text-align: center; border-bottom: 1px solid #f8f9fa; }
+        #sidebar ul li a { padding: 15px 25px; display: block; color: #858796; text-decoration: none; transition: 0.3s; }
+        #sidebar ul li a:hover, #sidebar ul li.active a { color: var(--primary-color); background: #f8f9fc; border-left: 4px solid var(--primary-color); }
+        #sidebar ul li a i { margin-right: 10px; width: 20px; text-align: center; }
+
+        /* Main Content */
+        #content { width: 100%; padding: 30px; }
+        .card { border: none; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
+        .table thead { background-color: #f8f9fc; color: #4e73df; }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2><i class="fas fa-users"></i> Quản lý người dùng</h2>
-        <a th:href="@{/admin/dashboard}" class="btn btn-secondary btn-sm">Quay lại Dashboard</a>
-    </div>
+<body>
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h4 class="text-primary font-weight-bold"><i class="fas fa-shopping-bag"></i> FS Admin</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a th:href="@{/admin/dashboard}"><i class="fas fa-th-large"></i> Dashboard</a>
+            </li>
+            <li class="active">
+                <a th:href="@{/admin/users}"><i class="fas fa-user-friends"></i> Quản lý Người dùng</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/products}"><i class="fas fa-box"></i> Quản lý Sản phẩm</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a>
+            </li>
+            <li class="mt-4">
+                <form th:action="@{/logout}" method="post" class="text-center">
+                    <button type="submit" class="btn btn-sm btn-outline-danger w-75">Đăng xuất</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
 
-    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
-    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div id="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="font-weight-bold text-gray-800"><i class="fas fa-users"></i> Quản lý người dùng</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0">
+                    <li class="breadcrumb-item"><a th:href="@{/admin/dashboard}">Home</a></li>
+                    <li class="breadcrumb-item active">Users</li>
+                </ol>
+            </nav>
+        </div>
 
-    <div class="card shadow">
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Tên đăng nhập</th>
-                    <th>Email</th>
-                    <th>Vai trò</th>
-                    <th>Hành động</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="u : ${users}">
-                    <td th:text="${u.id}"></td>
-                    <td th:text="${u.username}"></td>
-                    <td th:text="${u.email}"></td>
-                    <td><span class="badge badge-info" th:text="${u.role}"></span></td>
-                    <td>
-                        <a th:href="@{/admin/users/detail/{id}(id=${u.id})}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-eye"></i> Xem
-                        </a>
-                        <a th:href="@{/admin/users/delete/{id}(id=${u.id})}"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
-                            <i class="fas fa-trash"></i> Xóa
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-check-circle mr-2"></i> <span th:text="${message}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-exclamation-triangle mr-2"></i> <span th:text="${error}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead>
+                    <tr>
+                        <th class="pl-4">ID</th>
+                        <th>Tên đăng nhập</th>
+                        <th>Email</th>
+                        <th>Vai trò</th>
+                        <th class="text-center">Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="u : ${users}">
+                        <td class="pl-4" th:text="${u.id}"></td>
+                        <td class="font-weight-bold text-dark" th:text="${u.username}"></td>
+                        <td th:text="${u.email}"></td>
+                        <td>
+                                    <span class="badge badge-pill px-3 py-2"
+                                          th:classappend="${u.role == 'ADMIN' ? 'badge-primary' : 'badge-info'}"
+                                          th:text="${u.role}"></span>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{/admin/users/detail/{id}(id=${u.id})}"
+                               class="btn btn-light btn-sm text-primary shadow-sm mr-2" title="Xem chi tiết">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a th:href="@{/admin/users/delete/{id}(id=${u.id})}"
+                               class="btn btn-light btn-sm text-danger shadow-sm"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')" title="Xóa">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

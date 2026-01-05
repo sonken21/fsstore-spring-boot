@@ -1,49 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Quản lý đơn hàng</title>
+    <meta charset="UTF-8">
+    <title>Quản lý đơn hàng - Admin</title>
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+    <style>
+        :root { --sidebar-bg: #ffffff; --main-bg: #f8f9fc; --primary-color: #4e73df; }
+        body { background-color: var(--main-bg); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
+
+        /* Layout Sidebar */
+        .wrapper { display: flex; align-items: stretch; }
+        #sidebar { min-width: 250px; max-width: 250px; background: var(--sidebar-bg); min-height: 100vh; border-right: 1px solid #e3e6f0; position: sticky; top: 0; }
+        #sidebar .sidebar-header { padding: 20px; text-align: center; border-bottom: 1px solid #f8f9fa; }
+        #sidebar ul li a { padding: 15px 25px; display: block; color: #858796; text-decoration: none; transition: 0.3s; }
+        #sidebar ul li a:hover, #sidebar ul li.active a { color: var(--primary-color); background: #f8f9fc; border-left: 4px solid var(--primary-color); }
+        #sidebar ul li a i { margin-right: 10px; width: 20px; text-align: center; }
+
+        /* Main Content */
+        #content { width: 100%; padding: 30px; }
+        .card { border: none; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
+        .table thead { background-color: #f8f9fc; color: #4e73df; }
+
+        /* Trạng thái đơn hàng Custom */
+        .badge-pending { background-color: #f6c23e; color: white; }
+        .badge-delivered { background-color: #1cc88a; color: white; }
+        .badge-shipped { background-color: #36b9cc; color: white; }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="d-flex justify-content-between mb-3">
-        <h2>Danh sách đơn hàng</h2>
-        <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Quay lại Dashboard</a>
+<body>
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h4 class="text-primary font-weight-bold"><i class="fas fa-shopping-bag"></i> FS Admin</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a th:href="@{/admin/dashboard}"><i class="fas fa-th-large"></i> Dashboard</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/users}"><i class="fas fa-user-friends"></i> Quản lý Người dùng</a>
+            </li>
+            <li>
+                <a th:href="@{/admin/products}"><i class="fas fa-box"></i> Quản lý Sản phẩm</a>
+            </li>
+            <li class="active">
+                <a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a>
+            </li>
+            <li class="mt-4">
+                <form th:action="@{/logout}" method="post" class="text-center">
+                    <button type="submit" class="btn btn-sm btn-outline-danger w-75">Đăng xuất</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="font-weight-bold text-gray-800"><i class="fas fa-shopping-bag"></i> Danh sách đơn hàng</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0">
+                    <li class="breadcrumb-item"><a th:href="@{/admin/dashboard}">Home</a></li>
+                    <li class="breadcrumb-item active">Orders</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            <i class="fas fa-check-circle mr-2"></i> <span th:text="${message}"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead>
+                    <tr>
+                        <th class="pl-4">Mã ĐH</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th class="text-center">Hành động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="o : ${orders}">
+                        <td class="pl-4 font-weight-bold text-primary" th:text="'#' + ${o.id}"></td>
+
+                        <td th:text="${o.firstName != null ? o.firstName + ' ' + o.lastName : 'N/A'}"></td>
+
+                        <td th:text="${#temporals.format(o.orderDate, 'dd-MM-yyyy HH:mm')}"></td>
+
+                        <td class="font-weight-bold text-dark"
+                            th:text="${o.orderTotal != null ? #numbers.formatDecimal(o.orderTotal, 0, 'COMMA', 0, 'POINT') + ' đ' : '0 đ'}"></td>
+
+                        <td>
+                                <span class="badge badge-pill px-3 py-2"
+                                      th:classappend="${o.status == 'PENDING' ? 'badge-pending' : (o.status == 'DELIVERED' ? 'badge-delivered' : 'badge-shipped')}"
+                                      th:text="${o.status}"></span>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{/admin/orders/detail/{id}(id=${o.id})}"
+                               class="btn btn-light btn-sm text-primary shadow-sm border" title="Xem chi tiết">
+                                <i class="fas fa-file-invoice"></i> Chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer bg-white border-top-0 py-3">
+                <p class="text-muted small mb-0">Hiển thị tất cả đơn hàng hiện có trong hệ thống.</p>
+            </div>
+        </div>
     </div>
-
-    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
-
-    <table class="table table-bordered bg-white shadow-sm">
-        <thead class="thead-dark">
-        <tr>
-            <th>Mã ĐH</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Tổng tiền</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="o : ${orders}">
-            <td th:text="'#' + ${o.id}"></td>
-
-            <td th:text="${o.firstName != null ? o.firstName + ' ' + o.lastName : 'N/A'}"></td>
-
-            <td th:text="${#temporals.format(o.orderDate, 'dd-MM-yyyy HH:mm')}"></td>
-
-            <td th:text="${o.orderTotal != null ? #numbers.formatDecimal(o.orderTotal, 0, 'COMMA', 0, 'POINT') + ' đ' : '0 đ'}"></td>
-
-            <td>
-            <span th:classappend="${o.status == 'PENDING' ? 'badge-warning' : (o.status == 'DELIVERED' ? 'badge-success' : 'badge-info')}"
-                  th:text="${o.status}" class="badge"></span>
-            </td>
-            <td>
-                <a th:href="@{/admin/orders/detail/{id}(id=${o.id})}" class="btn btn-primary btn-sm">Chi tiết</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
 </div>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
