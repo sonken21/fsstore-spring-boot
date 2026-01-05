@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,31 +18,36 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Đăng ký người dùng mới với vai trò mặc định là ROLE_USER
-     */
+    // Đăng ký người dùng mới
     public User registerNewUser(User user) {
-        // 1. Mã hóa mật khẩu trước khi lưu vào database
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        // 2. Thiết lập vai trò mặc định (Spring Security yêu cầu có tiền tố ROLE_)
         user.setRole("ROLE_USER");
-
-        // 3. Lưu vào database
         return userRepository.save(user);
     }
 
-    /**
-     * Tìm kiếm người dùng theo username
-     */
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    /**
-     * Kiểm tra xem username đã tồn tại hay chưa (dùng cho logic Đăng ký)
-     */
     public boolean existsByUsername(String username) {
         return userRepository.findByUsername(username).isPresent();
+    }
+
+    // --- CÁC HÀM MỚI CHO ADMIN ---
+
+    // Lấy toàn bộ danh sách người dùng
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    // Tìm người dùng theo ID
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng ID: " + id));
+    }
+
+    // Xóa người dùng
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

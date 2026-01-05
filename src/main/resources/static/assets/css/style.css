@@ -10918,7 +10918,7 @@ span.toggle::before {
 }
 .horizontal-filter .input-price {
   display: block;
-  width: 50px;
+  width: 100px;
   padding: 6px;
   line-height: 1.45;
   outline: none;

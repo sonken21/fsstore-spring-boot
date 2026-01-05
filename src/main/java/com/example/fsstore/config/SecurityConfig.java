@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Tắt CSRF để submit form từ template dễ dàng hơn
                 .authorizeHttpRequests(auth -> auth
-                        // Các đường dẫn ai cũng có thể truy cập (bao gồm /register mới thêm)
+                        // Các đường dẫn công khai
                         .requestMatchers("/", "/shop/**", "/assets/**", "/product/**", "/login", "/register").permitAll()
 
                         // Chỉ ADMIN mới vào được các đường dẫn bắt đầu bằng /admin
@@ -34,8 +34,21 @@ public class SecurityConfig {
                 )
                 .formLogin(login -> login
                         .loginPage("/login")               // Trang hiển thị giao diện đăng nhập
-                        .loginProcessingUrl("/login")      // URL mà Spring Security sẽ xử lý đăng nhập nội bộ
-                        .defaultSuccessUrl("/", true)      // Đăng nhập thành công về trang chủ
+                        .loginProcessingUrl("/login")      // URL xử lý đăng nhập nội bộ
+
+                        // Xử lý chuyển hướng thông minh sau khi đăng nhập thành công
+                        .successHandler((request, response, authentication) -> {
+                            var roles = authentication.getAuthorities();
+                            boolean isAdmin = roles.stream()
+                                    .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+                            if (isAdmin) {
+                                response.sendRedirect("/admin/dashboard");
+                            } else {
+                                response.sendRedirect("/");
+                            }
+                        })
+
                         .failureUrl("/login?error=true")   // Thất bại quay lại login kèm tham số báo lỗi
                         .permitAll()
                 )

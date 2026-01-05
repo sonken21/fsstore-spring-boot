@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - FS Store</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+    <style>
+        .admin-card { transition: all 0.3s; border: none; border-radius: 15px; }
+        .admin-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .icon-box { font-size: 3.5rem; margin-bottom: 15px; }
+        .card-users { color: #007bff; }
+        .card-products { color: #28a745; }
+        .card-orders { color: #ffc107; }
+    </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/admin/dashboard}">
+            <i class="fas fa-user-shield mr-2"></i> Hệ thống Quản trị FS Store
+        </a>
+        <div class="d-flex align-items-center">
+            <span class="text-light mr-3" th:text="'Xin chào, ' + ${#authentication.name}">Admin</span>
+            <form th:action="@{/logout}" method="post" class="m-0">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h2 class="font-weight-bold">Bảng điều khiển</h2>
+            <p class="text-muted">Chào mừng bạn đến với trang quản trị hệ thống FS Store.</p>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card admin-card text-center py-4 shadow-sm">
+                <div class="card-body">
+                    <div class="icon-box card-users"><i class="fas fa-users"></i></div>
+                    <h5 class="card-title font-weight-bold">Quản lý Người dùng</h5>
+                    <p class="card-text text-muted">Xem danh sách, kiểm tra thông tin chi tiết và quản lý tài khoản khách hàng.</p>
+                    <a th:href="@{/admin/users}" class="btn btn-primary px-4">Truy cập</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card admin-card text-center py-4 shadow-sm">
+                <div class="card-body">
+                    <div class="icon-box card-products"><i class="fas fa-box-open"></i></div>
+                    <h5 class="card-title font-weight-bold">Quản lý Sản phẩm</h5>
+                    <p class="card-text text-muted">Thêm mới sản phẩm, cập nhật giá, hình ảnh và quản lý tồn kho sản phẩm.</p>
+                    <a th:href="@{/admin/products}" class="btn btn-success px-4">Truy cập</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card admin-card text-center py-4 shadow-sm">
+                <div class="card-body">
+                    <div class="icon-box card-orders"><i class="fas fa-shopping-basket"></i></div>
+                    <h5 class="card-title font-weight-bold">Quản lý Đơn hàng</h5>
+                    <p class="card-text text-muted">Theo dõi đơn hàng mới, cập nhật trạng thái giao hàng và lịch sử mua bán.</p>
+                    <a th:href="@{/admin/orders}" class="btn btn-warning px-4 text-white">Truy cập</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="alert alert-info shadow-sm">
+                <i class="fas fa-info-circle mr-2"></i> Hiện đang có <strong th:text="${totalUsers}">0</strong> người dùng trong hệ thống.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-success shadow-sm">
+                <i class="fas fa-check-circle mr-2"></i> Hệ thống đang vận hành ổn định với <strong th:text="${totalProducts}">0</strong> sản phẩm.
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center text-muted mt-5 py-3">
+    <small>&copy; 2026 FS Store Management System. All Rights Reserved.</small>
+</footer>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

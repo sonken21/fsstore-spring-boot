@@ -1,5 +1,3 @@
-// src/main/java/com/example/fsstore/service/OrderService.java
-
 package com.example.fsstore.service;
 
 import com.example.fsstore.entity.Cart;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -20,8 +19,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
 
-    // Giả định phí vận chuyển cố định (Dùng Double)
-    private static final Double SHIPPING_FEE = 30000.0; // 30,000 VNĐ
+    // Giữ nguyên phí vận chuyển cố định của bạn
+    private static final Double SHIPPING_FEE = 30000.0;
 
     @Autowired
     public OrderService(OrderRepository orderRepository, CartService cartService) {
@@ -29,12 +28,33 @@ public class OrderService {
         this.cartService = cartService;
     }
 
+    // ===========================================================
+    // PHƯƠNG THỨC MỚI DÀNH CHO ADMIN
+
+    @Transactional(readOnly = true)
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    @Transactional
+    public void updateStatus(Long orderId, String status) {
+        Order order = getOrderById(orderId);
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
+    @Transactional(readOnly = true)
+    public Order getOrderById(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy đơn hàng #" + orderId));
+    }
+
+    // ===========================================================
+    // PHƯƠNG THỨC CŨ CỦA BẠN (GIỮ NGUYÊN LOGIC)
+    // ===========================================================
+
     @Transactional
     public Order createOrderFromCart(Long cartId, Order order) {
-        // Lấy giỏ hàng (sử dụng phương thức getCartById mà CartService cần có)
-        // Lưu ý: Bạn cần thêm phương thức getCartById(Long id) vào CartService của bạn,
-        // hoặc dùng lại getOrCreateCart(cartId) nhưng phải đảm bảo nó không tạo giỏ hàng mới
-        // nếu cartId đã tồn tại (phương thức getOrCreateCart của bạn đã làm được điều này)
         Cart cart = cartService.getOrCreateCart(cartId);
 
         // 1. Kiểm tra giỏ hàng
@@ -44,7 +64,6 @@ public class OrderService {
 
         // 2. Thiết lập thông tin Order
         order.setOrderDate(LocalDateTime.now());
-
         Double subTotal = cart.getTotal();
 
         order.setSubTotal(subTotal);
@@ -56,13 +75,11 @@ public class OrderService {
         order.setStatus("PENDING");
 
         // 3. Tạo OrderDetails từ CartItems
-        for (CartItem item : cart.getItems()) { // Sử dụng getItems()
+        for (CartItem item : cart.getItems()) {
             OrderDetail detail = new OrderDetail();
-
             detail.setProduct(item.getProduct());
             detail.setQuantity(item.getQuantity());
-            detail.setPrice(item.getPriceAtPurchase()); // Lấy giá từ CartItem
-
+            detail.setPrice(item.getPriceAtPurchase()); // Giữ nguyên lấy giá từ CartItem
             order.addOrderDetail(detail);
         }
 
@@ -70,15 +87,8 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         // 5. Xóa giỏ hàng sau khi đặt hàng thành công
-        // Lưu ý: Bạn cần thêm phương thức deleteCart(Long cartId) vào CartService nếu chưa có.
         cartService.deleteCart(cartId);
 
         return savedOrder;
-    }
-
-    @Transactional(readOnly = true)
-    public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
-                .orElseThrow(() -> new NoSuchElementException("Không tìm thấy đơn hàng #" + orderId));
     }
 }

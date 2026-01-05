@@ -51,10 +51,10 @@
                         <nav class="main-nav w-100">
                             <ul class="menu ls-n-10">
                                 <li class="active">
-                                    <a href="demo6.html" class="pl-4">Home</a>
+                                    <a th:href="@{/#}" class="pl-4">Trang Chủ</a>
                                 </li>
                                 <li>
-                                    <a href="demo6-shop.html">Categories</a>
+                                    <a th:href="@{/shop}">Phân Loại</a>
                                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -103,7 +103,7 @@
                                                             <b class="">50%</b>
                                                             <i>OFF</i>
                                                         </h4>
-                                                        <a th:href="@{/shop}" class="btn btn-sm btn-dark">SHOP NOW</a>
+                                                        <a th:href="@{/shop}" class="btn btn-sm btn-dark">MUA NGAY</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@
                                     <!-- End .megamenu -->
                                 </li>
                                 <li>
-                                    <a href="demo6-product.html">Products</a>
+                                    <a th:href="@{/shop}">Sản Phẩm</a>
                                     <div class="megamenu megamenu-fixed-width">
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -158,7 +158,7 @@
                                                             <b class="">50%</b>
                                                         </h4>
                                                     </div>
-                                                    <a th:href="@{/shop}" class="btn btn-sm btn-dark">SHOP NOW</a>
+                                                    <a th:href="@{/shop}" class="btn btn-sm btn-dark">MUA NGAY</a>
                                                 </div>
                                             </div>
                                             <!-- End .col-lg-4 -->
@@ -168,25 +168,25 @@
                                     <!-- End .megamenu -->
                                 </li>
                                 <li>
-                                    <a href="#">Pages</a>
+                                    <a href="#">Trợ Giúp</a>
                                     <ul>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="dashboard.html">Dashboard</a></li>
-                                        <li><a href="demo6-about.html">About Us</a></li>
-                                        <li><a href="#">Blog</a>
-                                            <ul>
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="single.html">Blog Post</a></li>
-                                            </ul>
+                                        <li>
+                                            <a th:href="@{/wishlist}">Yêu thích</a>
                                         </li>
-                                        <li><a href="demo6-contact.html">Contact Us</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="forgot-password.html">Forgot Password</a></li>
+                                        <li>
+                                            <a th:href="@{/cart}">Giỏ hàng</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/order/checkout}">Thanh toán</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/login}">Đăng Ký</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/forgot-password}">Quên mật khẩu</a>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li><a href="blog.html">Blog</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -204,45 +204,8 @@
                             <i class="fas fa-bars"></i>
                         </button>
 
-                        <div class="header-dropdowns d-none d-xl-flex">
-                            <div class="header-dropdown mr-auto mr-sm-3 mr-md-0">
-                                <a href="#"><i class="flag-us flag"></i>ENG</a>
-                                <div class="header-menu">
-                                    <ul>
-                                        <li><a href="#"><i class="flag-us flag mr-2"></i>ENG</a>
-                                        </li>
-                                        <li><a href="#"><i class="flag-fr flag mr-2"></i>FRA</a></li>
-                                    </ul>
-                                </div>
-                                <!-- End .header-menu -->
-                            </div>
-                            <div class="header-dropdown">
-                                <a href="#" class="pl-0">USD</a>
-                                <div class="header-menu">
-                                    <ul>
-                                        <li><a href="#">EUR</a></li>
-                                        <li><a href="#">USD</a></li>
-                                    </ul>
-                                </div>
-                                <!-- End .header-menu -->
-                            </div>
-                            <div class="header-dropdown">
-                                <a href="#">LINKS</a>
-                                <div class="header-menu">
-                                    <ul>
-                                        <li><a href="dashboard.html">MY ACCOUNT</a></li>
-                                        <li><a href="demo6-about.html">ABOUT US</a></li>
-                                        <li><a href="demo6-contact.html">Contact US</a></li>
-                                    </ul>
-                                </div>
-                                <!-- End .header-menu -->
-                            </div>
-                            <!-- End .header-dropown -->
-                        </div>
-                        <!-- End .header-dropdowns -->
-
-                        <a href="login.html" class="header-icon header-icon-user"><i class="icon-user-2"></i></a>
-                        <a href="#" class="header-icon"><i class="icon-wishlist-2"></i></a>
+                        <a th:href="@{/account}" class="header-icon header-icon-user"><i class="icon-user-2"></i></a>
+                        <a th:href="@{/wishlist}" class="header-icon"><i class="icon-wishlist-2"></i></a>
 
                         <div class="header-search header-search-popup header-search-category d-none d-sm-block">
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
@@ -253,7 +216,7 @@
                                            name="keyword"
                                            id="keyword"
                                            th:value="${keyword}"
-                                           placeholder="I'm searching for..."
+                                           placeholder="Tôi đang tìm kiếm..."
                                            required="">
 
                                     <button class="btn icon-search-3" type="submit"></button>
@@ -272,7 +235,7 @@
                                 <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
                                 <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Shopping Cart</div>
+                                    <div class="dropdown-cart-header">Giỏ Hàng</div>
                                     <!-- End .dropdown-cart-header -->
 
                                     <div class="dropdown-cart-products">
@@ -351,9 +314,8 @@
                                     <!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn btn-gray btn-block view-cart">View
-                                            Cart</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
+                                        <a th:href="@{/cart}" class="btn btn-gray btn-block view-cart">Xem Giỏ Hàng</a>
+                                        <a th:href="@{/order/checkout}" class="btn btn-dark btn-block">Thanh Toán</a>
                                     </div>
                                     <!-- End .dropdown-cart-total -->
                                 </div>
@@ -388,7 +350,7 @@
                             <h5 class="coupon-sale-text text-left text-light appear-animate" data-animation-delay="2200" data-animation-duration="1200" data-animation-name="fadeIn">
                                 $<b>199</b>99</h5>
                             <div class="mb-0 p-t-2 appear-animate" data-animation-delay="2500" data-animation-name="fadeInUpShorter">
-                                <a th:href="@{/shop}" class="btn btn-borders btn-xl btn-outline-dark ls-10">SHOP NOW</a>
+                                <a th:href="@{/shop}" class="btn btn-borders btn-xl btn-outline-dark ls-10">MUA NGAY</a>
                             </div>
                         </div>
                         <!-- End .home-slide-content -->
@@ -409,7 +371,7 @@
                             <h4 class="pl-2 font-weight-light mb-0 text-left text-uppercase">prices up to</h4>
                             <h3 class="mb-0 text-sale m-l-n-xs text-left text-uppercase">80%<small>OFF</small></h3>
                             <div class="mb-0 pl-2">
-                                <a th:href="@{/shop}" class="btn btn-modern btn-xl btn-primary">SHOP NOW</a>
+                                <a th:href="@{/shop}" class="btn btn-modern btn-xl btn-primary">MUA NGAY</a>
                             </div>
                         </div>
                     </div>
@@ -431,7 +393,7 @@
                                 <h4 class="ls-10 m-b-3 text-right text-primary">STARTING AT $99</h4>
                                 <div class="mb-0 text-right">
                                     <a href="demo6-shop.html" class="btn btn-modern btn-md btn-dark">
-                                        Buy NOW!
+                                        MUA NGAY!
                                     </a>
                                 </div>
                             </div>
@@ -452,7 +414,7 @@
                                     <sup>$</sup>199<sup>99</sup></h4>
                                 <div class="mb-0 text-right">
                                     <a href="demo6-shop.html" class="btn btn-modern btn-md btn-light">
-                                        View Sale
+                                        SĂN SALE
                                     </a>
                                 </div>
                             </div>
@@ -471,7 +433,7 @@
                                 <h3 class="m-b-3 text-left">50% OFF</h3>
                                 <div class="vc_btn3-container mb-0 vc_btn3-inline">
                                     <a href="demo6-shop.html" class="btn btn-modern btn-md btn-dark ls-10">
-                                        Get Yours!
+                                        NHẬN NGAY
                                     </a>
                                 </div>
                             </div>
@@ -493,7 +455,7 @@
                                 <div class="col-5">
                                     <div class="mb-0">
                                         <a th:href="@{/shop}" class="btn btn-modern btn-md btn-dark">
-                                            Shop Now
+                                            MUA NGAY
                                         </a>
                                     </div>
                                 </div>
@@ -511,11 +473,11 @@
                 <div class="d-flex flex-wrap">
                     <div class="col-md-6 col-12 order-md-last half-img banner banner-md-vw-small banner-5 bg-img d-flex align-items-center appear-animate" data-animation-duration="1200" style="background-image: url('/assets/images/demoes/demo6/bg-1.jpg');">
                         <div class="banner-content">
-                            <h3 class="ls-n-10 m-b-3 text-left">WOMEN'S<br />COLLECTION</h3>
-                            <p class="line-height-1 m-b-4 text-left">Check out this week's hottest styles.</p>
+                            <h3 class="ls-n-10 m-b-3 text-left">THỜI TRANG<br />PHÁI ĐẸP</h3>
+                            <p class="line-height-1 m-b-4 text-left">Cùng khám phá những phong cách thời trang hot nhất tuần này.</p>
                             <div class="mb-0">
                                 <a th:href="@{/shop}" class="btn btn-borders btn-lg btn-outline-dark ls-10">
-                                    SHOP NOW
+                                    Mua Ngay
                                 </a>
                             </div>
                         </div>
@@ -547,14 +509,11 @@
                                 <div class="btn-icon-group">
                                     <a th:href="@{/cart/add/{id}(id=${p.id})}" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i></a>
                                 </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">XEM TRƯỚC</a>
                             </figure>
                                 <div class="product-details">
 
                                     <div class="category-wrap">
-                                        <div class="category-list">
-                                            <a href="demo6-shop.html" class="product-category">Category 1</a>,
-                                        </div>
                                         <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i class="icon-heart"></i></a>
                                     </div>
 
@@ -588,11 +547,11 @@
                 <div class="d-flex flex-wrap">
                     <div class="col-md-6 col-12 half-img banner banner-md-vw-small xbanner banner-5 bg-img d-flex align-items-center justify-content-end" style="background-image: url('/assets/images/demoes/demo6/bg-2.jpg');">
                         <div class="banner-content">
-                            <h3 class="ls-n-10 m-b-3 text-right">MEN'S<br />COLLECTION</h3>
-                            <p class="line-height-1 m-b-4 text-right">Check out this week's hottest styles.</p>
+                            <h3 class="ls-n-10 m-b-3 text-right">THỜI TRANG<br />PHÁI MẠNH</h3>
+                            <p class="line-height-1 m-b-4 text-right">Cùng khám phá những phong cách thời trang hot nhất tuần này.</p>
                             <div class="mb-0 text-right">
                                 <a th:href="@{/shop}" class="btn btn-borders btn-lg btn-outline-dark">
-                                    SHOP NOW
+                                    MUA NGAY
                                 </a>
                             </div>
                         </div>
@@ -623,14 +582,10 @@
                                     <a th:href="@{/cart/add/{id}(id=${p.id})}" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
                                             class="icon-shopping-cart"></i></a>
                                 </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick View</a>
+                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">XEM TRƯỚC</a>
                             </figure>
                                 <div class="product-details">
                                     <div class="category-wrap">
-                                        <div class="category-list">
-                                            <a href="demo6-shop.html" class="product-category">Caps</a>,
-                                            <a href="demo6-shop.html" class="product-category">shoes</a>
-                                        </div>
                                         <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i
                                                 class="icon-heart"></i></a>
                                     </div>
@@ -725,7 +680,7 @@
                 </div>
                 <div class="products-bottom appear-animate">
                     <div class="title-group text-center mb-2 mt-4 p-t-3">
-                        <h2 class="section-title text-uppercase ls-n-10">Featured Products</h2>
+                        <h2 class="section-title text-uppercase ls-n-10">Nổi Bật</h2>
                     </div>
 
                     <div class="featured-products owl-carousel owl-theme nav-outer show-nav-hover"
@@ -777,59 +732,22 @@
         <!-- End .main -->
 
         <footer class="footer appear-animate">
-            <div class="container-fluid">
-                <div class="footer-top">
-                    <div class="widget widget-newsletter">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12 col-9">
-                                <h4 class="widget-title">Subscribe newsletter</h4>
-                                <p>Get all the latest information on Events, Sales and Offers. Sign up for newsletter today.
-                                </p>
-                            </div>
-                            <!-- End .col-lg-6 -->
-
-                            <div class="col-lg-6 col-md-6 col-sm-7 d-flex align-items-center">
-                                <form action="#" class="d-flex w-100 pb-2">
-                                    <input type="email" class="form-control mb-0" placeholder="Enter Your Email address" required />
-                                    <button type="submit" class="btn btn-primary text-white">Subscribe</button>
-                                </form>
-                            </div>
-                            <!-- End .col-lg-6 -->
-
-                            <div class="col-lg-2 col-md-12 col-sm-5 widget-social d-flex align-items-center justify-content-lg-end justify-content-start mt-2 mb-1 mb-sm-0 mt-sm-0">
-                                <div class="social-icons pb-1">
-                                    <a href="#" class="social-icon" target="_blank"><i class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" target="_blank"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" target="_blank"><i class="icon-facebook"></i></a>
-                                </div>
-                                <!-- End .social-icons -->
-                            </div>
-                            <!-- End .col-md-3 -->
-                        </div>
-                        <!-- End .row -->
-                    </div>
-                    <!-- End .widget -->
-                </div>
-                <!-- End .footer-top -->
-            </div>
-            <!-- End .container-fluid -->
 
             <div class="footer-middle">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="widget">
-                                <h4 class="widget-title pb-2 mb-1">Contact Info</h4>
+                                <h4 class="widget-title pb-2 mb-1">Liên hệ</h4>
                                 <ul class="contact-info">
                                     <li>
-                                        <span class="contact-info-label">Address:</span>1234 Street Name, City, England
+                                        <span class="contact-info-label">Địa chỉ:</span>68 Cầu Giấy, Hà Nội
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:">(123)
-                                            456-7890</a>
+                                        <span class="contact-info-label">Điện thoại:</span> <a href="tel:">0343291216</a>
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Email:</span> <a href="https://portotheme.com/cdn-cgi/l/email-protection#e18c80888da18499808c918d84cf828e8c"><span class="__cf_email__" data-cfemail="701d11191c301508111d001c155e131f1d">[email&#160;protected]</span></a>
+                                        <span class="contact-info-label">Email:</span> <a href="https://portotheme.com/cdn-cgi/l/email-protection#e18c80888da18499808c918d84cf828e8c"><span class="__cf_email__" data-cfemail="701d11191c301508111d001c155e131f1d">son.nb194155@sis.hust.edu.vn</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -841,23 +759,21 @@
                             <div class="row footer-content">
                                 <div class="col-lg-4">
                                     <div class="widget">
-                                        <h4 class="widget-title">My Account</h4>
+                                        <h4 class="widget-title">Tài Khoản</h4>
 
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <ul class="links mb-0">
                                                     <li><a href="demo6-about.html">About us</a></li>
-                                                    <li><a href="demo6-contact.html">Contact us</a></li>
-                                                    <li><a href="dashboard.html">My Account</a></li>
+                                                    <li><a href="dashboard.html">Tài khoản của tôi</a></li>
                                                 </ul>
                                             </div>
                                             <!-- End .col-sm-6 -->
 
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Order history</a></li>
-                                                    <li><a href="#">Advanced search</a></li>
-                                                    <li><a href="login.html">Login</a></li>
+                                                    <li><a href="#">Lịch sử đặt hàng</a></li>
+                                                    <li><a href="login.html">Đăng ký</a></li>
                                                 </ul>
                                             </div>
                                             <!-- End .col-sm-6 -->
@@ -867,40 +783,12 @@
                                     <!-- End .widget -->
                                 </div>
                                 <!-- End .col-md-4 -->
-
-                                <div class="col-lg-5 mb-sm-2">
-                                    <div class="widget">
-                                        <h4 class="widget-title">Main Features</h4>
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <ul class="links mb-0">
-                                                    <li><a href="#">Super Fast HTML Template</a></li>
-                                                    <li><a href="#">1st Fully working Ajax Theme</a></li>
-                                                    <li><a href="#">33 Unique Shop Layouts</a></li>
-                                                </ul>
-                                            </div>
-                                            <!-- End .col-sm-6 -->
-                                            <div class="col-sm-6">
-                                                <ul class="links">
-                                                    <li><a href="#">Powerful Admin Panel</a></li>
-                                                    <li><a href="#">Mobile & Retina Optimized</a></li>
-                                                </ul>
-                                            </div>
-                                            <!-- End .col-sm-6 -->
-                                        </div>
-                                        <!-- End .row -->
-                                    </div>
-                                    <!-- End .widget -->
-                                </div>
-                                <!-- End .col-md-5 -->
-
                                 <div class="col-lg-3">
                                     <div class="widget widget-time">
-                                        <h4 class="widget-title mb-1">Working Days/Hours</h4>
+                                        <h4 class="widget-title mb-1">Ngày/Giờ làm việc</h4>
                                         <ul class="contact-info">
                                             <li>
-                                                Mon - Sun / 9:00AM - 8:00PM
+                                                T2 - CN / 9:00AM - 8:00PM
                                             </li>
                                         </ul>
                                     </div>
@@ -911,9 +799,6 @@
                             <!-- End .row -->
 
                             <div class="footer-bottom d-sm-flex align-items-center">
-                                <div class="footer-left">
-                                    <span class="footer-copyright">Porto eCommerce. © 2021 All Rights Reserved</span>
-                                </div>
 
                                 <div class="footer-right ml-auto mt-1 mt-sm-0">
                                     <div class="payment-icons mr-0">
@@ -954,9 +839,9 @@
             <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li><a href="demo6.html">Home</a></li>
+                    <li><a href="demo6.html">Trang Chủ</a></li>
                     <li>
-                        <a href="demo6-shop.html">Categories</a>
+                        <a href="demo6-shop.html">Phân Loại</a>
                         <ul>
                             <li><a href="category.html">Full Width Banner</a></li>
                             <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
@@ -978,7 +863,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="demo6-product.html">Products</a>
+                        <a href="demo6-product.html">Sản Phẩm</a>
                         <ul>
                             <li>
                                 <a href="#" class="nolink">PRODUCT PAGES</a>
@@ -1009,67 +894,33 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Pages<span class="tip tip-hot">Hot!</span></a>
+                        <a href="#">Trợ Giúp<span class="tip tip-hot">Hot!</span></a>
                         <ul>
                             <li>
-                                <a href="wishlist.html">Wishlist</a>
+                                <a th:href="@{/wishlist}">Yêu thích</a>
                             </li>
                             <li>
-                                <a href="cart.html">Shopping Cart</a>
+                                <a th:href="@{/cart}">Giỏ hàng</a>
                             </li>
                             <li>
-                                <a href="checkout.html">Checkout</a>
+                                <a th:href="@{/order/checkout}">Thanh toán</a>
                             </li>
                             <li>
-                                <a href="dashboard.html">Dashboard</a>
+                                <a th:href="@{/login}">Đăng Ký</a>
                             </li>
                             <li>
-                                <a href="login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="forgot-password.html">Forgot Password</a>
+                                <a th:href="@{/forgot-password}">Quên mật khẩu</a>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li>
-                        <a href="#">Elements</a>
-                        <ul class="custom-scrollbar">
-                            <li><a href="element-accordions.html">Accordion</a></li>
-                            <li><a href="element-alerts.html">Alerts</a></li>
-                            <li><a href="element-animations.html">Animations</a></li>
-                            <li><a href="element-banners.html">Banners</a></li>
-                            <li><a href="element-buttons.html">Buttons</a></li>
-                            <li><a href="element-call-to-action.html">Call to Action</a></li>
-                            <li><a href="element-countdown.html">Count Down</a></li>
-                            <li><a href="element-counters.html">Counters</a></li>
-                            <li><a href="element-headings.html">Headings</a></li>
-                            <li><a href="element-icons.html">Icons</a></li>
-                            <li><a href="element-info-box.html">Info box</a></li>
-                            <li><a href="element-posts.html">Posts</a></li>
-                            <li><a href="element-products.html">Products</a></li>
-                            <li><a href="element-product-categories.html">Product Categories</a></li>
-                            <li><a href="element-tabs.html">Tabs</a></li>
-                            <li><a href="element-testimonial.html">Testimonials</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <ul class="mobile-menu mt-2 mb-2">
-                    <li class="border-0">
-                        <a href="#">
-                            Special Offer!
-                        </a>
                     </li>
                 </ul>
 
                 <ul class="mobile-menu">
-                    <li><a href="login.html">My Account</a></li>
-                    <li><a href="demo6-contact.html">Contact Us</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="wishlist.html">My Wishlist</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="login.html" class="login-link">Log In</a></li>
+                    <li><a href="login.html">Tài khoản</a></li>
+                    <li><a href="demo6-contact.html">Liên hệ</a></li>
+                    <li><a href="wishlist.html">Yêu thích</a></li>
+                    <li><a href="cart.html">Giỏ hàng</a></li>
+                    <li><a href="login.html" class="login-link">Đăng Nhập</a></li>
                 </ul>
             </nav>
             <!-- End .mobile-nav -->
@@ -1094,64 +945,64 @@
 
     <div class="sticky-navbar">
         <div class="sticky-info">
-            <a href="demo6.html">
-                <i class="icon-home"></i>Home
+            <a th:href="@{/#}">
+                <i class="icon-home"></i>Trang Chủ
             </a>
         </div>
         <div class="sticky-info">
-            <a href="demo6-shop.html" class="">
-                <i class="icon-bars"></i>Categories
+            <a th:href="@{/shop}" class="">
+                <i class="icon-bars"></i>Phân Loại
             </a>
         </div>
         <div class="sticky-info">
-            <a href="wishlist.html" class="">
-                <i class="icon-wishlist-2"></i>Wishlist
+            <a th:href="@{/wishlist}" class="">
+                <i class="icon-wishlist-2"></i>Yêu Thích
             </a>
         </div>
         <div class="sticky-info">
-            <a href="login.html" class="">
-                <i class="icon-user-2"></i>Account
+            <a th:href="@{/login}" class="">
+                <i class="icon-user-2"></i>Tài Khoản
             </a>
         </div>
         <div class="sticky-info">
-            <a href="cart.html" class="">
+            <a th:href="@{/cart}" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">3</span>
-                </i>Cart
+                </i>Giỏ hàng
             </a>
         </div>
     </div>
 
-    <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(/assets/images/newsletter_popup_bg.jpg)">
-        <div class="newsletter-popup-content">
-            <img th:src="@{/assets/images/logo_black.png}" alt="Logo" class="logo-newsletter" width="111" height="44">
-            <h2>Subscribe to newsletter</h2>
+<!--    <div class="newsletter-popup mfp-hide bg-img" id="newsletter-popup-form" style="background: #f1f1f1 no-repeat center/cover url(/assets/images/newsletter_popup_bg.jpg)">-->
+<!--        <div class="newsletter-popup-content">-->
+<!--            <img th:src="@{/assets/images/logo_black.png}" alt="Logo" class="logo-newsletter" width="111" height="44">-->
+<!--            <h2>Subscribe to newsletter</h2>-->
 
-            <p>
-                Subscribe to the Porto mailing list to receive updates on new arrivals, special offers and our promotions.
-            </p>
+<!--            <p>-->
+<!--                Subscribe to the Porto mailing list to receive updates on new arrivals, special offers and our promotions.-->
+<!--            </p>-->
 
-            <form action="#">
-                <div class="input-group">
-                    <input type="email" class="form-control" id="newsletter-email" name="newsletter-email" placeholder="Your email address" required />
-                    <input type="submit" class="btn btn-primary" value="Submit" />
-                </div>
-            </form>
-            <div class="newsletter-subscribe">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" value="0" id="show-again" />
-                    <label for="show-again" class="custom-control-label">
-                        Don't show this popup again
-                    </label>
-                </div>
-            </div>
-        </div>
-        <!-- End .newsletter-popup-content -->
+<!--            <form action="#">-->
+<!--                <div class="input-group">-->
+<!--                    <input type="email" class="form-control" id="newsletter-email" name="newsletter-email" placeholder="Địa chỉ email của bạn" required />-->
+<!--                    <input type="submit" class="btn btn-primary" value="Xác nhận" />-->
+<!--                </div>-->
+<!--            </form>-->
+<!--            <div class="newsletter-subscribe">-->
+<!--                <div class="custom-control custom-checkbox">-->
+<!--                    <input type="checkbox" class="custom-control-input" value="0" id="show-again" />-->
+<!--                    <label for="show-again" class="custom-control-label">-->
+<!--                        Không hiển thị cửa sổ này nữa-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; End .newsletter-popup-content &ndash;&gt;-->
 
-        <button title="Close (Esc)" type="button" class="mfp-close">
-            ×
-        </button>
-    </div>
+<!--        <button title="Close (Esc)" type="button" class="mfp-close">-->
+<!--            ×-->
+<!--        </button>-->
+<!--    </div>-->
     <!-- End .newsletter-popup -->
 
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>

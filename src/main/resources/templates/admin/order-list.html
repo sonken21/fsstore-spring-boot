@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản lý đơn hàng</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Danh sách đơn hàng</h2>
+        <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Quay lại Dashboard</a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <table class="table table-bordered bg-white shadow-sm">
+        <thead class="thead-dark">
+        <tr>
+            <th>Mã ĐH</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="o : ${orders}">
+            <td th:text="'#' + ${o.id}"></td>
+
+            <td th:text="${o.firstName != null ? o.firstName + ' ' + o.lastName : 'N/A'}"></td>
+
+            <td th:text="${#temporals.format(o.orderDate, 'dd-MM-yyyy HH:mm')}"></td>
+
+            <td th:text="${o.orderTotal != null ? #numbers.formatDecimal(o.orderTotal, 0, 'COMMA', 0, 'POINT') + ' đ' : '0 đ'}"></td>
+
+            <td>
+            <span th:classappend="${o.status == 'PENDING' ? 'badge-warning' : (o.status == 'DELIVERED' ? 'badge-success' : 'badge-info')}"
+                  th:text="${o.status}" class="badge"></span>
+            </td>
+            <td>
+                <a th:href="@{/admin/orders/detail/{id}(id=${o.id})}" class="btn btn-primary btn-sm">Chi tiết</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -33,54 +33,34 @@
 
 <body>
 <div class="page-wrapper">
-    <div class="top-notice bg-primary text-white">
-        <div class="container text-center">
-            <h5 class="d-inline-block">Get Up to <b>40% OFF</b> New-Season Styles</h5>
-            <a th:href="@{/category}" class="category">MEN</a>
-            <a th:href="@{/category}" class="category ml-2 mr-3">WOMEN</a>
-            <small>* Limited time only.</small>
-            <button title="Close (Esc)" type="button" class="mfp-close">×</button>
-        </div></div><header class="header">
+<!--    <div class="top-notice bg-primary text-white">-->
+<!--        <div class="container text-center">-->
+<!--            <h5 class="d-inline-block">Get Up to <b>40% OFF</b> New-Season Styles</h5>-->
+<!--            <a th:href="@{/category}" class="category">MEN</a>-->
+<!--            <a th:href="@{/category}" class="category ml-2 mr-3">WOMEN</a>-->
+<!--            <small>* Limited time only.</small>-->
+<!--            <button title="Close (Esc)" type="button" class="mfp-close">×</button>-->
+<!--        </div>-->
+<!--    </div>-->
+    <header class="header">
     <div class="header-top">
         <div class="container">
-            <div class="header-left d-none d-sm-block">
-                <p class="top-message text-uppercase">FREE Returns. Standard Shipping Orders $99+</p>
-            </div><div class="header-right header-dropdowns ml-0 ml-sm-auto w-sm-100">
+<!--            <div class="header-left d-none d-sm-block">-->
+<!--                <p class="top-message text-uppercase">FREE Returns. Standard Shipping Orders $99+</p>-->
+<!--            </div>-->
+<div class="header-right header-dropdowns ml-0 ml-sm-auto w-sm-100">
             <div class="header-dropdown dropdown-expanded d-none d-lg-block">
-                <a href="#">Links</a>
                 <div class="header-menu">
                     <ul>
-                        <li><a th:href="@{/dashboard}">My Account</a></li>
+                        <li><a th:href="@{/dashboard}">Tài Khoản Của Tôi</a></li>
                         <li><a th:href="@{/about}">About Us</a></li>
-                        <li><a th:href="@{/blog}">Blog</a></li>
-                        <li><a th:href="@{/wishlist}">My Wishlist</a></li>
-                        <li><a th:href="@{/cart}">Cart</a></li>
-                        <li><a th:href="@{/login}" class="login-link">Log In</a></li>
+                        <li><a th:href="@{/wishlist}">Yêu Thích</a></li>
+                        <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                        <li><a th:href="@{/login}" class="login-link">Đăng Nhập</a></li>
                     </ul>
                 </div></div><span class="separator"></span>
 
-            <div class="header-dropdown">
-                <a href="#"><i class="flag-us flag"></i>ENG</a>
-                <div class="header-menu">
-                    <ul>
-                        <li><a href="#"><i class="flag-us flag mr-2"></i>ENG</a>
-                        </li>
-                        <li><a href="#"><i class="flag-fr flag mr-2"></i>FRA</a></li>
-                    </ul>
-                </div></div><div class="header-dropdown mr-auto mr-sm-3 mr-md-0">
-            <a href="#">USD</a>
-            <div class="header-menu">
-                <ul>
-                    <li><a href="#">EUR</a></li>
-                    <li><a href="#">USD</a></li>
-                </ul>
-            </div></div><span class="separator"></span>
-
-            <div class="social-icons">
-                <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
-                <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
-                <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
-            </div></div></div></div><div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
+            </div></div></div><div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
     <div class="container">
         <div class="header-left col-lg-2 w-auto pl-0">
             <button class="mobile-menu-toggler text-primary mr-2" type="button">
@@ -93,35 +73,25 @@
         <div
                 class="header-icon header-search header-search-inline header-search-category w-lg-max text-right mt-0">
             <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
-            <form action="#" method="get">
-                <div class="header-search-wrapper">
-                    <input type="search" class="form-control" name="q" id="q" placeholder="Search..."
-                           required>
-                    <div class="select-custom">
-                        <select id="cat" name="cat">
-                            <option value="">All Categories</option>
-                            <option value="4">Fashion</option>
-                            <option value="12">- Women</option>
-                            <option value="13">- Men</option>
-                            <option value="66">- Jewellery</option>
-                            <option value="67">- Kids Fashion</option>
-                            <option value="5">Electronics</option>
-                            <option value="21">- Smart TVs</option>
-                            <option value="22">- Cameras</option>
-                            <option value="63">- Games</option>
-                            <option value="7">Home &amp; Garden</option>
-                            <option value="11">Motors</option>
-                            <option value="31">- Cars and Trucks</option>
-                            <option value="32">- Motorcycles &amp; Powersports</option>
-                            <option value="33">- Parts &amp; Accessories</option>
-                            <option value="34">- Boats</option>
-                            <option value="57">- Auto Tools &amp; Supplies</option>
-                        </select>
-                    </div><button class="btn icon-magnifier p-0" type="submit"></button>
-                </div></form>
+                <div class="header-search header-search-popup header-search-category d-none d-sm-block">
+                    <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
+                    <form th:action="@{/shop}" method="get">
+                        <div class="header-search-wrapper">
+                            <input type="search"
+                                   class="form-control"
+                                   name="keyword"
+                                   id="keyword"
+                                   th:value="${keyword}"
+                                   placeholder="Tôi đang tìm kiếm..."
+                                   required="">
+
+                            <button class="btn icon-search-3" type="submit"></button>
+                        </div>
+                    </form>
+                </div>
         </div><div class="header-contact d-none d-lg-flex pl-4 pr-4">
         <img alt="phone" th:src="@{/assets/images/phone.png}" width="30" height="30" class="pb-1">
-        <h6><span>Call us now</span><a href="tel:#" class="text-dark font1">+123 5678 890</a></h6>
+        <h6><span>Call us now</span><a href="tel:#" class="text-dark font1">0343291216</a></h6>
     </div>
         <a th:href="@{/login}" class="header-icon" title="login"><i class="icon-user-2"></i></a>
 
@@ -139,7 +109,7 @@
                 <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
                 <div class="dropdownmenu-wrapper custom-scrollbar">
-                    <div class="dropdown-cart-header">Shopping Cart</div>
+                    <div class="dropdown-cart-header">Giỏ Hàng</div>
                     <div class="dropdown-cart-products">
                         <div class="product">
                             <div class="product-details">
@@ -162,17 +132,17 @@
                     <span>SUBTOTAL:</span>
                     <span class="cart-total-price float-right" th:text="${#numbers.formatDecimal(cartTotal, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">$134.00</span>
                 </div><div class="dropdown-cart-action">
-                    <a th:href="@{/cart}" class="btn btn-gray btn-block view-cart">View Cart</a>
-                    <a th:href="@{/checkout}" class="btn btn-dark btn-block">Checkout</a>
+                    <a th:href="@{/cart}" class="btn btn-gray btn-block view-cart">Xem Giỏ Hàng</a>
+                    <a th:href="@{/checkout}" class="btn btn-dark btn-block">Thanh Toán</a>
                 </div></div></div></div></div></div></div><div class="header-bottom sticky-header d-none d-lg-block" data-sticky-options="{'mobile': false}">
     <div class="container">
         <nav class="main-nav w-100">
             <ul class="menu">
                 <li>
-                    <a th:href="@{/}">Home</a>
+                    <a th:href="@{/}">Trang Chủ</a>
                 </li>
                 <li>
-                    <a th:href="@{/category}">Categories</a>
+                    <a th:href="@{/category}">Phân Loại</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                         <div class="row">
                             <div class="col-lg-4">
@@ -197,45 +167,29 @@
                                             <b class="">50%</b>
                                             <i>OFF</i>
                                         </h4>
-                                        <a th:href="@{/category}" class="btn btn-sm btn-dark">SHOP NOW</a>
+                                        <a th:href="@{/category}" class="btn btn-sm btn-dark">Mua Ngay</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div></li>
                 <li>
-                    <a th:href="@{/product}">Products</a>
+                    <a th:href="@{/product}">Sản Phẩm</a>
                     <div class="megamenu megamenu-fixed-width">
                     </div></li>
-                <li class="active">
-                    <a href="#">Pages</a>
+                <li class="help">
+                    <a href="#">Trợ Giúp</a>
                     <ul>
-                        <li><a th:href="@{/wishlist}">Wishlist</a></li>
-                        <li><a th:href="@{/cart}">Shopping Cart</a></li>
-                        <li><a th:href="@{/checkout}">Checkout</a></li>
-                        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+                        <li><a th:href="@{/wishlist}">Yêu Thích</a></li>
+                        <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                        <li><a th:href="@{/checkout}">Thanh Toán</a></li>
                         <li><a th:href="@{/about}">About Us</a></li>
-                        <li><a href="#">Blog</a>
-                            <ul>
-                                <li><a th:href="@{/blog}">Blog</a></li>
-                                <li><a th:href="@{/single}">Blog Post</a></li>
-                            </ul>
-                        </li>
-                        <li><a th:href="@{/contact}">Contact Us</a></li>
-                        <li><a th:href="@{/login}">Login</a></li>
-                        <li><a th:href="@{/forgot-password}">Forgot Password</a></li>
+                        <li><a th:href="@{/contact}">Liên Hệ</a></li>
+                        <li><a th:href="@{/login}">Đăng Nhập</a></li>
+                        <li><a th:href="@{/forgot-password}">Quên Mật Khẩu</a></li>
                     </ul>
                 </li>
-                <li><a th:href="@{/blog}">Blog</a></li>
-                <li>
-                    <a href="#">Elements</a>
-                    <ul class="custom-scrollbar">
-                    </ul>
-                </li>
-                <li><a th:href="@{/contact}">Contact Us</a></li>
-                <li class="float-right"><a href="https://1.envato.market/DdLk5" class="pl-5"
-                                           target="_blank">Buy Porto!</a></li>
-                <li class="float-right"><a href="#" class="pl-5">Special Offer!</a></li>
+                <li><a th:href="@{/contact}">Liên Hệ</a></li>
             </ul>
         </nav>
     </div></div></header>
@@ -287,17 +241,16 @@
                                                 <form action="#">
                                                     <div class="input-group">
                                                         <input type="text" class="form-control form-control-sm"
-                                                               placeholder="Coupon Code">
+                                                               placeholder="Mã Ưu Đãi">
                                                         <div class="input-group-append">
-                                                            <button class="btn btn-sm" type="submit">Apply
-                                                                Coupon</button>
+                                                            <button class="btn btn-sm" type="submit">Áp Dụng</button>
                                                         </div>
                                                     </div></form>
                                             </div>
                                         </div><div class="float-right">
 
                                         <button type="submit" class="btn btn-shop btn-update-cart">
-                                            Update Cart
+                                            Sửa Giỏ Hàng
                                         </button>
                                     </div></td>
                                 </tr>
@@ -308,25 +261,25 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="cart-summary">
-                        <h3>CART TOTALS</h3>
+                        <h3>GIÁ TRỊ GIỎ HÀNG</h3>
                         <table class="table table-totals">
                             <tbody>
                             <tr>
-                                <td>Subtotal</td>
+                                <td>Sản Phẩm</td>
                                 <td th:text="${#numbers.formatDecimal(cart.total, 0, 'POINT', 0, 'COMMA')} + ' VNĐ'">$17.90</td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="text-left">
-                                    <h4>Shipping</h4>
+                                    <h4>Phí Ship</h4>
                                 </td>
                             </tr>
                             </tbody>
                             <tr>
-                                <td>Total</td>
+                                <td>Tổng</td>
                                 <td>—</td> </tr>
                         </table>
                         <div class="checkout-methods">
-                            <a th:href="@{/order/checkout}" class="btn btn-block btn-dark">Proceed to Checkout
+                            <a th:href="@{/order/checkout}" class="btn btn-block btn-dark">Thanh Toán
                                 <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
@@ -349,29 +302,29 @@
 </div><div class="sticky-navbar">
     <div class="sticky-info">
         <a th:href="@{/}">
-            <i class="icon-home"></i>Home
+            <i class="icon-home"></i>Trang Chủ
         </a>
     </div>
     <div class="sticky-info">
         <a th:href="@{/category}" class="">
-            <i class="icon-bars"></i>Categories
+            <i class="icon-bars"></i>Phân Loại
         </a>
     </div>
     <div class="sticky-info">
         <a th:href="@{/wishlist}" class="">
-            <i class="icon-wishlist-2"></i>Wishlist
+            <i class="icon-wishlist-2"></i>Yêu Thích
         </a>
     </div>
     <div class="sticky-info">
         <a th:href="@{/login}" class="">
-            <i class="icon-user-2"></i>Account
+            <i class="icon-user-2"></i>Tài Khoản
         </a>
     </div>
     <div class="sticky-info">
         <a th:href="@{/cart}" class="">
             <i class="icon-shopping-cart position-relative">
                 <span class="cart-count badge-circle" th:text="${totalQuantity}">3</span>
-            </i>Cart
+            </i>Giỏ Hàng
         </a>
     </div>
 </div>

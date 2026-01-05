@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sản phẩm mới - Admin</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body class="bg-light">
+<div class="container mt-5 mb-5">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Thêm sản phẩm mới</h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/admin/products/save}" th:object="${product}" method="post" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="col-md-8 form-group mb-3">
+                        <label class="font-weight-bold">Tên sản phẩm</label>
+                        <input type="text" th:field="*{name}" class="form-control" placeholder="Nhập tên sản phẩm..." required />
+                    </div>
+
+                    <div class="col-md-4 form-group mb-3">
+                        <label class="font-weight-bold">Giá bán (đ)</label>
+                        <input type="number" step="0.01" th:field="*{price}" class="form-control" placeholder="0.00" required />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group mb-3">
+                        <label class="font-weight-bold">Giới tính</label>
+                        <select th:field="*{gender}" class="form-control">
+                            <option value="Nam">Nam</option>
+                            <option value="Nu">Nữ</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 form-group mb-3">
+                        <label class="font-weight-bold">Loại sản phẩm</label>
+                        <input type="text" th:field="*{productType}" class="form-control" placeholder="Ví dụ: Shoes, T-Shirt..." />
+                    </div>
+
+                    <div class="col-md-4 form-group mb-3">
+                        <label class="font-weight-bold">Số lượng kho</label>
+                        <input type="number" th:field="*{stock}" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="font-weight-bold">Mô tả sản phẩm</label>
+                    <textarea th:field="*{description}" class="form-control" rows="4" placeholder="Nhập mô tả chi tiết..."></textarea>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="font-weight-bold">Hình ảnh sản phẩm</label>
+                    <input type="file" name="imageFile" class="form-control-file" accept="image/*" required />
+                    <small class="form-text text-muted">Ảnh sẽ được lưu vào: static/assets/images/demoes/demo6/products/</small>
+                </div>
+
+                <input type="hidden" th:field="*{rating}" value="0.0" />
+                <input type="hidden" th:field="*{reviewCount}" value="0" />
+
+                <div class="d-flex justify-content-between border-top pt-3">
+                    <a th:href="@{/admin/products}" class="btn btn-secondary px-4">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-success px-5 font-weight-bold">Lưu sản phẩm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

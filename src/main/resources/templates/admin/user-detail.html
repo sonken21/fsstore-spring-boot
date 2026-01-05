@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết người dùng</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Thông tin chi tiết: <span th:text="${user.username}"></span></h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr><th>ID:</th><td th:text="${user.id}"></td></tr>
+                        <tr><th>Email:</th><td th:text="${user.email}"></td></tr>
+                        <tr><th>Địa chỉ:</th><td th:text="${user.streetAddress}"></td></tr>
+                        <tr><th>Mã vùng:</th><td th:text="${user.zipCode}"></td></tr>
+                        <tr><th>Vai trò:</th><td th:text="${user.role}"></td></tr>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <a th:href="@{/admin/users}" class="btn btn-secondary w-100">Quay lại danh sách</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
