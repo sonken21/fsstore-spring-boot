@@ -4,7 +4,9 @@ import com.example.fsstore.entity.Cart;
 import com.example.fsstore.entity.CartItem;
 import com.example.fsstore.entity.Order;
 import com.example.fsstore.entity.OrderDetail;
+import com.example.fsstore.entity.Product;
 import com.example.fsstore.repository.OrderRepository;
+import com.example.fsstore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +22,15 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CartService cartService;
+    private final ProductRepository productRepository; // Tiêm thêm repository sản phẩm
 
     private static final Double SHIPPING_FEE = 30000.0;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, CartService cartService) {
+    public OrderService(OrderRepository orderRepository, CartService cartService, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.cartService = cartService;
+        this.productRepository = productRepository;
     }
 
     // --- CÁC PHƯƠNG THỨC MỚI LẤY DỮ LIỆU THỰC TẾ CHO BIỂU ĐỒ ---
@@ -53,7 +57,7 @@ public class OrderService {
         return counts;
     }
 
-    // --- CÁC PHƯƠNG THỨC ADMIN CŨ ---
+    // --- CÁC PHƯƠNG THỨC ADMIN CẬP NHẬT ---
 
     @Transactional(readOnly = true)
     public List<Order> getAllOrders() {
@@ -61,9 +65,22 @@ public class OrderService {
     }
 
     @Transactional
-    public void updateStatus(Long orderId, String status) {
+    public void updateStatus(Long orderId, String newStatus) {
         Order order = getOrderById(orderId);
-        order.setStatus(status);
+        String oldStatus = order.getStatus();
+
+        // 1. Nếu trạng thái chuyển sang CONFIRMED từ PENDING (Trừ kho)
+        if ("CONFIRMED".equalsIgnoreCase(newStatus) && "PENDING".equalsIgnoreCase(oldStatus)) {
+            subtractStock(order);
+        }
+
+        // 2. Nếu trạng thái chuyển sang CANCELLED từ các trạng thái đã trừ kho (Hoàn kho)
+        // Các trạng thái đã trừ kho bao gồm: CONFIRMED, SHIPPED, DELIVERED
+        else if ("CANCELLED".equalsIgnoreCase(newStatus) && isAlreadySubtracted(oldStatus)) {
+            restoreStock(order);
+        }
+
+        order.setStatus(newStatus);
         orderRepository.save(order);
     }
 
@@ -71,6 +88,34 @@ public class OrderService {
     public Order getOrderById(Long orderId) {
         return orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("Không tìm thấy đơn hàng #" + orderId));
+    }
+
+    // --- LOGIC XỬ LÝ KHO HÀNG (PRIVATE) ---
+
+    private void subtractStock(Order order) {
+        for (OrderDetail detail : order.getOrderDetails()) {
+            Product product = detail.getProduct();
+            int quantityNeeded = detail.getQuantity();
+
+            if (product.getStock() < quantityNeeded) {
+                throw new RuntimeException("Sản phẩm '" + product.getName() + "' không đủ tồn kho (Cần: " + quantityNeeded + ", Hiện có: " + product.getStock() + ")");
+            }
+
+            product.setStock(product.getStock() - quantityNeeded);
+            productRepository.save(product);
+        }
+    }
+
+    private void restoreStock(Order order) {
+        for (OrderDetail detail : order.getOrderDetails()) {
+            Product product = detail.getProduct();
+            product.setStock(product.getStock() + detail.getQuantity());
+            productRepository.save(product);
+        }
+    }
+
+    private boolean isAlreadySubtracted(String status) {
+        return "CONFIRMED".equalsIgnoreCase(status) || "SHIPPED".equalsIgnoreCase(status) || "DELIVERED".equalsIgnoreCase(status);
     }
 
     // --- PHƯƠNG THỨC TẠO ĐƠN HÀNG (GIỮ NGUYÊN) ---

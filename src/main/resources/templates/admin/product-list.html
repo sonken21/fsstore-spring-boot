@@ -8,20 +8,16 @@
     <style>
         :root { --sidebar-bg: #ffffff; --main-bg: #f8f9fc; --primary-color: #4e73df; }
         body { background-color: var(--main-bg); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
-
-        /* Layout Sidebar */
         .wrapper { display: flex; align-items: stretch; }
         #sidebar { min-width: 250px; max-width: 250px; background: var(--sidebar-bg); min-height: 100vh; border-right: 1px solid #e3e6f0; position: sticky; top: 0; }
         #sidebar .sidebar-header { padding: 20px; text-align: center; border-bottom: 1px solid #f8f9fa; }
         #sidebar ul li a { padding: 15px 25px; display: block; color: #858796; text-decoration: none; transition: 0.3s; }
         #sidebar ul li a:hover, #sidebar ul li.active a { color: var(--primary-color); background: #f8f9fc; border-left: 4px solid var(--primary-color); }
-        #sidebar ul li a i { margin-right: 10px; width: 20px; text-align: center; }
-
-        /* Main Content */
         #content { width: 100%; padding: 30px; }
         .card { border: none; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
-        .product-img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; border: 1px solid #e3e6f0; }
+        .product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; border: 1px solid #e3e6f0; }
         .table thead { background-color: #f8f9fc; color: #4e73df; }
+        .btn-action { width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -31,18 +27,10 @@
             <h4 class="text-primary font-weight-bold"><i class="fas fa-shopping-bag"></i> FS Admin</h4>
         </div>
         <ul class="list-unstyled components">
-            <li>
-                <a th:href="@{/admin/dashboard}"><i class="fas fa-th-large"></i> Dashboard</a>
-            </li>
-            <li>
-                <a th:href="@{/admin/users}"><i class="fas fa-user-friends"></i> Quản lý Người dùng</a>
-            </li>
-            <li class="active">
-                <a th:href="@{/admin/products}"><i class="fas fa-box"></i> Quản lý Sản phẩm</a>
-            </li>
-            <li>
-                <a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a>
-            </li>
+            <li><a th:href="@{/admin/dashboard}"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a th:href="@{/admin/users}"><i class="fas fa-user-friends"></i> Quản lý Người dùng</a></li>
+            <li class="active"><a th:href="@{/admin/products}"><i class="fas fa-box"></i> Quản lý Sản phẩm</a></li>
+            <li><a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a></li>
             <li class="mt-4">
                 <form th:action="@{/logout}" method="post" class="text-center">
                     <button type="submit" class="btn btn-sm btn-outline-danger w-75">Đăng xuất</button>
@@ -54,59 +42,118 @@
     <div id="content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="font-weight-bold text-gray-800"><i class="fas fa-box-open"></i> Quản lý sản phẩm</h3>
-            <a th:href="@{/admin/products/add}" class="btn btn-primary shadow-sm">
-                <i class="fas fa-plus fa-sm text-white-50 mr-2"></i> Thêm sản phẩm
-            </a>
         </div>
 
-        <div th:if="${message}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="fas fa-check-circle mr-2"></i> <span th:text="${message}"></span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <a th:href="@{/admin/products/add}" class="btn btn-primary shadow-sm"><i class="fas fa-plus mr-2"></i> Thêm sản phẩm</a>
+            </div>
+            <div class="col-md-6">
+                <form th:action="@{/admin/products}" method="get">
+                    <div class="input-group shadow-sm">
+                        <input type="text" name="keyword" id="searchInput" class="form-control border-0"
+                               placeholder="Tìm tên sản phẩm..." th:value="${keyword}">
+
+                        <div class="input-group-append">
+                            <a th:if="${keyword != null and keyword != ''}"
+                               th:href="@{/admin/products}"
+                               class="btn btn-light border-left text-muted"
+                               title="Xóa tìm kiếm">
+                                <i class="fas fa-times"></i>
+                            </a>
+
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button> </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="card shadow">
             <div class="card-body p-0">
-                <table class="table table-hover mb-0">
-                    <thead>
-                    <tr>
-                        <th class="pl-4">Ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Giá bán</th>
-                        <th class="text-center">Hành động</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="p : ${products}">
-                        <td>
-                            <img th:src="@{'/assets/images/demoes/demo6/products/' + ${p.imageUrl}}" width="60" height="60" style="object-fit: cover;"
-                                 alt="Product Image">>
-                        </td>
-                        <td>
-                            <div class="font-weight-bold text-dark" th:text="${p.name}"></div>
-                            <small class="text-muted" th:text="'ID: #' + ${p.id}"></small>
-                        </td>
-                        <td class="text-primary font-weight-bold"
-                            th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
-                        <td class="text-center">
-                            <a th:href="@{/admin/products/delete/{id}(id=${p.id})}"
-                               class="btn btn-light btn-sm text-danger shadow-sm border"
-                               onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
-                                <i class="fas fa-trash-alt"></i> Xóa
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead>
+                        <tr>
+                            <th class="pl-4">Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá bán</th>
+                            <th>Kho hàng</th> <th class="text-center">Hành động</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="p : ${products}">
+                            <td class="pl-4">
+                                <img th:src="@{'/assets/images/demoes/demo6/products/' + ${p.imageUrl}}" class="product-img shadow-sm">
+                            </td>
+                            <td>
+                                <div class="font-weight-bold text-dark" th:text="${p.name}"></div>
+                                <small class="text-muted" th:text="'ID: #' + ${p.id}"></small>
+                            </td>
+                            <td class="text-success font-weight-bold"
+                                th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+
+                            <td>
+                                <div class="d-flex align-items-center">
+            <span th:text="${p.stock}"
+                  class="font-weight-bold"
+                  th:classappend="${p.stock <= 10 ? 'text-danger' : 'text-dark'}"></span>
+                                    <i th:if="${p.stock <= 10}"
+                                       class="fas fa-exclamation-triangle text-danger ml-2"
+                                       title="Sắp hết hàng!"></i>
+                                </div>
+                                <div class="progress mt-1" style="height: 4px; width: 50px;">
+                                    <div class="progress-bar"
+                                         th:classappend="${p.stock <= 10 ? 'bg-danger' : 'bg-success'}"
+                                         role="progressbar"
+                                         th:style="'width: ' + ${p.stock > 100 ? 100 : p.stock} + '%'"></div>
+                                </div>
+                            </td>
+
+                            <td class="text-center">
+                                <a th:href="@{/admin/products/detail/{id}(id=${p.id})}" class="btn btn-light btn-sm text-primary shadow-sm border mr-1 btn-action"><i class="fas fa-eye"></i></a>
+                                <a th:href="@{/admin/products/delete/{id}(id=${p.id})}" class="btn btn-light btn-sm text-danger shadow-sm border btn-action" onclick="return confirm('Xóa sản phẩm này?')"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="card-footer bg-white py-3">
-                <p class="small text-muted mb-0">Tổng cộng: <strong th:text="${products.size()}"></strong> sản phẩm trong kho.</p>
+
+            <div class="card-footer bg-white py-3 d-flex justify-content-between align-items-center">
+                <p class="small text-muted mb-0">
+        <span th:if="${!#lists.isEmpty(products)}">
+            Hiển thị <strong th:text="${products.size()}"></strong> / <strong th:text="${totalItems}"></strong> sản phẩm.
+        </span>
+                    <span th:if="${#lists.isEmpty(products)}">0 kết quả được tìm thấy.</span>
+                </p>
+
+                <nav th:if="${totalPages > 1}">
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/products(page=${currentPage - 1}, keyword=${keyword})}">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                            th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" th:href="@{/admin/products(page=${i}, keyword=${keyword})}" th:text="${i}"></a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/products(page=${currentPage + 1}, keyword=${keyword})}">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 </div>
-
 <script th:src="@{/assets/js/jquery.min.js}"></script>
 <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 </body>

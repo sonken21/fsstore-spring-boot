@@ -121,4 +121,18 @@ public class ProductService {
         }
         return productRepository.findAll(pageable);
     }
+
+    // Cho Admin
+    public Page<Product> getAllProductsPaged(int pageNum, int pageSize, String keyword) {
+        // Spring Data JPA dùng Index từ 0, nên pageNum - 1
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // Sử dụng phương thức có sẵn trong Repository của bạn (trả về Page)
+            return productRepository.findByNameContainingIgnoreCase(keyword.trim(), pageable);
+        }
+
+        // Nếu không có keyword, lấy tất cả có phân trang
+        return productRepository.findAll(pageable);
+    }
 }

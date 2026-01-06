@@ -693,7 +693,7 @@
 
                         <div th:each="p : ${featuredProducts}" class="product-default inner-quickview inner-icon">
                             <figure>
-                                <a th:href="@{/product/detail/{id}(id=${p.id})}">
+                                <a th:href="@{/product/{id}(id=${p.id})}">
                                     <img th:src="@{/assets/images/demoes/demo6/products/{imgName}(imgName=${p.imageUrl})}"
                                          width="400" height="400" th:alt="${p.name}" />
                                 </a>

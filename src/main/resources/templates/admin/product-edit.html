@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa sản phẩm - Admin</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Chỉnh sửa sản phẩm: <span th:text="${product.name}"></span></h5>
+                    <a th:href="@{/admin/products}" class="btn btn-sm btn-light">Quay lại</a>
+                </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/admin/products/update}" th:object="${product}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{rating}">
+                        <input type="hidden" th:field="*{reviewCount}">
+                        <div class="row">
+                            <div class="col-md-12 form-group mb-3">
+                                <label class="font-weight-bold">Tên sản phẩm</label>
+                                <input type="text" th:field="*{name}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="font-weight-bold">Giá bán (đ)</label>
+                                <input type="number" th:field="*{price}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="font-weight-bold">Số lượng kho</label>
+                                <input type="number" th:field="*{stock}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="font-weight-bold">Giới tính</label>
+                                <select th:field="*{gender}" class="form-control">
+                                    <option value="Nam">Nam (Men)</option>
+                                    <option value="Nu">Nữ (Women)</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label class="font-weight-bold">Loại sản phẩm</label>
+                                <input type="text" th:field="*{productType}" class="form-control" placeholder="VD: T-Shirt, Shoes...">
+                            </div>
+
+                            <div class="col-md-12 form-group mb-3">
+                                <label class="font-weight-bold">Mô tả sản phẩm</label>
+                                <textarea th:field="*{description}" class="form-control" rows="4"></textarea>
+                            </div>
+
+                            <div class="col-md-12 form-group mb-4">
+                                <label class="font-weight-bold">Ảnh sản phẩm</label>
+                                <div class="mb-2">
+                                    <small class="text-muted">Ảnh hiện tại:</small><br>
+                                    <img th:src="@{'/assets/images/demoes/demo6/products/' + ${product.imageUrl}}"
+                                         width="100" class="rounded border shadow-sm">
+                                </div>
+                                <input type="file" name="imageFile" class="form-control-file">
+                                <small class="text-danger">Để trống nếu không muốn thay đổi ảnh.</small>
+                            </div>
+                        </div>
+
+                        <div class="text-right border-top pt-3">
+                            <button type="submit" class="btn btn-primary px-5">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

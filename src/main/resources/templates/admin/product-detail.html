@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sản phẩm - Admin</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/vendor/fontawesome-free/css/all.min.css}">
+    <style>
+        :root { --sidebar-bg: #ffffff; --main-bg: #f8f9fc; --primary-color: #4e73df; }
+        body { background-color: var(--main-bg); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
+
+        /* Layout Sidebar */
+        .wrapper { display: flex; align-items: stretch; }
+        #sidebar { min-width: 250px; max-width: 250px; background: var(--sidebar-bg); min-height: 100vh; border-right: 1px solid #e3e6f0; position: sticky; top: 0; }
+        #sidebar .sidebar-header { padding: 20px; text-align: center; border-bottom: 1px solid #f8f9fa; }
+        #sidebar ul li a { padding: 15px 25px; display: block; color: #858796; text-decoration: none; transition: 0.3s; }
+        #sidebar ul li a:hover, #sidebar ul li.active a { color: var(--primary-color); background: #f8f9fc; border-left: 4px solid var(--primary-color); }
+        #sidebar ul li a i { margin-right: 10px; width: 20px; text-align: center; }
+
+        /* Main Content */
+        #content { width: 100%; padding: 30px; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
+        .product-preview-img { width: 100%; border-radius: 10px; border: 1px solid #e3e6f0; transition: transform 0.3s; }
+        .product-preview-img:hover { transform: scale(1.02); }
+        .info-label { font-weight: 700; color: #4e73df; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .info-value { font-size: 1.1rem; color: #2e2f37; margin-bottom: 25px; }
+        .description-box { background-color: #f8f9fc; border-radius: 8px; padding: 20px; border: 1px dashed #d1d3e2; }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h4 class="text-primary font-weight-bold"><i class="fas fa-shopping-bag"></i> FS Admin</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li><a th:href="@{/admin/dashboard}"><i class="fas fa-th-large"></i> Dashboard</a></li>
+            <li><a th:href="@{/admin/users}"><i class="fas fa-user-friends"></i> Quản lý Người dùng</a></li>
+            <li class="active"><a th:href="@{/admin/products}"><i class="fas fa-box"></i> Quản lý Sản phẩm</a></li>
+            <li><a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng</a></li>
+            <li class="mt-4 text-center">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-sm btn-outline-danger w-75">Đăng xuất</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="mb-4 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <a th:href="@{/admin/products}" class="btn btn-sm btn-white border shadow-sm mr-3 text-primary bg-white">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h3 class="font-weight-bold text-gray-800 mb-0">Chi tiết sản phẩm</h3>
+            </div>
+            <span class="badge badge-light border px-3 py-2">ID Sản phẩm: <span th:text="'#' + ${product.id}"></span></span>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-body p-lg-5">
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="info-label">Hình ảnh hiển thị</div>
+                        <img th:src="@{'/assets/images/demoes/demo6/products/' + ${product.imageUrl}}"
+                             class="product-preview-img shadow-sm" alt="Product Image">
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="info-label">Tên sản phẩm</div>
+                                <div class="info-value font-weight-bold h4 text-primary" th:text="${product.name}"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-label">Giá niêm yết</div>
+                                <div class="info-value text-success font-weight-bold"
+                                     th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-label">Tồn kho hiện tại</div>
+                                <div class="info-value">
+                                    <span th:class="${product.stock > 10} ? 'badge badge-success px-3 py-2' : 'badge badge-danger px-3 py-2'"
+                                          th:text="${product.stock} + ' sản phẩm'"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-label">Phân loại giới tính</div>
+                                <div class="info-value"><i class="fas fa-users mr-2 text-muted"></i><span th:text="${product.gender}"></span></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="info-label">Danh mục sản phẩm</div>
+                                <div class="info-value">
+                                    <span class="badge badge-info px-3 py-2" th:text="${product.productType}"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="info-label">Mô tả sản phẩm</div>
+                                <div class="description-box">
+                                    <div class="text-dark" style="line-height: 1.8; white-space: pre-line;" th:text="${product.description}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-top d-flex">
+                            <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" class="btn btn-primary px-4 py-2 shadow-sm mr-2">
+                                <i class="fas fa-edit mr-2"></i>Chỉnh sửa thông tin
+                            </a>
+                            <a th:href="@{/admin/products/delete/{id}(id=${product.id})}"
+                               class="btn btn-outline-danger px-4 py-2"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn sản phẩm này?')">
+                                <i class="fas fa-trash-alt mr-2"></i>Xóa sản phẩm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

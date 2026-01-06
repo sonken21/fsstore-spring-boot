@@ -10,10 +10,16 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    // Tìm kiếm cho trang Admin (Trả về List)
+    @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Product> searchByName(@Param("keyword") String keyword);
+
     List<Product> findByGenderOrderByRatingDesc(String gender, Pageable pageable);
     Page<Product> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
     // Lấy top sản phẩm dựa theo Rating giảm dần
     List<Product> findTop10ByOrderByRatingDesc();
+    // Lấy sp sắp hết hàng
+    List<Product> findByStockLessThanOrderByStockAsc(int threshold);
     // PHƯƠNG THỨC ĐÃ TỐI ƯU: Sử dụng LOWER() cho các điều kiện String
     @Query("SELECT p FROM Product p WHERE " +
             // Điều kiện 1: Tìm kiếm theo Keyword (sử dụng LOWER() cho cả hai)
