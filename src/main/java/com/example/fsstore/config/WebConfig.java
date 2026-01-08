@@ -12,11 +12,27 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Đường dẫn vật lý đến thư mục chứa ảnh
-        String reportPath = Paths.get("src/main/resources/static/assets/images/demoes/demo6/products/").toAbsolutePath().toString();
+        // 1. Cấu hình cho ảnh Sản phẩm (Giữ nguyên logic của bạn)
+        exposeDirectory("src/main/resources/static/assets/images/demoes/demo6/products",
+                "/assets/images/demoes/demo6/products/**", registry);
 
-        // Map URL /assets/images/demoes/demo6/products/** vào thư mục vật lý trên
-        registry.addResourceHandler("/assets/images/demoes/demo6/products/**")
-                .addResourceLocations("file:/" + reportPath + "/");
+        // 2. Cấu hình cho ảnh Đại diện (Avatar) - MỚI THÊM
+        exposeDirectory("src/main/resources/static/assets/images/avatars",
+                "/assets/images/avatars/**", registry);
+    }
+
+    /**
+     * Hàm hỗ trợ ánh xạ đường dẫn thư mục vật lý vào URL Web
+     */
+    private void exposeDirectory(String dirName, String urlPath, ResourceHandlerRegistry registry) {
+        Path uploadDir = Paths.get(dirName);
+        String uploadPath = uploadDir.toFile().getAbsolutePath();
+
+        // Fix lỗi đường dẫn trên Windows (thêm file:/)
+        if (uploadPath.startsWith("/")) {
+            registry.addResourceHandler(urlPath).addResourceLocations("file:" + uploadPath + "/");
+        } else {
+            registry.addResourceHandler(urlPath).addResourceLocations("file:/" + uploadPath + "/");
+        }
     }
 }

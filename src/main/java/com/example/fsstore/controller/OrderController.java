@@ -2,8 +2,10 @@ package com.example.fsstore.controller;
 
 import com.example.fsstore.entity.Cart;
 import com.example.fsstore.entity.Order;
+import com.example.fsstore.entity.User;
 import com.example.fsstore.service.CartService;
 import com.example.fsstore.service.OrderService;
+import com.example.fsstore.service.UserService;
 import com.example.fsstore.service.VnPayService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,12 +27,13 @@ public class OrderController {
     private final CartService cartService;
     private final OrderService orderService;
     private final VnPayService vnPayService;
-
+    private final UserService userService;
     @Autowired
-    public OrderController(CartService cartService, OrderService orderService, VnPayService vnPayService) {
+    public OrderController(CartService cartService, OrderService orderService, VnPayService vnPayService, UserService userService) {
         this.cartService = cartService;
         this.orderService = orderService;
         this.vnPayService = vnPayService;
+        this.userService = userService;
     }
 
     /**
@@ -56,16 +60,22 @@ public class OrderController {
     @PostMapping("/place-order")
     public Object placeOrder(@ModelAttribute("order") Order order,
                              HttpSession session,
-                             HttpServletRequest request) {
+                             HttpServletRequest request,
+                             Principal principal) {
 
         Long cartId = (Long) session.getAttribute("cartId");
         if (cartId == null) return new RedirectView("/cart");
-
+//  Kiểm tra nếu chưa đăng nhập (đề phòng)
+        if (principal == null) return new RedirectView("/login");
         try {
-            // Bước 1: Tạo đơn hàng từ giỏ hàng (Lưu vào DB)
-            Order newOrder = orderService.createOrderFromCart(cartId, order);
+            // Lấy đối tượng User từ username của Principal
+            String username = principal.getName();
+            User currentUser = userService.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User không tồn tại"));
+            // Tạo đơn hàng từ giỏ hàng (Lưu vào DB)
+            Order newOrder = orderService.createOrderFromCart(cartId, order, currentUser);
 
-            // Bước 2: Kiểm tra phương thức thanh toán
+            // Kiểm tra phương thức thanh toán
             if ("ONLINE".equals(newOrder.getPaymentMethod())) {
                 // Tạo link thanh toán VNPay
                 String vnpayUrl = vnPayService.createPaymentUrl(newOrder, request);

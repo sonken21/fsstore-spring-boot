@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Tắt CSRF để submit form từ template dễ dàng hơn
                 .authorizeHttpRequests(auth -> auth
                         // Các đường dẫn công khai
-                        .requestMatchers("/", "/shop/**", "/assets/**", "/product/**", "/login", "/register").permitAll()
+                        .requestMatchers("/", "/shop/**", "/assets/**", "/product/**", "/login", "/register", "/forgot-password", "/reset-password").permitAll()
 
                         // Chỉ ADMIN mới vào được các đường dẫn bắt đầu bằng /admin
                         .requestMatchers("/admin/**").hasRole("ADMIN")

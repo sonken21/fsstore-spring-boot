@@ -50,4 +50,14 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    // Quên mật khẩu
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }

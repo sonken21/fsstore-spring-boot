@@ -1,10 +1,6 @@
 package com.example.fsstore.service;
 
-import com.example.fsstore.entity.Cart;
-import com.example.fsstore.entity.CartItem;
-import com.example.fsstore.entity.Order;
-import com.example.fsstore.entity.OrderDetail;
-import com.example.fsstore.entity.Product;
+import com.example.fsstore.entity.*;
 import com.example.fsstore.repository.OrderRepository;
 import com.example.fsstore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +29,9 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
+    public List<Order> getOrdersByUser(User user) {
+        return orderRepository.findByUserOrderByOrderDateDesc(user);
+    }
     // --- CÁC PHƯƠNG THỨC MỚI LẤY DỮ LIỆU THỰC TẾ CHO BIỂU ĐỒ ---
 
     public List<Double> getRevenueDataByDays(int days) {
@@ -86,8 +85,13 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("Không tìm thấy đơn hàng #" + orderId));
+
+        // ÉP BUỘC nạp dữ liệu Lazy (OrderDetail) ngay tại đây
+        order.getOrderDetails().size();
+
+        return order;
     }
 
     // --- LOGIC XỬ LÝ KHO HÀNG (PRIVATE) ---
@@ -118,14 +122,15 @@ public class OrderService {
         return "CONFIRMED".equalsIgnoreCase(status) || "SHIPPED".equalsIgnoreCase(status) || "DELIVERED".equalsIgnoreCase(status);
     }
 
-    // --- PHƯƠNG THỨC TẠO ĐƠN HÀNG (GIỮ NGUYÊN) ---
+    // --- PHƯƠNG THỨC TẠO ĐƠN HÀNG ---
 
     @Transactional
-    public Order createOrderFromCart(Long cartId, Order order) {
+    public Order createOrderFromCart(Long cartId, Order order, User user) {
         Cart cart = cartService.getOrCreateCart(cartId);
         if (cart.getItems().isEmpty() || cart.getTotal() == null || cart.getTotal() <= 0.0) {
             throw new IllegalArgumentException("Giỏ hàng trống.");
         }
+        order.setUser(user);
         order.setOrderDate(LocalDateTime.now());
         Double subTotal = cart.getTotal();
         order.setSubTotal(subTotal);

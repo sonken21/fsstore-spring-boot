@@ -1,6 +1,7 @@
 package com.example.fsstore.repository;
 
 import com.example.fsstore.entity.Order;
+import com.example.fsstore.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-
+    List<Order> findByUserOrderByOrderDateDesc(User user);
     // Lấy tổng doanh thu của một ngày cụ thể (Dùng Native Query để dễ xử lý DATE)
     @Query(value = "SELECT SUM(order_total) FROM orders WHERE CAST(order_date AS DATE) = :date", nativeQuery = true)
     Double getTotalRevenueByDate(@Param("date") LocalDate date);
@@ -28,4 +29,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "GROUP BY p.id, p.name, p.image_url, p.price " +
             "ORDER BY totalSales DESC LIMIT 10", nativeQuery = true)
     List<Object[]> findTop10BestSellers();
+
 }
