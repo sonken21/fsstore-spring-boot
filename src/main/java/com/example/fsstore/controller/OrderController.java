@@ -1,5 +1,6 @@
 package com.example.fsstore.controller;
 
+import com.example.fsstore.config.VnPayConfig;
 import com.example.fsstore.entity.Cart;
 import com.example.fsstore.entity.Order;
 import com.example.fsstore.entity.User;
@@ -16,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -102,19 +104,52 @@ public class OrderController {
      */
     @GetMapping("/payment-callback")
     public String paymentCallback(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        String responseCode = request.getParameter("vnp_ResponseCode");
-        String orderIdStr = request.getParameter("vnp_TxnRef");
-
-        // "00" là mã thành công của VNPay
-        if ("00".equals(responseCode)) {
-            // Tại đây bạn có thể gọi thêm orderService.updateStatus(orderIdStr, "PAID")
-            redirectAttributes.addFlashAttribute("success", "Thanh toán qua VNPay thành công!");
-            return "redirect:/order/complete/" + orderIdStr;
-        } else {
-            // Nếu hủy hoặc lỗi, quay về trang checkout và thông báo lỗi
-            redirectAttributes.addFlashAttribute("error", "Thanh toán không thành công. Vui lòng thử lại hoặc chọn COD.");
-            return "redirect:/order/checkout";
+        // 1. Thu thập tham số và tính toán lại Checksum (Giống như VnPayService nhưng ngược lại)
+        Map<String, String> fields = new HashMap<>();
+        for (Enumeration<String> params = request.getParameterNames(); params.hasMoreElements();) {
+            String fieldName = params.nextElement();
+            String fieldValue = request.getParameter(fieldName);
+            if (fieldValue != null && !fieldValue.isEmpty()) {
+                fields.put(fieldName, fieldValue);
+            }
         }
+
+        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+        fields.remove("vnp_SecureHash"); // Loại bỏ hash cũ để tính toán hash mới
+
+        // Sắp xếp tham số theo bảng chữ cái
+        List<String> fieldNames = new ArrayList<>(fields.keySet());
+        Collections.sort(fieldNames);
+
+        // Xây dựng chuỗi hashData
+        StringBuilder hashData = new StringBuilder();
+        for (Iterator<String> itr = fieldNames.iterator(); itr.hasNext();) {
+            String fieldName = itr.next();
+            String fieldValue = fields.get(fieldName);
+            hashData.append(fieldName).append('=').append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+            if (itr.hasNext()) hashData.append('&');
+        }
+
+        // 2. Kiểm tra chữ ký
+        String signValue = VnPayConfig.hmacSHA512(VnPayConfig.vnp_HashSecret, hashData.toString());
+
+        if (signValue.equals(vnp_SecureHash)) {
+            String orderIdStr = request.getParameter("vnp_TxnRef");
+            String responseCode = request.getParameter("vnp_ResponseCode");
+            long vnpAmount = Long.parseLong(request.getParameter("vnp_Amount")) / 100;
+
+            // 3. Kiểm tra chéo với Database
+            Order order = orderService.getOrderById(Long.parseLong(orderIdStr));
+            if (order != null && order.getOrderTotal().longValue() == vnpAmount) {
+                if ("00".equals(responseCode)) {
+                    // CẬP NHẬT TRẠNG THÁI ĐÃ THANH TOÁN TẠI ĐÂY
+                    return "redirect:/order/complete/" + orderIdStr;
+                }
+            }
+        }
+
+        redirectAttributes.addFlashAttribute("error", "Dữ liệu không hợp lệ hoặc thanh toán thất bại.");
+        return "redirect:/order/checkout";
     }
 
     /**

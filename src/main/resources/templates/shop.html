@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
-<!-- Mirrored from portotheme.com/html/porto_ecommerce/demo6-shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:42 GMT -->
+<!-- Mirrored from portotheme.com/html/porto_ecommerce/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:42 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
     <meta charset="UTF-8">
@@ -51,10 +51,10 @@
                         <nav class="main-nav w-100">
                             <ul class="menu ls-n-10">
                                 <li>
-                                    <a href="demo6.html" class="pl-4">Trang Chủ</a>
+                                    <a href="home.html" class="pl-4">Trang Chủ</a>
                                 </li>
                                 <li class="active">
-                                    <a href="demo6-shop.html">Phân Loại</a>
+                                    <a href="shop.html">Phân Loại</a>
                                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -112,7 +112,7 @@
                                     <!-- End .megamenu -->
                                 </li>
                                 <li>
-                                    <a href="demo6-product.html">Sản Phẩm</a>
+                                    <a href="product.html">Sản Phẩm</a>
                                     <div class="megamenu megamenu-fixed-width">
                                         <div class="row">
                                             <div class="col-lg-4">
@@ -192,7 +192,7 @@
                     <!-- End .header-left -->
 
                     <div class="header-center ml-0 ml-xl-auto">
-                        <a href="demo6.html" class="logo logo-transition">
+                        <a href="home.html" class="logo logo-transition">
                             <img th:src="@{/assets/images/logo_black.png}" width="113" height="46" alt="Porto" />
                         </a>
                     </div>
@@ -224,7 +224,8 @@
                         <div class="dropdown cart-dropdown">
                             <a href="#" class="dropdown-toggle dropdown-arrow cart-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <i class="icon-cart-thick"></i>
-                                <span class="cart-count badge-circle">3</span>
+                                <span class="cart-count badge-circle"
+                                      th:text="${cart != null && cart.items != null ? cart.items.size() : 0}">0</span>
                             </a>
 
                             <div class="cart-overlay"></div>
@@ -234,94 +235,52 @@
 
                                 <div class="dropdownmenu-wrapper custom-scrollbar">
                                     <div class="dropdown-cart-header">Giỏ Hàng</div>
-                                    <!-- End .dropdown-cart-header -->
 
                                     <div class="dropdown-cart-products">
-                                        <div class="product">
+                                        <div class="product" th:each="item : ${cart?.items}">
                                             <div class="product-details">
                                                 <h4 class="product-title">
-                                                    <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
+                                                    <a th:href="@{/product/{id}(id=${item.product.id})}"
+                                                       th:text="${item.product.name}">Tên sản phẩm</a>
                                                 </h4>
 
                                                 <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $99.00
-                                                </span>
+                            <span class="cart-product-qty" th:text="${item.quantity}">1</span> ×
+                            <span th:text="${#numbers.formatDecimal(item.priceAtPurchase, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</span>
+                        </span>
                                             </div>
-                                            <!-- End .product-details -->
 
                                             <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-1.jpg}" alt="product" width="80" height="80">
+                                                <a th:href="@{/product/{id}(id=${item.product.id})}" class="product-image">
+                                                    <img th:src="@{/assets/images/demoes/demo6/products/{fileName}(fileName=${item.product.imageUrl})}"
+                                                         alt="product" width="80" height="80">
                                                 </a>
-
-                                                <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
+                                                <a href="javascript:void(0);"
+                                                   th:onclick="'removeCartItemAjax(' + ${item.id} + ', this)'"
+                                                   class="btn-remove"
+                                                   title="Remove Product">
+                                                    <span>×</span>
+                                                </a>
                                             </figure>
                                         </div>
-                                        <!-- End .product -->
 
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Brown Women Casual HandBag</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $35.00
-                                                </span>
-                                            </div>
-                                            <!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-2.jpg}" alt="product" width="80" height="80">
-                                                </a>
-
-                                                <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
-                                            </figure>
+                                        <div th:if="${cart == null || #lists.isEmpty(cart.items)}" class="text-center p-5">
+                                            <p>Giỏ hàng trống</p>
                                         </div>
-                                        <!-- End .product -->
-
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="product.html">Circled Ultimate 3D Speaker</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $35.00
-                                                </span>
-                                            </div>
-                                            <!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img th:src="@{/assets/images/products/product-3.jpg}" alt="product" width="80" height="80">
-                                                </a>
-                                                <a href="#" class="btn-remove" title="Remove Product"><span>×</span></a>
-                                            </figure>
-                                        </div>
-                                        <!-- End .product -->
                                     </div>
-                                    <!-- End .cart-product -->
 
-                                    <div class="dropdown-cart-total">
-                                        <span>SUBTOTAL:</span>
-
-                                        <span class="cart-total-price float-right">$134.00</span>
+                                    <div class="dropdown-cart-total" th:if="${cart != null && !#lists.isEmpty(cart.items)}">
+                                        <span>TỔNG CỘNG:</span>
+                                        <span class="cart-total-price float-right"
+                                              th:text="${#numbers.formatDecimal(cart.total, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</span>
                                     </div>
-                                    <!-- End .dropdown-cart-total -->
 
-                                    <div class="dropdown-cart-action">
-                                        <a href="cart.html" class="btn btn-gray btn-block view-cart">View
-                                            Cart</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Thanh Toán</a>
+                                    <div class="dropdown-cart-action" th:if="${cart != null && !#lists.isEmpty(cart.items)}">
+                                        <a th:href="@{/cart}" class="btn btn-gray btn-block view-cart">Xem Giỏ Hàng</a>
+                                        <a th:href="@{/order/checkout}" class="btn btn-dark btn-block">Thanh Toán</a>
                                     </div>
-                                    <!-- End .dropdown-cart-total -->
                                 </div>
-                                <!-- End .dropdownmenu-wrapper -->
                             </div>
-                            <!-- End .dropdown-menu -->
-                        </div>
                     </div>
                     <!-- End .header-right -->
                 </div>
@@ -347,7 +306,7 @@
 <!--            <nav aria-label="breadcrumb" class="breadcrumb-nav">-->
 <!--                <div class="container-fluid">-->
 <!--                    <ol class="breadcrumb">-->
-<!--                        <li class="breadcrumb-item"><a href="demo6.html">Trang Chủ</a></li>-->
+<!--                        <li class="breadcrumb-item"><a href="home.html">Trang Chủ</a></li>-->
 <!--                        <li class="breadcrumb-item"><a href="#">Men</a></li>-->
 <!--                        <li class="breadcrumb-item active" aria-current="page">Accessories</li>-->
 <!--                    </ol>-->
@@ -466,7 +425,7 @@
                     <!-- End .toolbox-item -->
 
                     <div class="toolbox-item layout-modes">
-                        <a href="demo6-shop.html" class="layout-btn btn-grid active" title="Grid">
+                        <a href="shop.html" class="layout-btn btn-grid active" title="Grid">
                             <i class="icon-mode-grid"></i>
                         </a>
                         <a href="category-list.html" class="layout-btn btn-list" title="List">
@@ -497,7 +456,7 @@
                             <div class="product-details">
                                 <div class="category-wrap">
                                     <div class="category-list">
-                                        <a href="demo6-shop.html" class="product-category">clothing</a>
+                                        <a href="shop.html" class="product-category">clothing</a>
                                     </div>
                                     <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
                                             class="icon-heart"></i></a>
@@ -787,9 +746,9 @@
             <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li><a href="demo6.html">Trang Chủ</a></li>
+                    <li><a href="home.html">Trang Chủ</a></li>
                     <li>
-                        <a href="demo6-shop.html">Phân Loại</a>
+                        <a href="shop.html">Phân Loại</a>
                         <ul>
                             <li><a href="category.html">Full Width Banner</a></li>
                             <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
@@ -811,7 +770,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="demo6-product.html">Sản Phẩm</a>
+                        <a href="product.html">Sản Phẩm</a>
                         <ul>
                             <li>
                                 <a href="#" class="nolink">PRODUCT PAGES</a>
@@ -927,12 +886,12 @@
 
     <div class="sticky-navbar">
         <div class="sticky-info">
-            <a href="demo6.html">
+            <a href="home.html">
                 <i class="icon-home"></i>Trang Chủ
             </a>
         </div>
         <div class="sticky-info">
-            <a href="demo6-shop.html" class="">
+            <a href="shop.html" class="">
                 <i class="icon-bars"></i>Phân Loại
             </a>
         </div>
@@ -996,17 +955,62 @@
     </script>
 
     <!-- Plugins JS File -->
-    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/nouislider.min.js"></script>
-    <script src="assets/js/jquery.appear.min.js"></script>
+    <script data-cfasync="false" th:src="@{../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
+    <script th:src="@{assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/plugins.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.appear.min.js}"></script>
+    <script>
+        function removeCartItemAjax(itemId, element) {
+            console.log("Đang gọi hàm xóa cho ID:", itemId); // Kiểm tra xem hàm có chạy không
 
+            // Sử dụng đường dẫn tương đối chính xác
+            fetch('/cart/api/remove/' + itemId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    console.log("Phản hồi từ Server:", response.status);
+                    if (!response.ok) {
+                        throw new Error('Mạng hoặc Server gặp lỗi (Code: ' + response.status + ')');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dữ liệu nhận được:", data);
+                    if (data.success) {
+                        // Xóa phần tử trên giao diện
+                        const productItem = element.closest('.product');
+                        if (productItem) {
+                            productItem.remove();
+                        }
+
+                        // Cập nhật số lượng Badge
+                        const badge = document.querySelector('.cart-count');
+                        if (badge) badge.innerText = data.cartCount;
+
+                        // Cập nhật tổng tiền
+                        const totalPrice = document.querySelector('.cart-total-price');
+                        if (totalPrice) {
+                            totalPrice.innerText = new Intl.NumberFormat('vi-VN').format(data.newTotal) + 'đ';
+                        }
+                    } else {
+                        alert("Lỗi: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi Fetch:", error);
+                    alert("Có lỗi xảy ra khi gửi yêu cầu xóa.");
+                });
+        }
+    </script>
     <!-- Main JS File -->
-    <script src="assets/js/main.min.js"></script>
+    <script th:src="@{/assets/js/main.min.js}"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83b5283c190a04',t:'MTc2NDc3MTY1Ng=='};var a=document.createElement('script');a.src='../../cdn-cgi/challenge-platform/h/b/scripts/jsd/13c98df4ef2d/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 
-<!-- Mirrored from portotheme.com/html/porto_ecommerce/demo6-shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:44 GMT -->
+<!-- Mirrored from portotheme.com/html/porto_ecommerce/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:44 GMT -->
 </html>

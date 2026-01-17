@@ -62,6 +62,6 @@ public class ShopController {
         model.addAttribute("minPrice", minPrice); // <-- THÊM
         model.addAttribute("maxPrice", maxPrice); // <-- THÊM
 
-        return "demo6-shop";
+        return "shop";
     }
 }

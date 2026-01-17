@@ -5,13 +5,16 @@ package com.example.fsstore.controller;
 import com.example.fsstore.entity.Cart;
 import com.example.fsstore.service.CartService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List; // ⭐ Cần import List
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cart")
@@ -137,5 +140,28 @@ public class CartController {
         }
 
         return "redirect:/cart";
+    }
+
+    // Trong CartController.java
+    @Transactional
+    @PostMapping("/api/remove/{itemId}") // Kiểm tra kỹ đường dẫn này
+    @ResponseBody
+    public ResponseEntity<?> removeCartItemAjax(@PathVariable("itemId") Long itemId, HttpSession session) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            boolean success = cartService.removeCartItem(itemId);
+            if (success) {
+                Long cartId = (Long) session.getAttribute("cartId");
+                Cart cart = cartService.getOrCreateCart(cartId);
+
+                response.put("success", true);
+                response.put("newTotal", cart.getTotal());
+                response.put("cartCount", cart.getItems().size());
+                return ResponseEntity.ok(response);
+            }
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Không tìm thấy sản phẩm"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("success", false, "message", e.getMessage()));
+        }
     }
 }

@@ -28,7 +28,9 @@ public class User {
     private String avatar;
     private String role; // "ROLE_USER" hoặc "ROLE_ADMIN"
 
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String firstName;
     private String lastName;
     private String phone;

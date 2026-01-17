@@ -40,7 +40,7 @@ public class HomeController {
 
         model.addAttribute("featuredProducts", allFeaturedProducts);
 
-        return "demo6";
+        return "home";
     }
 
 }
