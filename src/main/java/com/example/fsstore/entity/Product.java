@@ -10,11 +10,11 @@ import lombok.ToString; // Cần import này
 
 @Entity
 @Table(name = "product")
-@Getter // Tạo getters cho tất cả fields
-@Setter // Tạo setters cho tất cả fields
-@NoArgsConstructor // Thêm constructor không đối số
-@AllArgsConstructor // Thêm constructor đầy đủ đối số
-// ⭐ FIX LOMBOK: Ngăn Lombok tạo toString/equals/hashCode nguy hiểm (mặc dù Product không có Lazy fields, đây là thói quen tốt)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = false)
 public class Product {
@@ -46,9 +46,6 @@ public class Product {
     @Column(name = "product_type")
     private String productType;
 
-    // Lưu ý: Các phương thức Getter/Setter tùy chỉnh của bạn ở dưới
-    // vẫn được giữ nguyên và sẽ ghi đè lên các hàm do Lombok tạo nếu có.
-
     // Thêm getters và setters cho productType:
     public String getProductType() {
         return productType;
@@ -67,7 +64,7 @@ public class Product {
     }
 
     public String getImageUrl() {
-        // Đảm bảo loại bỏ khoảng trắng thừa ở đầu và cuối chuỗi
+
         if (this.imageUrl != null) {
             return this.imageUrl.trim();
         }

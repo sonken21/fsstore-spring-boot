@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Porto - Shopping Cart</title>
+    <title>FSStore - Shopping Cart</title>
 
     <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="description" content="FSStore - Bootstrap eCommerce Template">
     <meta name="author" content="SW-THEMES">
 
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.jpg}">
 
     <script>
         WebFontConfig = {
@@ -52,8 +52,8 @@
             <div class="header-dropdown dropdown-expanded d-none d-lg-block">
                 <div class="header-menu">
                     <ul>
-                        <li><a th:href="@{/dashboard}">Tài Khoản Của Tôi</a></li>
-                        <li><a th:href="@{/about}">About Us</a></li>
+                        <li><a th:href="@{/account}">Tài Khoản Của Tôi</a></li>
+                        <li><a th:href="@{/}">About Us</a></li>
                         <li><a th:href="@{/wishlist}">Yêu Thích</a></li>
                         <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
                         <li><a th:href="@{/login}" class="login-link">Đăng Nhập</a></li>
@@ -67,7 +67,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <a th:href="@{/}" class="logo">
-                <img th:src="@{/assets/images/logo_black.png}" width="111" height="44" alt="Porto Logo">
+                <img th:src="@{/assets/images/logo_black.png}" width="111" height="44" alt="FS logo">
             </a>
         </div><div class="header-right w-lg-max">
         <div class="header-icon header-search header-search-inline header-search-category w-lg-max text-right mt-0">
@@ -89,7 +89,16 @@
         <img alt="phone" th:src="@{/assets/images/phone.png}" width="30" height="30" class="pb-1">
         <h6><span>Call us now</span><a href="tel:#" class="text-dark font1">0343291216</a></h6>
     </div>
-        <a th:href="@{/login}" class="header-icon" title="login"><i class="icon-user-2"></i></a>
+        <div class="user-info-wrapper d-flex align-items-center">
+                    <span sec:authorize="isAuthenticated()" style="margin-right: 10px; font-size: 13px; white-space: nowrap;" class="d-none d-sm-inline">
+                        Chào, <strong sec:authentication="name" class="text-primary">User</strong>
+                    </span>
+
+            <a th:href="@{/account}" class="header-icon header-icon-user">
+                <i class="icon-user-2"></i>
+            </a>
+
+        </div>
 
         <a th:href="@{/wishlist}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
 
@@ -161,24 +170,41 @@
                     <a th:href="@{/}">Trang Chủ</a>
                 </li>
                 <li>
-                    <a th:href="@{/category}">Phân Loại</a>
+                    <a th:href="@{/shop}">Phân Loại</a>
                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                         <div class="row">
                             <div class="col-lg-4">
-                                <a href="#" class="nolink">VARIATION 1</a>
+                                <a href="#" class="nolink">ĐỐI TƯỢNG</a>
                                 <ul class="submenu">
-                                    <li><a th:href="@{/category}">Fullwidth Banner</a></li>
-                                    <li><a th:href="@{/category-banner-boxed-slider}">Boxed Slider Banner</a>
+                                    <li>
+                                        <a th:href="@{/shop(cat='Nam')}">Nam</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/shop(cat='Nữ')}">Nữ</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/shop}">Tất cả sản phẩm</a>
                                     </li>
                                 </ul>
                             </div>
+
                             <div class="col-lg-4">
-                                <a href="#" class="nolink">VARIATION 2</a>
+                                <a href="#" class="nolink">DANH MỤC</a>
+                                <ul class="submenu">
+                                    <li><a th:href="@{/shop(cat='Áo')}">Áo</a></li>
+                                    <li><a th:href="@{/shop(cat='Quần')}">Quần</a></li>
+                                    <li><a th:href="@{/shop(cat='Váy')}">Váy</a></li>
+                                    <li><a th:href="@{/shop(cat='Giày')}">Giày</a></li>
+                                    <li><a th:href="@{/shop(cat='Túi xách')}">Túi xách</a></li>
+                                    <li><a th:href="@{/shop(cat='Đồng hồ')}">Đồng hồ</a></li>
+                                    <li><a th:href="@{/shop(cat='Thắt lưng')}">Thắt lưng</a></li>
+                                </ul>
                             </div>
+
                             <div class="col-lg-4 p-0">
                                 <div class="menu-banner">
                                     <figure>
-                                        <img th:src="@{/assets/images/menu-banner.jpg}" width="192" height="313" alt="Menu banner">
+                                        <img th:src="@{/assets/images/menu-banner.jpg}" alt="Menu banner" width="300" height="300">
                                     </figure>
                                     <div class="banner-content">
                                         <h4>
@@ -186,29 +212,23 @@
                                             <b class="">50%</b>
                                             <i>OFF</i>
                                         </h4>
-                                        <a th:href="@{/category}" class="btn btn-sm btn-dark">Mua Ngay</a>
+                                        <a th:href="@{/shop}" class="btn btn-sm btn-dark">MUA NGAY</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div></li>
-                <li>
-                    <a th:href="@{/product}">Sản Phẩm</a>
-                    <div class="megamenu megamenu-fixed-width">
-                    </div></li>
+                    </div>
+                </li>
                 <li class="help">
                     <a href="#">Trợ Giúp</a>
                     <ul>
                         <li><a th:href="@{/wishlist}">Yêu Thích</a></li>
                         <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
-                        <li><a th:href="@{/checkout}">Thanh Toán</a></li>
-                        <li><a th:href="@{/about}">About Us</a></li>
-                        <li><a th:href="@{/contact}">Liên Hệ</a></li>
+                        <li><a th:href="@{/}">About Us</a></li>
                         <li><a th:href="@{/login}">Đăng Nhập</a></li>
                         <li><a th:href="@{/forgot-password}">Quên Mật Khẩu</a></li>
                     </ul>
                 </li>
-                <li><a th:href="@{/contact}">Liên Hệ</a></li>
             </ul>
         </nav>
     </div></div></header>
@@ -256,16 +276,7 @@
                                 <tr>
                                     <td colspan="5" class="clearfix">
                                         <div class="float-left">
-                                            <div class="cart-discount">
-                                                <form action="#">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                               placeholder="Mã Ưu Đãi">
-                                                        <div class="input-group-append">
-                                                            <button class="btn btn-sm" type="submit">Áp Dụng</button>
-                                                        </div>
-                                                    </div></form>
-                                            </div>
+
                                         </div><div class="float-right">
 
                                         <button type="submit" class="btn btn-shop btn-update-cart">
@@ -318,14 +329,15 @@
 </div>
 
 <div class="mobile-menu-overlay"></div><div class="mobile-menu-container">
-</div><div class="sticky-navbar">
+</div>
+<div class="sticky-navbar">
     <div class="sticky-info">
         <a th:href="@{/}">
             <i class="icon-home"></i>Trang Chủ
         </a>
     </div>
     <div class="sticky-info">
-        <a th:href="@{/category}" class="">
+        <a th:href="@{/shop}" class="">
             <i class="icon-bars"></i>Phân Loại
         </a>
     </div>
@@ -335,7 +347,7 @@
         </a>
     </div>
     <div class="sticky-info">
-        <a th:href="@{/login}" class="">
+        <a th:href="@{/account}" class="">
             <i class="icon-user-2"></i>Tài Khoản
         </a>
     </div>

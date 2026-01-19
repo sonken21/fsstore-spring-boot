@@ -23,7 +23,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    // Đường dẫn thư mục lưu ảnh (tương đối từ gốc dự án)
+    // Đường dẫn thư mục lưu ảnh
     private final String UPLOAD_DIR = "src/main/resources/static/assets/images/demoes/demo6/products/";
 
     @Autowired
@@ -56,7 +56,7 @@ public class ProductService {
                     Files.createDirectories(uploadPath);
                 }
 
-                // Đổi tên file để tránh trùng lặp (ví dụ: uuid_tenfile.jpg)
+                // Đổi tên file để tránh trùng lặp
                 String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
                 Path filePath = uploadPath.resolve(fileName);
 
@@ -73,7 +73,7 @@ public class ProductService {
     }
 
     // -----------------------------------------------------------
-    // CÁC PHƯƠNG THỨC HIỆN TẠI CỦA BẠN (GIỮ NGUYÊN)
+
     // -----------------------------------------------------------
 
     @Transactional(readOnly = true)
@@ -128,7 +128,7 @@ public class ProductService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            // Sử dụng phương thức có sẵn trong Repository của bạn (trả về Page)
+            // Sử dụng phương thức có sẵn trong Repository (trả về Page)
             return productRepository.findByNameContainingIgnoreCase(keyword.trim(), pageable);
         }
 

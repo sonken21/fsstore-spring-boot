@@ -20,18 +20,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findTop10ByOrderByRatingDesc();
     // Lấy sp sắp hết hàng
     List<Product> findByStockLessThanOrderByStockAsc(int threshold);
-    // PHƯƠNG THỨC ĐÃ TỐI ƯU: Sử dụng LOWER() cho các điều kiện String
+
     @Query("SELECT p FROM Product p WHERE " +
-            // Điều kiện 1: Tìm kiếm theo Keyword (sử dụng LOWER() cho cả hai)
+            // Điều kiện 1: Tìm kiếm theo Keyword
             "(:keyword IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
 
-            // Điều kiện 2: Lọc theo Category/Gender/Type (sử dụng LOWER() cho tất cả String)
+            // Điều kiện 2: Lọc theo Category/Gender/Type
             "(:filterValue IS NULL OR LOWER(p.gender) = LOWER(:filterValue) OR LOWER(p.productType) = LOWER(:filterValue)) AND " +
 
-            // Điều kiện 3: Lọc theo Giá Tối thiểu (không thay đổi)
+            // Điều kiện 3: Lọc theo Giá Tối thiểu
             "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
 
-            // Điều kiện 4: Lọc theo Giá Tối đa (không thay đổi)
+            // Điều kiện 4: Lọc theo Giá Tối đa
             "(:maxPrice IS NULL OR p.price <= :maxPrice)"
     )
     Page<Product> findFilteredProducts(

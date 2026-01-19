@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByUserOrderByOrderDateDesc(User user);
-    // Lấy tổng doanh thu của một ngày cụ thể (Dùng Native Query để dễ xử lý DATE)
+    // Lấy tổng doanh thu của một ngày cụ thể
     @Query(value = "SELECT SUM(order_total) FROM orders WHERE CAST(order_date AS DATE) = :date", nativeQuery = true)
     Double getTotalRevenueByDate(@Param("date") LocalDate date);
 

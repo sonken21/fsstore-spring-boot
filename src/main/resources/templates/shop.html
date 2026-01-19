@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-
-<!-- Mirrored from portotheme.com/html/porto_ecommerce/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:42 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Porto - Bootstrap eCommerce Template</title>
+    <title>FSStore - Bootstrap eCommerce Template</title>
 
     <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="description" content="FSStore - Bootstrap eCommerce Template">
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.jpg}">
 
 
     <script>
@@ -50,48 +47,41 @@
                     <div class="header-left flex-1 d-none d-xl-flex">
                         <nav class="main-nav w-100">
                             <ul class="menu ls-n-10">
-                                <li>
-                                    <a href="home.html" class="pl-4">Trang Chủ</a>
-                                </li>
                                 <li class="active">
-                                    <a href="shop.html">Phân Loại</a>
+                                    <a th:href="@{/#}" class="pl-4">Trang Chủ</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/shop}">Phân Loại</a>
                                     <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                         <div class="row">
                                             <div class="col-lg-4">
-                                                <a href="#" class="nolink">VARIATION 1</a>
+                                                <a href="#" class="nolink">ĐỐI TƯỢNG</a>
                                                 <ul class="submenu">
-                                                    <li><a href="category.html">Fullwidth Banner</a></li>
-                                                    <li><a href="category-banner-boxed-slider.html">Boxed Slider
-                                                            Banner</a>
+                                                    <li>
+                                                        <a th:href="@{/shop(cat='Nam')}">Nam</a>
                                                     </li>
-                                                    <li><a href="category-banner-boxed-image.html">Boxed Image
-                                                            Banner</a>
+                                                    <li>
+                                                        <a th:href="@{/shop(cat='Nữ')}">Nữ</a>
                                                     </li>
-                                                    <li><a href="category.html">Left Sidebar</a></li>
-                                                    <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                                                    <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
-                                                    <li><a href="category-horizontal-filter1.html">Horizontal
-                                                            Filter1</a>
-                                                    </li>
-                                                    <li><a href="category-horizontal-filter2.html">Horizontal
-                                                            Filter2</a>
+                                                    <li>
+                                                        <a th:href="@{/shop}">Tất cả sản phẩm</a>
                                                     </li>
                                                 </ul>
                                             </div>
+
                                             <div class="col-lg-4">
-                                                <a href="#" class="nolink">VARIATION 2</a>
+                                                <a href="#" class="nolink">DANH MỤC</a>
                                                 <ul class="submenu">
-                                                    <li><a href="category-list.html">List Types</a></li>
-                                                    <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a>
-                                                    </li>
-                                                    <li><a href="category.html">3 Columns Products</a></li>
-                                                    <li><a href="category-4col.html">4 Columns Products</a></li>
-                                                    <li><a href="category-5col.html">5 Columns Products</a></li>
-                                                    <li><a href="category-6col.html">6 Columns Products</a></li>
-                                                    <li><a href="category-7col.html">7 Columns Products</a></li>
-                                                    <li><a href="category-8col.html">8 Columns Products</a></li>
+                                                    <li><a th:href="@{/shop(cat='Áo')}">Áo</a></li>
+                                                    <li><a th:href="@{/shop(cat='Quần')}">Quần</a></li>
+                                                    <li><a th:href="@{/shop(cat='Váy')}">Váy</a></li>
+                                                    <li><a th:href="@{/shop(cat='Giày')}">Giày</a></li>
+                                                    <li><a th:href="@{/shop(cat='Túi xách')}">Túi xách</a></li>
+                                                    <li><a th:href="@{/shop(cat='Đồng hồ')}">Đồng hồ</a></li>
+                                                    <li><a th:href="@{/shop(cat='Thắt lưng')}">Thắt lưng</a></li>
                                                 </ul>
                                             </div>
+
                                             <div class="col-lg-4 p-0">
                                                 <div class="menu-banner">
                                                     <figure>
@@ -103,87 +93,31 @@
                                                             <b class="">50%</b>
                                                             <i>OFF</i>
                                                         </h4>
-                                                        <a href="category.html" class="btn btn-sm btn-dark">Mua Ngay</a>
+                                                        <a th:href="@{/shop}" class="btn btn-sm btn-dark">MUA NGAY</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- End .megamenu -->
-                                </li>
-                                <li>
-                                    <a href="product.html">Sản Phẩm</a>
-                                    <div class="megamenu megamenu-fixed-width">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <a href="#" class="nolink">PRODUCT PAGES</a>
-                                                <ul class="submenu">
-                                                    <li><a href="product.html">SIMPLE PRODUCT</a></li>
-                                                    <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
-                                                    <li><a href="product.html">SALE PRODUCT</a></li>
-                                                    <li><a href="product.html">FEATURED & ON SALE</a></li>
-                                                    <li><a href="product-custom-tab.html">WITH CUSTOM TAB</a></li>
-                                                    <li><a href="product-sidebar-left.html">WITH LEFT SIDEBAR</a></li>
-                                                    <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
-                                                    <li><a href="product-addcart-sticky.html">ADD CART STICKY</a></li>
-                                                </ul>
-                                            </div>
-                                            <!-- End .col-lg-4 -->
-
-                                            <div class="col-lg-4">
-                                                <a href="#" class="nolink">PRODUCT LAYOUTS</a>
-                                                <ul class="submenu">
-                                                    <li><a href="product-extended-layout.html">EXTENDED LAYOUT</a></li>
-                                                    <li><a href="product-grid-layout.html">GRID IMAGE</a></li>
-                                                    <li><a href="product-full-width.html">FULL WIDTH LAYOUT</a></li>
-                                                    <li><a href="product-sticky-info.html">STICKY INFO</a></li>
-                                                    <li><a href="product-sticky-both.html">LEFT & RIGHT STICKY</a></li>
-                                                    <li><a href="product-transparent-image.html">TRANSPARENT IMAGE</a>
-                                                    </li>
-                                                    <li><a href="product-center-vertical.html">CENTER VERTICAL</a></li>
-                                                    <li><a href="#">BUILD YOUR OWN</a></li>
-                                                </ul>
-                                            </div>
-                                            <!-- End .col-lg-4 -->
-
-                                            <div class="col-lg-4 p-0">
-                                                <div class="menu-banner menu-banner-2">
-                                                    <figure>
-                                                        <img th:src="@{/assets/images/menu-banner-1.jpg}" alt="Menu banner" class="product-promo" width="380" height="790">
-                                                    </figure>
-                                                    <i>OFF</i>
-                                                    <div class="banner-content">
-                                                        <h4>
-                                                            <span class="">UP TO</span><br />
-                                                            <b class="">50%</b>
-                                                        </h4>
-                                                    </div>
-                                                    <a href="category.html" class="btn btn-sm btn-dark">Mua Ngay</a>
-                                                </div>
-                                            </div>
-                                            <!-- End .col-lg-4 -->
-                                        </div>
-                                        <!-- End .row -->
-                                    </div>
-                                    <!-- End .megamenu -->
                                 </li>
                                 <li>
                                     <a href="#">Trợ Giúp</a>
                                     <ul>
-                                        <li><a href="wishlist.html">Yêu Thích</a></li>
-                                        <li><a href="cart.html">Giỏ Hàng</a></li>
-                                        <li><a href="checkout.html">Thanh Toán</a></li>
-                                        <li><a href="dashboard.html">Dashboard</a></li>
-                                        <li><a href="demo6-about.html">About Us</a></li>
-                                        <li><a href="#">Blog</a>
-                                            <ul>
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="single.html">Blog Post</a></li>
-                                            </ul>
+                                        <li>
+                                            <a th:href="@{/wishlist}">Yêu thích</a>
                                         </li>
-                                        <li><a href="demo6-contact.html">Liên Hệ</a></li>
-                                        <li><a href="login.html">Đăng Nhập</a></li>
-                                        <li><a href="forgot-password.html">Quên Mật Khẩu</a></li>
+                                        <li>
+                                            <a th:href="@{/cart}">Giỏ hàng</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/order/checkout}">Thanh toán</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/login}">Đăng Ký</a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/forgot-password}">Quên mật khẩu</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -192,7 +126,7 @@
                     <!-- End .header-left -->
 
                     <div class="header-center ml-0 ml-xl-auto">
-                        <a href="home.html" class="logo logo-transition">
+                        <a th:href="@{/}" class="logo logo-transition">
                             <img th:src="@{/assets/images/logo_black.png}" width="113" height="46" alt="Porto" />
                         </a>
                     </div>
@@ -203,8 +137,17 @@
                             <i class="fas fa-bars"></i>
                         </button>
 
-                        <a href="login.html" class="header-icon header-icon-user"><i class="icon-user-2"></i></a>
-                        <a href="#" class="header-icon"><i class="icon-wishlist-2"></i></a>
+                        <div class="user-info-wrapper d-flex align-items-center">
+                    <span sec:authorize="isAuthenticated()" style="margin-right: 10px; font-size: 13px; white-space: nowrap;" class="d-none d-sm-inline">
+                        Chào, <strong sec:authentication="name" class="text-primary">User</strong>
+                    </span>
+
+                            <a th:href="@{/account}" class="header-icon header-icon-user">
+                                <i class="icon-user-2"></i>
+                            </a>
+
+                        </div>
+                        <a th:href="@{/wishlist}" class="header-icon"><i class="icon-wishlist-2"></i></a>
                         <div class="header-search header-search-popup header-search-category d-none d-sm-block">
                             <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
                             <form th:action="@{/shop}" method="get">
@@ -287,6 +230,7 @@
                 <!-- End .container-fluid -->
             </div>
             <!-- End .header-middle -->
+            </div>
         </header>
         <!-- End .header -->
 
@@ -408,30 +352,8 @@
                         <!-- End .toolbox-item -->
                     </aside>
                     <!-- End .toolbox-left -->
-
-                    <div class="toolbox-item toolbox-show ml-auto">
-                        <label>Show:</label>
-
-                        <div class="select-custom">
-                            <select name="count" class="form-control">
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="40">40</option>
-                                <option value="50">50</option>
-                            </select>
-                        </div>
-                        <!-- End .select-custom -->
-                    </div>
                     <!-- End .toolbox-item -->
 
-                    <div class="toolbox-item layout-modes">
-                        <a href="shop.html" class="layout-btn btn-grid active" title="Grid">
-                            <i class="icon-mode-grid"></i>
-                        </a>
-                        <a href="category-list.html" class="layout-btn btn-list" title="List">
-                            <i class="icon-mode-list"></i>
-                        </a>
-                    </div>
                     <!-- End .layout-modes -->
                 </nav>
 
@@ -446,21 +368,8 @@
 
                                 </a>
 
-                                <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">Quick
-                                    View</a>
                             </figure>
                             <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="shop.html" class="product-category">clothing</a>
-                                    </div>
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                </div>
 
                                 <h3 class="product-title">
                                     <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}">Tên sản phẩm</a>
@@ -569,60 +478,23 @@
             </div>
         </main>
         <!-- End .main -->
-        <footer class="footer">
-            <div class=" container-fluid">
-                <div class="footer-top">
-                    <div class="widget widget-newsletter">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12 col-9">
-                                <h4 class="widget-title">Subscribe newsletter</h4>
-                                <p>Get all the latest information on Events, Sales and Offers. Sign up for newsletter today.
-                                </p>
-                            </div>
-                            <!-- End .col-lg-6 -->
-
-                            <div class="col-lg-6 col-md-6 col-sm-7 d-flex align-items-center">
-                                <form action="#" class="d-flex w-100 pb-2">
-                                    <input type="email" class="form-control mb-0" placeholder="Enter Your Địa chỉ email" required />
-                                    <button type="submit" class="btn btn-primary text-white">Subscribe</button>
-                                </form>
-                            </div>
-                            <!-- End .col-lg-6 -->
-
-                            <div class="col-lg-2 col-md-12 col-sm-5 widget-social d-flex align-items-center justify-content-lg-end justify-content-start mt-2 mb-1 mb-sm-0 mt-sm-0">
-                                <div class="social-icons pb-1">
-                                    <a href="#" class="social-icon" target="_blank"><i class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" target="_blank"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" target="_blank"><i class="icon-facebook"></i></a>
-                                </div>
-                                <!-- End .social-icons -->
-                            </div>
-                            <!-- End .col-md-3 -->
-                        </div>
-                        <!-- End .row -->
-                    </div>
-                    <!-- End .widget -->
-                </div>
-                <!-- End .footer-top -->
-            </div>
-            <!-- End .container-fluid -->
+        <footer class="footer appear-animate">
 
             <div class="footer-middle">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="widget">
-                                <h4 class="widget-title pb-2 mb-1">Contact Info</h4>
+                                <h4 class="widget-title pb-2 mb-1">Liên hệ</h4>
                                 <ul class="contact-info">
                                     <li>
-                                        <span class="contact-info-label">Address:</span>1234 Street Name, City, England
+                                        <span class="contact-info-label">Địa chỉ:</span>68 Cầu Giấy, Hà Nội
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:">(123)
-                                            456-7890</a>
+                                        <span class="contact-info-label">Điện thoại:</span> <a href="tel:">0343291216</a>
                                     </li>
                                     <li>
-                                        <span class="contact-info-label">Email:</span> <a href="https://portotheme.com/cdn-cgi/l/email-protection#a1ccc0c8cde1c4d9c0ccd1cdc48fc2cecc"><span class="__cf_email__" data-cfemail="5a373b33361a3f223b372a363f74393537">[email&#160;protected]</span></a>
+                                        <span class="contact-info-label">Email:</span> <a href="https://portotheme.com/cdn-cgi/l/email-protection#e18c80888da18499808c918d84cf828e8c"><span class="__cf_email__" data-cfemail="701d11191c301508111d001c155e131f1d">son.nb194155@sis.hust.edu.vn</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -634,22 +506,21 @@
                             <div class="row footer-content">
                                 <div class="col-lg-4">
                                     <div class="widget">
-                                        <h4 class="widget-title">Tài Khoản Của Tôi</h4>
+                                        <h4 class="widget-title">Tài Khoản</h4>
 
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <ul class="links mb-0">
-                                                    <li><a href="demo6-about.html">About us</a></li>
-                                                    <li><a href="demo6-contact.html">Liên Hệ</a></li>
-                                                    <li><a href="dashboard.html">Tài Khoản Của Tôi</a></li>
+                                                    <li><a th:href="@{/}">About us</a></li>
+                                                    <li><a th:href="@{/account}">Tài khoản của tôi</a></li>
                                                 </ul>
                                             </div>
                                             <!-- End .col-sm-6 -->
+
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Order history</a></li>
-                                                    <li><a href="#">Advanced search</a></li>
-                                                    <li><a href="login.html">Đăng Nhập</a></li>
+                                                    <li><a th:href="@{/order-history}">Lịch sử đặt hàng</a></li>
+                                                    <li><a th:href="@{/login}">Đăng ký</a></li>
                                                 </ul>
                                             </div>
                                             <!-- End .col-sm-6 -->
@@ -659,40 +530,12 @@
                                     <!-- End .widget -->
                                 </div>
                                 <!-- End .col-md-4 -->
-
-                                <div class="col-lg-5 mb-sm-2">
-                                    <div class="widget">
-                                        <h4 class="widget-title">Main Features</h4>
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <ul class="links mb-0">
-                                                    <li><a href="#">Super Fast HTML Template</a></li>
-                                                    <li><a href="#">1st Fully working Ajax Theme</a></li>
-                                                    <li><a href="#">33 Unique Shop Layouts</a></li>
-                                                </ul>
-                                            </div>
-                                            <!-- End .col-sm-6 -->
-                                            <div class="col-sm-6">
-                                                <ul class="links">
-                                                    <li><a href="#">Powerful Admin Panel</a></li>
-                                                    <li><a href="#">Mobile & Retina Optimized</a></li>
-                                                </ul>
-                                            </div>
-                                            <!-- End .col-sm-6 -->
-                                        </div>
-                                        <!-- End .row -->
-                                    </div>
-                                    <!-- End .widget -->
-                                </div>
-                                <!-- End .col-md-5 -->
-
                                 <div class="col-lg-3">
                                     <div class="widget widget-time">
-                                        <h4 class="widget-title mb-1">Working Days/Hours</h4>
+                                        <h4 class="widget-title mb-1">Ngày/Giờ làm việc</h4>
                                         <ul class="contact-info">
                                             <li>
-                                                Mon - Sun / 9:00AM - 8:00PM
+                                                T2 - CN / 9:00AM - 8:00PM
                                             </li>
                                         </ul>
                                     </div>
@@ -703,9 +546,6 @@
                             <!-- End .row -->
 
                             <div class="footer-bottom d-sm-flex align-items-center">
-                                <div class="footer-left">
-                                    <span class="footer-copyright">Porto eCommerce. © 2021 All Rights Reserved</span>
-                                </div>
 
                                 <div class="footer-right ml-auto mt-1 mt-sm-0">
                                     <div class="payment-icons mr-0">
@@ -746,128 +586,60 @@
             <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li><a href="home.html">Trang Chủ</a></li>
+                    <li><a th:href="@{/}">Trang Chủ</a></li>
                     <li>
-                        <a href="shop.html">Phân Loại</a>
+                        <a th:href="@{/shop}">Phân Loại</a>
                         <ul>
-                            <li><a href="category.html">Full Width Banner</a></li>
-                            <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-                            <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-                            <li><a href="https://www.portotheme.com/html/porto_ecommerce/category-sidebar-left.html">Left Sidebar</a></li>
-                            <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                            <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
-                            <li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
-                            <li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
-                            <li><a href="#">List Types</a></li>
-                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll<span
-                                        class="tip tip-new">New</span></a></li>
-                            <li><a href="category.html">3 Columns Products</a></li>
-                            <li><a href="category-4col.html">4 Columns Products</a></li>
-                            <li><a href="category-5col.html">5 Columns Products</a></li>
-                            <li><a href="category-6col.html">6 Columns Products</a></li>
-                            <li><a href="category-7col.html">7 Columns Products</a></li>
-                            <li><a href="category-8col.html">8 Columns Products</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="product.html">Sản Phẩm</a>
-                        <ul>
-                            <li>
-                                <a href="#" class="nolink">PRODUCT PAGES</a>
-                                <ul>
-                                    <li><a href="product.html">SIMPLE PRODUCT</a></li>
-                                    <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
-                                    <li><a href="product.html">SALE PRODUCT</a></li>
-                                    <li><a href="product.html">FEATURED & ON SALE</a></li>
-                                    <li><a href="product-sticky-info.html">WIDTH CUSTOM TAB</a></li>
-                                    <li><a href="product-sidebar-left.html">WITH LEFT SIDEBAR</a></li>
-                                    <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
-                                    <li><a href="product-addcart-sticky.html">ADD CART STICKY</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#" class="nolink">PRODUCT LAYOUTS</a>
-                                <ul>
-                                    <li><a href="product-extended-layout.html">EXTENDED LAYOUT</a></li>
-                                    <li><a href="product-grid-layout.html">GRID IMAGE</a></li>
-                                    <li><a href="product-full-width.html">FULL WIDTH LAYOUT</a></li>
-                                    <li><a href="product-sticky-info.html">STICKY INFO</a></li>
-                                    <li><a href="product-sticky-both.html">LEFT & RIGHT STICKY</a></li>
-                                    <li><a href="product-transparent-image.html">TRANSPARENT IMAGE</a></li>
-                                    <li><a href="product-center-vertical.html">CENTER VERTICAL</a></li>
-                                    <li><a href="#">BUILD YOUR OWN</a></li>
-                                </ul>
-                            </li>
+                            <li style="font-weight: bold; padding-left: 15px; color: #fff; margin-top: 10px;">ĐỐI TƯỢNG</li>
+                            <li><a th:href="@{/shop(cat='Nam')}">Thời trang Nam</a></li>
+                            <li><a th:href="@{/shop(cat='Nữ')}">Thời trang Nữ</a></li>
+
+                            <li><hr class="dropdown-divider"></li> <li style="font-weight: bold; padding-left: 15px; color: #fff;">DANH MỤC</li>
+                            <li><a th:href="@{/shop(cat='Áo')}">Các loại Áo</a></li>
+                            <li><a th:href="@{/shop(cat='Quần')}">Các loại Quần</a></li>
+                            <li><a th:href="@{/shop(cat='Váy')}">Váy & Đầm</a></li>
+                            <li><a th:href="@{/shop(cat='Giày')}">Giày dép</a></li>
+                            <li><a th:href="@{/shop(cat='Túi xách')}">Túi xách</a></li>
+                            <li><a th:href="@{/shop(cat='Đồng hồ')}">Đồng hồ</a></li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li><a th:href="@{/shop}" style="font-weight: bold; color: #0088cc;">Tất Cả Sản Phẩm</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">Trợ Giúp<span class="tip tip-hot">Hot!</span></a>
                         <ul>
                             <li>
-                                <a href="wishlist.html">Yêu Thích</a>
+                                <a th:href="@{/order/checkout}">Thanh toán</a>
                             </li>
                             <li>
-                                <a href="cart.html">Giỏ Hàng</a>
+                                <a th:href="@{/login}">Đăng Ký</a>
                             </li>
                             <li>
-                                <a href="checkout.html">Thanh Toán</a>
-                            </li>
-                            <li>
-                                <a href="dashboard.html">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Đăng Nhập</a>
-                            </li>
-                            <li>
-                                <a href="forgot-password.html">Quên Mật Khẩu</a>
+                                <a th:href="@{/forgot-password}">Quên mật khẩu</a>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li>
-                        <a href="#">Elements</a>
-                        <ul class="custom-scrollbar">
-                            <li><a href="element-accordions.html">Accordion</a></li>
-                            <li><a href="element-alerts.html">Alerts</a></li>
-                            <li><a href="element-animations.html">Animations</a></li>
-                            <li><a href="element-banners.html">Banners</a></li>
-                            <li><a href="element-buttons.html">Buttons</a></li>
-                            <li><a href="element-call-to-action.html">Call to Action</a></li>
-                            <li><a href="element-countdown.html">Count Down</a></li>
-                            <li><a href="element-counters.html">Counters</a></li>
-                            <li><a href="element-headings.html">Headings</a></li>
-                            <li><a href="element-icons.html">Icons</a></li>
-                            <li><a href="element-info-box.html">Info box</a></li>
-                            <li><a href="element-posts.html">Posts</a></li>
-                            <li><a href="element-products.html">Sản Phẩm</a></li>
-                            <li><a href="element-product-categories.html">Product Categories</a></li>
-                            <li><a href="element-tabs.html">Tabs</a></li>
-                            <li><a href="element-testimonial.html">Testimonials</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <ul class="mobile-menu mt-2 mb-2">
-                    <li class="border-0">
-                        <a href="#">
-                            Special Offer!
-                        </a>
                     </li>
                 </ul>
 
                 <ul class="mobile-menu">
-                    <li><a href="login.html">Tài Khoản Của Tôi</a></li>
-                    <li><a href="demo6-contact.html">Liên Hệ</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="wishlist.html">Yêu Thích</a></li>
-                    <li><a href="cart.html">Giỏ Hàng</a></li>
-                    <li><a href="login.html" class="login-link">Log In</a></li>
+                    <li><a th:href="@{/account}">Tài khoản</a></li>
+                    <li><a th:href="@{/contact}">Liên hệ</a></li>
+                    <li><a th:href="@{/wishlist}">Yêu thích</a></li>
+                    <li><a th:href="@{/cart}">Giỏ hàng</a></li>
+                    <li><a th:href="@{/login}" class="login-link">Đăng Nhập</a></li>
                 </ul>
             </nav>
             <!-- End .mobile-nav -->
 
-            <form class="search-wrapper mb-2" action="#">
-                <input type="text" class="form-control mb-0" placeholder="Search..." required />
+            <form class="search-wrapper mb-2" th:action="@{/shop}" method="get">
+                <input type="text"
+                       class="form-control mb-0"
+                       name="keyword"
+                       th:value="${keyword}"
+                       placeholder="Tìm kiếm sản phẩm..."
+                       required />
                 <button class="btn icon-search text-white bg-transparent p-0" type="submit"></button>
             </form>
 
@@ -886,30 +658,30 @@
 
     <div class="sticky-navbar">
         <div class="sticky-info">
-            <a href="home.html">
+            <a th:href="@{/}">
                 <i class="icon-home"></i>Trang Chủ
             </a>
         </div>
         <div class="sticky-info">
-            <a href="shop.html" class="">
+            <a th:href="@{/shop}" class="">
                 <i class="icon-bars"></i>Phân Loại
             </a>
         </div>
         <div class="sticky-info">
-            <a href="wishlist.html" class="">
+            <a th:href="@{/wishlist}" class="">
                 <i class="icon-wishlist-2"></i>Yêu Thích
             </a>
         </div>
         <div class="sticky-info">
-            <a href="login.html" class="">
+            <a th:href="@{/login}" class="">
                 <i class="icon-user-2"></i>Tài Khoản
             </a>
         </div>
         <div class="sticky-info">
-            <a href="cart.html" class="">
+            <a th:href="@{/cart}" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">3</span>
-                </i>Giỏ Hàng
+                </i>Giỏ hàng
             </a>
         </div>
     </div>
@@ -956,7 +728,7 @@
 
     <!-- Plugins JS File -->
     <script data-cfasync="false" th:src="@{../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js}"></script>
-    <script th:src="@{assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
     <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/assets/js/plugins.min.js}"></script>
     <script th:src="@{/assets/js/jquery.appear.min.js}"></script>
@@ -1008,7 +780,7 @@
     </script>
     <!-- Main JS File -->
     <script th:src="@{/assets/js/main.min.js}"></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<!--<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"ecd4920e43e14654b78e65dbf8311922","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>-->
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a83b5283c190a04',t:'MTc2NDc3MTY1Ng=='};var a=document.createElement('script');a.src='../../cdn-cgi/challenge-platform/h/b/scripts/jsd/13c98df4ef2d/maind41d.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 
 

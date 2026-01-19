@@ -43,20 +43,17 @@ public class ShopController {
 
             Model model) {
 
-        // 1. GỌI SERVICE với TẤT CẢ 5 tham số lọc/phân trang
         Page<Product> productPage = productService.findPaginatedProducts(
                 pageable, keyword, catValue, minPrice, maxPrice
         );
 
-        // 2. Đưa đối tượng Page<Product> và nội dung vào Model
         model.addAttribute("productPage", productPage);
         model.addAttribute("products", productPage.getContent());
 
-        // 3. Đưa thông tin phân trang tiện ích vào Model
         model.addAttribute("currentPage", productPage.getNumber());
         model.addAttribute("totalPages", productPage.getTotalPages());
 
-        // 4. TRUYỀN CÁC THAM SỐ LỌC/TÌM KIẾM VÀO MODEL
+        // TRUYỀN CÁC THAM SỐ LỌC/TÌM KIẾM VÀO MODEL
         model.addAttribute("keyword", keyword);
         model.addAttribute("catValue", catValue);
         model.addAttribute("minPrice", minPrice); // <-- THÊM

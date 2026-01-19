@@ -67,14 +67,13 @@ public class OrderController {
 
         Long cartId = (Long) session.getAttribute("cartId");
         if (cartId == null) return new RedirectView("/cart");
-//  Kiểm tra nếu chưa đăng nhập (đề phòng)
         if (principal == null) return new RedirectView("/login");
         try {
             // Lấy đối tượng User từ username của Principal
             String username = principal.getName();
             User currentUser = userService.findByUsername(username)
                     .orElseThrow(() -> new RuntimeException("User không tồn tại"));
-            // Tạo đơn hàng từ giỏ hàng (Lưu vào DB)
+            // Tạo đơn hàng từ giỏ hàng
             Order newOrder = orderService.createOrderFromCart(cartId, order, currentUser);
 
             // Kiểm tra phương thức thanh toán
@@ -89,7 +88,7 @@ public class OrderController {
                 }
             }
 
-            // Bước 3: Nếu là COD (Thanh toán khi nhận hàng) hoặc lỗi tạo link VNPay
+            // Nếu là COD hoặc lỗi tạo link VNPay
             session.removeAttribute("cartId");
             return new RedirectView("/order/complete/" + newOrder.getId());
 
@@ -104,7 +103,7 @@ public class OrderController {
      */
     @GetMapping("/payment-callback")
     public String paymentCallback(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        // 1. Thu thập tham số và tính toán lại Checksum (Giống như VnPayService nhưng ngược lại)
+        // 1. Thu thập tham số và tính toán lại Checksum
         Map<String, String> fields = new HashMap<>();
         for (Enumeration<String> params = request.getParameterNames(); params.hasMoreElements();) {
             String fieldName = params.nextElement();
@@ -142,7 +141,7 @@ public class OrderController {
             Order order = orderService.getOrderById(Long.parseLong(orderIdStr));
             if (order != null && order.getOrderTotal().longValue() == vnpAmount) {
                 if ("00".equals(responseCode)) {
-                    // CẬP NHẬT TRẠNG THÁI ĐÃ THANH TOÁN TẠI ĐÂY
+                    // CẬP NHẬT TRẠNG THÁI ĐÃ THANH TOÁN
                     return "redirect:/order/complete/" + orderIdStr;
                 }
             }
@@ -160,7 +159,7 @@ public class OrderController {
         try {
             Order order = orderService.getOrderById(orderId);
             model.addAttribute("order", order);
-            return "order-complete"; // Trả về file order-complete.html
+            return "order-complete";
         } catch (Exception e) {
             return "redirect:/";
         }

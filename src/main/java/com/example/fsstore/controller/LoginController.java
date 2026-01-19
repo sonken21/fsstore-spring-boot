@@ -13,11 +13,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
 
     @Autowired
-    private UserService userService; // Tiêm UserService để xử lý logic lưu User
+    private UserService userService;
 
     @GetMapping("/login")
     public String showLoginPage() {
-        // Trả về file login.html trong src/main/resources/templates/
         return "login";
     }
 
@@ -29,7 +28,7 @@ public class LoginController {
             return "redirect:/login";
         }
 
-        // 2. Lưu người dùng mới (UserService đã xử lý mã hóa mật khẩu và gán ROLE_USER)
+        // 2. Lưu người dùng mới
         try {
             userService.registerNewUser(user);
             // 3. Thông báo thành công và chuyển về trang login

@@ -23,7 +23,6 @@ public class OrderHistoryController {
 
     @GetMapping("/order-history")
     public String showOrderHistory(Model model, Principal principal) {
-        // Principal giúp lấy tên người dùng đang đăng nhập trong Session
         String username = principal.getName();
         User user = userService.findByUsername(username).orElseThrow();
 

@@ -20,7 +20,6 @@ public class GlobalControllerAdvice {
     public void addCartToModel(HttpSession session, Model model) {
         Long cartId = (Long) session.getAttribute("cartId");
         if (cartId != null) {
-            // Sử dụng hàm getOrCreateCart bạn đã viết trong CartService
             Cart cart = cartService.getOrCreateCart(cartId);
             model.addAttribute("cart", cart);
         }

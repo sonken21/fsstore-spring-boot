@@ -26,11 +26,9 @@ public class CartService {
         this.productService = productService;
     }
 
-    // Phương thức này không thay đổi
     @Transactional
     public Cart getOrCreateCart(Long cartId) {
         if (cartId != null) {
-            // Sử dụng findByIdWithItems để luôn tải items (EAGER FETCH)
             Optional<Cart> existingCart = cartRepository.findByIdWithItems(cartId);
             if (existingCart.isPresent()) {
                 System.out.println("DEBUG: [getOrCreateCart] Đã tìm thấy Cart ID: " + cartId);
@@ -45,14 +43,11 @@ public class CartService {
         return newCart;
     }
 
-    // Phương thức đã FIX lỗi dữ liệu price=NULL
     @Transactional
     public boolean addProductToCart(Cart cart, Long productId, int quantity) {
         if (quantity <= 0) {
             return false;
         }
-
-        // ... (check null cart, giữ nguyên) ...
 
         // --- 1. Tìm Sản phẩm ---
         Optional<Product> productOptional = productService.findOptionalProductById(productId);
@@ -63,7 +58,7 @@ public class CartService {
 
         Product product = productOptional.get();
 
-        // ⭐ FIX VÀ XÁC NHẬN: Kiểm tra giá sản phẩm trước khi gán
+        //  Kiểm tra giá sản phẩm trước khi gán
         if (product.getPrice() == null) {
             throw new IllegalStateException("Lỗi dữ liệu: Giá sản phẩm ID " + productId + " là NULL. Vui lòng cập nhật giá.");
         }
@@ -105,7 +100,6 @@ public class CartService {
     @Transactional
     public boolean updateCartItemQuantity(Long cartItemId, int newQuantity) {
         if (newQuantity <= 0) {
-            // Nếu số lượng là 0 hoặc âm, coi như xóa CartItem đó
             return removeCartItem(cartItemId);
         }
 
@@ -125,7 +119,7 @@ public class CartService {
         return false;
     }
 
-    // ⭐ THÊM PHƯƠNG THỨC HỖ TRỢ XÓA (Cần thiết khi Quantity = 0)
+    //  THÊM PHƯƠNG THỨC HỖ TRỢ XÓA
     @Transactional
     public boolean removeCartItem(Long cartItemId) {
         Optional<CartItem> itemOptional = cartItemRepository.findById(cartItemId);
@@ -148,9 +142,6 @@ public class CartService {
     @Transactional
     public void deleteCart(Long cartId) {
         if (cartId != null) {
-            // Sử dụng CartRepository đã được inject để xóa Cart
-            // Giả định rằng bạn đã cấu hình CascadeType.ALL/orphanRemoval=true
-            // trong Cart Entity để tự động xóa CartItem khi xóa Cart.
             cartRepository.deleteById(cartId);
             System.out.println("DEBUG: [deleteCart] Đã xóa Cart ID: " + cartId);
         }

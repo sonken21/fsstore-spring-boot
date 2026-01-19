@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 
 <!-- Mirrored from portotheme.com/html/porto_ecommerce/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:22:49 GMT -->
@@ -9,14 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Porto - Bootstrap eCommerce Template</title>
+    <title>FSStore - Bootstrap eCommerce Template</title>
 
     <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="description" content="FSStore - Bootstrap eCommerce Template">
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.jpg}">
 
 
     <script>
@@ -57,11 +57,11 @@
                             <a href="#">Links</a>
                             <div class="header-menu">
                                 <ul>
-                                    <li><a href="dashboard.html">Tài Khoản Của Tôi</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="wishlist.html">Yêu Thích</a></li>
-                                    <li><a href="cart.html">Giỏ Hàng</a></li>
-                                    <li><a href="login.html" class="login-link">Đăng Nhập</a></li>
+                                    <li><a th:href="@{/account}">Tài Khoản Của Tôi</a></li>
+                                    <li><a th:href="@{/}">About Us</a></li>
+                                    <li><a th:href="@{/wishlist}">Yêu Thích</a></li>
+                                    <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                                    <li><a th:href="@{/login}" class="login-link">Đăng Nhập</a></li>
                                 </ul>
                             </div>
                             <!-- End .header-menu -->
@@ -89,8 +89,8 @@
                         <button class="mobile-menu-toggler text-primary mr-2" type="button">
                             <i class="fas fa-bars"></i>
                         </button>
-                        <a href="demo4.html" class="logo">
-                            <img th:src="@{/assets/images/logo_black.png}" width="111" height="44" alt="Porto Logo">
+                        <a th:href="@{/}" class="logo">
+                            <img th:src="@{/assets/images/logo_black.png}" width="111" height="44" alt="FS Logo">
                         </a>
                     </div>
                     <!-- End .header-left -->
@@ -119,9 +119,18 @@
                             <h6><span>Call us now</span><a href="tel:#" class="text-dark font1">0343291216</a></h6>
                         </div>
 
-                        <a href="login.html" class="header-icon" title="login"><i class="icon-user-2"></i></a>
+                        <div class="user-info-wrapper d-flex align-items-center">
+                    <span sec:authorize="isAuthenticated()" style="margin-right: 10px; font-size: 13px; white-space: nowrap;" class="d-none d-sm-inline">
+                        Chào, <strong sec:authentication="name" class="text-primary">User</strong>
+                    </span>
 
-                        <a href="wishlist.html" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
+                            <a th:href="@{/account}" class="header-icon header-icon-user">
+                                <i class="icon-user-2"></i>
+                            </a>
+
+                        </div>
+
+                        <a th:href="@{/wishlist}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
 
                         <!-- End .dropdown -->
                     </div>
@@ -136,47 +145,44 @@
                     <nav class="main-nav w-100">
                         <ul class="menu">
                             <li>
-                                <a href="demo4.html">Trang Chủ</a>
+                                <a th:href="@{/}">Trang Chủ</a>
                             </li>
                             <li>
-                                <a href="category.html">Phân Loại</a>
+                                <a th:href="@{/shop}">Phân Loại</a>
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
                                         <div class="col-lg-4">
-                                            <a href="#" class="nolink">VARIATION 1</a>
+                                            <a href="#" class="nolink">ĐỐI TƯỢNG</a>
                                             <ul class="submenu">
-                                                <li><a href="category.html">Fullwidth Banner</a></li>
-                                                <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a>
+                                                <li>
+                                                    <a th:href="@{/shop(cat='Nam')}">Nam</a>
                                                 </li>
-                                                <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a>
+                                                <li>
+                                                    <a th:href="@{/shop(cat='Nữ')}">Nữ</a>
                                                 </li>
-                                                <li><a href="category.html">Left Sidebar</a></li>
-                                                <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                                                <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
-                                                <li><a href="category-horizontal-filter1.html">Horizontal Filter1</a>
-                                                </li>
-                                                <li><a href="category-horizontal-filter2.html">Horizontal Filter2</a>
+                                                <li>
+                                                    <a th:href="@{/shop}">Tất cả sản phẩm</a>
                                                 </li>
                                             </ul>
                                         </div>
+
                                         <div class="col-lg-4">
-                                            <a href="#" class="nolink">VARIATION 2</a>
+                                            <a href="#" class="nolink">DANH MỤC</a>
                                             <ul class="submenu">
-                                                <li><a href="category-list.html">List Types</a></li>
-                                                <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll</a>
-                                                </li>
-                                                <li><a href="category.html">3 Columns Products</a></li>
-                                                <li><a href="category-4col.html">4 Columns Products</a></li>
-                                                <li><a href="category-5col.html">5 Columns Products</a></li>
-                                                <li><a href="category-6col.html">6 Columns Products</a></li>
-                                                <li><a href="category-7col.html">7 Columns Products</a></li>
-                                                <li><a href="category-8col.html">8 Columns Products</a></li>
+                                                <li><a th:href="@{/shop(cat='Áo')}">Áo</a></li>
+                                                <li><a th:href="@{/shop(cat='Quần')}">Quần</a></li>
+                                                <li><a th:href="@{/shop(cat='Váy')}">Váy</a></li>
+                                                <li><a th:href="@{/shop(cat='Giày')}">Giày</a></li>
+                                                <li><a th:href="@{/shop(cat='Túi xách')}">Túi xách</a></li>
+                                                <li><a th:href="@{/shop(cat='Đồng hồ')}">Đồng hồ</a></li>
+                                                <li><a th:href="@{/shop(cat='Thắt lưng')}">Thắt lưng</a></li>
                                             </ul>
                                         </div>
+
                                         <div class="col-lg-4 p-0">
                                             <div class="menu-banner">
                                                 <figure>
-                                                    <img th:src="@{/assets/images/menu-banner.jpg}" width="192" height="313" alt="Menu banner">
+                                                    <img th:src="@{/assets/images/menu-banner.jpg}" alt="Menu banner" width="300" height="300">
                                                 </figure>
                                                 <div class="banner-content">
                                                     <h4>
@@ -184,83 +190,25 @@
                                                         <b class="">50%</b>
                                                         <i>OFF</i>
                                                     </h4>
-                                                    <a href="category.html" class="btn btn-sm btn-dark">Mua Ngay</a>
+                                                    <a th:href="@{/shop}" class="btn btn-sm btn-dark">MUA NGAY</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- End .megamenu -->
-                            </li>
-                            <li>
-                                <a href="product.html">Sản Phẩm</a>
-                                <div class="megamenu megamenu-fixed-width">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <a href="#" class="nolink">PRODUCT PAGES</a>
-                                            <ul class="submenu">
-                                                <li><a href="product.html">SIMPLE PRODUCT</a></li>
-                                                <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
-                                                <li><a href="product.html">SALE PRODUCT</a></li>
-                                                <li><a href="product.html">FEATURED & ON SALE</a></li>
-                                                <li><a href="product-custom-tab.html">WITH CUSTOM TAB</a></li>
-                                                <li><a href="product-sidebar-left.html">WITH LEFT SIDEBAR</a></li>
-                                                <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
-                                                <li><a href="product-addcart-sticky.html">ADD CART STICKY</a></li>
-                                            </ul>
-                                        </div>
-                                        <!-- End .col-lg-4 -->
-
-                                        <div class="col-lg-4">
-                                            <a href="#" class="nolink">PRODUCT LAYOUTS</a>
-                                            <ul class="submenu">
-                                                <li><a href="product-extended-layout.html">EXTENDED LAYOUT</a></li>
-                                                <li><a href="product-grid-layout.html">GRID IMAGE</a></li>
-                                                <li><a href="product-full-width.html">FULL WIDTH LAYOUT</a></li>
-                                                <li><a href="product-sticky-info.html">STICKY INFO</a></li>
-                                                <li><a href="product-sticky-both.html">LEFT & RIGHT STICKY</a></li>
-                                                <li><a href="product-transparent-image.html">TRANSPARENT IMAGE</a></li>
-                                                <li><a href="product-center-vertical.html">CENTER VERTICAL</a></li>
-                                                <li><a href="#">BUILD YOUR OWN</a></li>
-                                            </ul>
-                                        </div>
-                                        <!-- End .col-lg-4 -->
-
-                                        <div class="col-lg-4 p-0">
-                                            <div class="menu-banner menu-banner-2">
-                                                <figure>
-                                                    <img th:src="@{/assets/images/menu-banner-1.jpg}" alt="Menu banner" class="product-promo">
-                                                </figure>
-                                                <i>OFF</i>
-                                                <div class="banner-content">
-                                                    <h4>
-                                                        <span class="">UP TO</span><br />
-                                                        <b class="">50%</b>
-                                                    </h4>
-                                                </div>
-                                                <a href="category.html" class="btn btn-sm btn-dark">Mua Ngay</a>
-                                            </div>
-                                        </div>
-                                        <!-- End .col-lg-4 -->
-                                    </div>
-                                    <!-- End .row -->
                                 </div>
                                 <!-- End .megamenu -->
                             </li>
                             <li class="help">
                                 <a href="#">Trợ Giúp</a>
                                 <ul>
-                                    <li><a href="wishlist.html">Yêu Thích</a></li>
-                                    <li><a href="cart.html">Giỏ Hàng</a></li>
-                                    <li><a href="checkout.html">Thanh Toán</a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Liên Hệ</a></li>
-                                    <li><a href="login.html">Đăng Nhập</a></li>
-                                    <li><a href="forgot-password.html">Quên Mật Khẩu</a></li>
+                                    <li><a th:href="@{/wishlist}">Yêu Thích</a></li>
+                                    <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                                    <li><a th:href="@{/checkout}">Thanh Toán</a></li>
+                                    <li><a th:href="@{/}">About Us</a></li>
+                                    <li><a th:href="@{/login}">Đăng Nhập</a></li>
+                                    <li><a th:href="@{/forgot-password}">Quên Mật Khẩu</a></li>
                                 </ul>
                             </li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Liên Hệ</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -275,10 +223,10 @@
                 <form th:action="@{/order/place-order}" method="post" id="checkout-form" th:object="${order}">
                 <ul class="checkout-progress-bar d-flex justify-content-center flex-wrap">
                     <li>
-                        <a href="cart.html">Giỏ Hàng</a>
+                        <a th:href="@{/cart}">Giỏ Hàng</a>
                     </li>
                     <li class="active">
-                        <a href="checkout.html">Thanh Toán</a>
+                        <a th:href="@{/checkout}">Thanh Toán</a>
                     </li>
                     <li class="disabled">
                         <a href="#">Hoàn thành đơn hàng</a>
@@ -465,113 +413,60 @@
             <span class="mobile-menu-close"><i class="fa fa-times"></i></span>
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
-                    <li><a href="demo4.html">Trang Chủ</a></li>
+                    <li><a th:href="@{/}">Trang Chủ</a></li>
                     <li>
-                        <a href="category.html">Phân Loại</a>
+                        <a th:href="@{/shop}">Phân Loại</a>
                         <ul>
-                            <li><a href="category.html">Full Width Banner</a></li>
-                            <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-                            <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-                            <li><a href="https://www.portotheme.com/html/porto_ecommerce/category-sidebar-left.html">Left Sidebar</a></li>
-                            <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                            <li><a href="category-off-canvas.html">Off Canvas Filter</a></li>
-                            <li><a href="category-horizontal-filter1.html">Horizontal Filter 1</a></li>
-                            <li><a href="category-horizontal-filter2.html">Horizontal Filter 2</a></li>
-                            <li><a href="#">List Types</a></li>
-                            <li><a href="category-infinite-scroll.html">Ajax Infinite Scroll<span
-                                        class="tip tip-new">New</span></a></li>
-                            <li><a href="category.html">3 Columns Products</a></li>
-                            <li><a href="category-4col.html">4 Columns Products</a></li>
-                            <li><a href="category-5col.html">5 Columns Products</a></li>
-                            <li><a href="category-6col.html">6 Columns Products</a></li>
-                            <li><a href="category-7col.html">7 Columns Products</a></li>
-                            <li><a href="category-8col.html">8 Columns Products</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="product.html">Sản Phẩm</a>
-                        <ul>
-                            <li>
-                                <a href="#" class="nolink">PRODUCT PAGES</a>
-                                <ul>
-                                    <li><a href="product.html">SIMPLE PRODUCT</a></li>
-                                    <li><a href="product-variable.html">VARIABLE PRODUCT</a></li>
-                                    <li><a href="product.html">SALE PRODUCT</a></li>
-                                    <li><a href="product.html">FEATURED & ON SALE</a></li>
-                                    <li><a href="product-sticky-info.html">WIDTH CUSTOM TAB</a></li>
-                                    <li><a href="product-sidebar-left.html">WITH LEFT SIDEBAR</a></li>
-                                    <li><a href="product-sidebar-right.html">WITH RIGHT SIDEBAR</a></li>
-                                    <li><a href="product-addcart-sticky.html">ADD CART STICKY</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#" class="nolink">PRODUCT LAYOUTS</a>
-                                <ul>
-                                    <li><a href="product-extended-layout.html">EXTENDED LAYOUT</a></li>
-                                    <li><a href="product-grid-layout.html">GRID IMAGE</a></li>
-                                    <li><a href="product-full-width.html">FULL WIDTH LAYOUT</a></li>
-                                    <li><a href="product-sticky-info.html">STICKY INFO</a></li>
-                                    <li><a href="product-sticky-both.html">LEFT & RIGHT STICKY</a></li>
-                                    <li><a href="product-transparent-image.html">TRANSPARENT IMAGE</a></li>
-                                    <li><a href="product-center-vertical.html">CENTER VERTICAL</a></li>
-                                    <li><a href="#">BUILD YOUR OWN</a></li>
-                                </ul>
-                            </li>
+                            <li style="font-weight: bold; padding-left: 15px; color: #fff; margin-top: 10px;">ĐỐI TƯỢNG</li>
+                            <li><a th:href="@{/shop(cat='Nam')}">Thời trang Nam</a></li>
+                            <li><a th:href="@{/shop(cat='Nữ')}">Thời trang Nữ</a></li>
+
+                            <li><hr class="dropdown-divider"></li> <li style="font-weight: bold; padding-left: 15px; color: #fff;">DANH MỤC</li>
+                            <li><a th:href="@{/shop(cat='Áo')}">Các loại Áo</a></li>
+                            <li><a th:href="@{/shop(cat='Quần')}">Các loại Quần</a></li>
+                            <li><a th:href="@{/shop(cat='Váy')}">Váy & Đầm</a></li>
+                            <li><a th:href="@{/shop(cat='Giày')}">Giày dép</a></li>
+                            <li><a th:href="@{/shop(cat='Túi xách')}">Túi xách</a></li>
+                            <li><a th:href="@{/shop(cat='Đồng hồ')}">Đồng hồ</a></li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li><a th:href="@{/shop}" style="font-weight: bold; color: #0088cc;">Tất Cả Sản Phẩm</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#">Trợ Giúp<span class="tip tip-hot">Hot!</span></a>
                         <ul>
                             <li>
-                                <a href="wishlist.html">Yêu Thích</a>
+                                <a th:href="@{/order/checkout}">Thanh toán</a>
                             </li>
                             <li>
-                                <a href="cart.html">Giỏ Hàng</a>
+                                <a th:href="@{/login}">Đăng Ký</a>
                             </li>
                             <li>
-                                <a href="checkout.html">Thanh Toán</a>
-                            </li>
-                            <li>
-                                <a href="dashboard.html">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Đăng Nhập</a>
-                            </li>
-                            <li>
-                                <a href="forgot-password.html">Quên Mật Khẩu</a>
+                                <a th:href="@{/forgot-password}">Quên mật khẩu</a>
                             </li>
                         </ul>
-                    </li>
-
-                </ul>
-
-                <ul class="mobile-menu mt-2 mb-2">
-                    <li class="border-0">
-                        <a href="#">
-                            Special Offer!
-                        </a>
-                    </li>
-                    <li class="border-0">
-                        <a href="https://1.envato.market/DdLk5" target="_blank">
-                            Buy Porto!
-                            <span class="tip tip-hot">Hot</span>
-                        </a>
                     </li>
                 </ul>
 
                 <ul class="mobile-menu">
-                    <li><a href="dashboard.html">Tài Khoản Của Tôi</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="wishlist.html">Yêu Thích</a></li>
-                    <li><a href="cart.html">Giỏ Hàng</a></li>
-                    <li><a href="login.html" class="login-link">Log In</a></li>
+                    <li><a th:href="@{/account}">Tài khoản</a></li>
+                    <li><a th:href="@{/contact}">Liên hệ</a></li>
+                    <li><a th:href="@{/wishlist}">Yêu thích</a></li>
+                    <li><a th:href="@{/cart}">Giỏ hàng</a></li>
+                    <li><a th:href="@{/login}" class="login-link">Đăng Nhập</a></li>
                 </ul>
             </nav>
             <!-- End .mobile-nav -->
 
-            <form class="search-wrapper mb-2" action="#">
-                <input type="text" class="form-control mb-0" placeholder="Search..." required />
+            <form class="search-wrapper mb-2" th:action="@{/shop}" method="get">
+                <input type="text"
+                       class="form-control mb-0"
+                       name="keyword"
+                       th:value="${keyword}"
+                       placeholder="Tìm kiếm sản phẩm..."
+                       required />
                 <button class="btn icon-search text-white bg-transparent p-0" type="submit"></button>
             </form>
 
@@ -590,30 +485,30 @@
 
     <div class="sticky-navbar">
         <div class="sticky-info">
-            <a href="demo4.html">
+            <a th:href="@{/}">
                 <i class="icon-home"></i>Trang Chủ
             </a>
         </div>
         <div class="sticky-info">
-            <a href="category.html" class="">
+            <a th:href="@{/shop}" class="">
                 <i class="icon-bars"></i>Phân Loại
             </a>
         </div>
         <div class="sticky-info">
-            <a href="wishlist.html" class="">
+            <a th:href="@{/wishlist}" class="">
                 <i class="icon-wishlist-2"></i>Yêu Thích
             </a>
         </div>
         <div class="sticky-info">
-            <a href="https://www.portotheme.com/html/porto_ecommerce/my-account.html" class="">
+            <a th:href="@{/login}" class="">
                 <i class="icon-user-2"></i>Tài Khoản
             </a>
         </div>
         <div class="sticky-info">
-            <a href="cart.html" class="">
+            <a th:href="@{/cart}" class="">
                 <i class="icon-shopping-cart position-relative">
                     <span class="cart-count badge-circle">3</span>
-                </i>Giỏ Hàng
+                </i>Giỏ hàng
             </a>
         </div>
     </div>

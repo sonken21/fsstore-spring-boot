@@ -18,7 +18,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CartService cartService;
-    private final ProductRepository productRepository; // Tiêm thêm repository sản phẩm
+    private final ProductRepository productRepository;
 
     private static final Double SHIPPING_FEE = 30000.0;
 
@@ -32,7 +32,6 @@ public class OrderService {
     public List<Order> getOrdersByUser(User user) {
         return orderRepository.findByUserOrderByOrderDateDesc(user);
     }
-    // --- CÁC PHƯƠNG THỨC MỚI LẤY DỮ LIỆU THỰC TẾ CHO BIỂU ĐỒ ---
 
     public List<Double> getRevenueDataByDays(int days) {
         List<Double> revenues = new ArrayList<>();
@@ -88,13 +87,12 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("Không tìm thấy đơn hàng #" + orderId));
 
-        // ÉP BUỘC nạp dữ liệu Lazy (OrderDetail) ngay tại đây
         order.getOrderDetails().size();
 
         return order;
     }
 
-    // --- LOGIC XỬ LÝ KHO HÀNG (PRIVATE) ---
+    // --- LOGIC XỬ LÝ KHO HÀNG ---
 
     private void subtractStock(Order order) {
         for (OrderDetail detail : order.getOrderDetails()) {

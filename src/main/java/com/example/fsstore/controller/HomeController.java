@@ -21,8 +21,6 @@ public class HomeController {
     @GetMapping("/")
     public String homePage(Model model) {
 
-        // --- THAY ĐỔI TẠI ĐÂY ---
-
         // 1. Lấy 4 sản phẩm Nữ có rating cao nhất
         List<Product> femaleFeaturedProducts = productService.findTopRatedProductsByGender("Nu", 4);
 
@@ -35,7 +33,7 @@ public class HomeController {
         // 4. Đặt danh sách Nam vào Model với tên biến mới
         model.addAttribute("maleProducts", maleFeaturedProducts);
 
-        // Lấy 10 sản phẩm có rating cao nhất (không phân biệt giới tính)
+        // Lấy 10 sản phẩm có rating cao nhất
         List<Product> allFeaturedProducts = productService.getTopRatedProducts(10);
 
         model.addAttribute("featuredProducts", allFeaturedProducts);

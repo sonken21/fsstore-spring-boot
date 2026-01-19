@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@Getter // Thêm Lombok
-@Setter // Thêm Lombok
-@NoArgsConstructor // Thêm Lombok
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -40,7 +40,7 @@ public class User {
     private String resetPasswordToken;
     private LocalDateTime tokenExpiration;
 
-    // Thiết lập mối quan hệ với Order (Tùy chọn, nhưng nên có)
+    // Thiết lập mối quan hệ với Order
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orders;
 

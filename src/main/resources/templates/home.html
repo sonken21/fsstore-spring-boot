@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-
-<!-- Mirrored from portotheme.com/html/porto_ecommerce/home.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Dec 2025 14:21:04 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,11 +10,11 @@
     <title>FSStore – Bootstrap eCommerce Template</title>
 
     <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="Porto – Bootstrap eCommerce Template">
+    <meta name="description" content="FS Store – Bootstrap eCommerce Template">
     <meta name="author" content="SW-THEMES">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/images/icons/favicon.jpg}">
 
     <script>
         WebFontConfig = {
@@ -129,7 +127,7 @@
                     <!-- End .header-left -->
 
                     <div class="header-center ml-0 ml-xl-auto">
-                        <a href="home.html" class="logo logo-transition">
+                        <a th:href="@{/#}" class="logo logo-transition">
                             <img th:src="@{/assets/images/logo_black.png}" width="226" height="92" alt="Porto" />
                         </a>
                     </div>
@@ -140,7 +138,16 @@
                             <i class="fas fa-bars"></i>
                         </button>
 
-                        <a th:href="@{/account}" class="header-icon header-icon-user"><i class="icon-user-2"></i></a>
+                        <div class="user-info-wrapper d-flex align-items-center">
+                    <span sec:authorize="isAuthenticated()" style="margin-right: 10px; font-size: 13px; white-space: nowrap;" class="d-none d-sm-inline">
+                        Chào, <strong sec:authentication="name" class="text-primary">User</strong>
+                    </span>
+
+                            <a th:href="@{/account}" class="header-icon header-icon-user">
+                                <i class="icon-user-2"></i>
+                            </a>
+
+                        </div>
                         <a th:href="@{/wishlist}" class="header-icon"><i class="icon-wishlist-2"></i></a>
 
                         <div class="header-search header-search-popup header-search-category d-none d-sm-block">
@@ -289,7 +296,7 @@
                                 <h3 class="m-b-3 text-right">Hat Sales</h3>
                                 <h4 class="ls-10 m-b-3 text-right text-primary">STARTING AT $99</h4>
                                 <div class="mb-0 text-right">
-                                    <a href="shop.html" class="btn btn-modern btn-md btn-dark">
+                                    <a th:href="@{/shop}" class="btn btn-modern btn-md btn-dark">
                                         MUA NGAY!
                                     </a>
                                 </div>
@@ -310,7 +317,7 @@
                                 <h4 class="font-weight-bold ls-n-20 m-b-3 text-right text-light">STARTING AT
                                     <sup>$</sup>199<sup>99</sup></h4>
                                 <div class="mb-0 text-right">
-                                    <a href="shop.html" class="btn btn-modern btn-md btn-light">
+                                    <a th:href="@{/shop}" class="btn btn-modern btn-md btn-light">
                                         SĂN SALE
                                     </a>
                                 </div>
@@ -329,7 +336,7 @@
                                 <h2 class="m-b-1 font3 text-left">Exclusive Shoes</h2>
                                 <h3 class="m-b-3 text-left">50% OFF</h3>
                                 <div class="vc_btn3-container mb-0 vc_btn3-inline">
-                                    <a href="shop.html" class="btn btn-modern btn-md btn-dark ls-10">
+                                    <a th:href="@{/shop}" class="btn btn-modern btn-md btn-dark ls-10">
                                         NHẬN NGAY
                                     </a>
                                 </div>
@@ -373,7 +380,7 @@
                             <h3 class="ls-n-10 m-b-3 text-left">THỜI TRANG<br />PHÁI ĐẸP</h3>
                             <p class="line-height-1 m-b-4 text-left">Cùng khám phá những phong cách thời trang hot nhất tuần này.</p>
                             <div class="mb-0">
-                                <a th:href="@{/shop}" class="btn btn-borders btn-lg btn-outline-dark ls-10">
+                                <a th:href="@{/shop(cat='Nữ')}" class="btn btn-borders btn-lg btn-outline-dark ls-10">
                                     Mua Ngay
                                 </a>
                             </div>
@@ -403,16 +410,8 @@
                                          width="400"
                                          height="400">
                                 </a>
-                                <div class="btn-icon-group">
-                                    <a th:href="@{/cart/add/{id}(id=${p.id})}" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">XEM TRƯỚC</a>
                             </figure>
                                 <div class="product-details">
-
-                                    <div class="category-wrap">
-                                        <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i class="icon-heart"></i></a>
-                                    </div>
 
                                     <h3 class="product-title">
                                         <a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">Tên Sản Phẩm Mẫu</a>
@@ -447,7 +446,7 @@
                             <h3 class="ls-n-10 m-b-3 text-right">THỜI TRANG<br />PHÁI MẠNH</h3>
                             <p class="line-height-1 m-b-4 text-right">Cùng khám phá những phong cách thời trang hot nhất tuần này.</p>
                             <div class="mb-0 text-right">
-                                <a th:href="@{/shop}" class="btn btn-borders btn-lg btn-outline-dark">
+                                <a th:href="@{/shop(cat='Nam')}" class="btn btn-borders btn-lg btn-outline-dark">
                                     MUA NGAY
                                 </a>
                             </div>
@@ -475,17 +474,8 @@
                                                                                 width="400"
                                                                                 height="400" />
                                 </a>
-                                <div class="btn-icon-group">
-                                    <a th:href="@{/cart/add/{id}(id=${p.id})}" title="Add To Cart" class="btn-icon btn-add-cart product-type-simple"><i
-                                            class="icon-shopping-cart"></i></a>
-                                </div>
-                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View">XEM TRƯỚC</a>
                             </figure>
                                 <div class="product-details">
-                                    <div class="category-wrap">
-                                        <a href="wishlist.html" title="Add to Wishlist" class="btn-icon-wish"><i
-                                                class="icon-heart"></i></a>
-                                    </div>
                                     <h3 class="product-title">
                                         <a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">Tên Sản Phẩm Nam</a>
                                     </h3>
@@ -530,9 +520,6 @@
                                     <img th:src="@{/assets/images/demoes/demo6/products/{imgName}(imgName=${p.imageUrl})}"
                                          width="400" height="400" th:alt="${p.name}" />
                                 </a>
-                                <div class="btn-icon-group">
-                                    <a href="#" class="btn-icon btn-add-cart"><i class="icon-shopping-cart"></i></a>
-                                </div>
                             </figure>
 
                             <div class="product-details">
@@ -543,12 +530,13 @@
                                 </div>
 
                                 <h3 class="product-title">
-                                    <a th:href="@{/product/detail/{id}(id=${p.id})}" th:text="${p.name}">Product Name</a>
+                                    <a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">Product Name</a>
                                 </h3>
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
-                                        <span class="ratings" th:style="'width:' + (${p.rating} * 20) + '%'"></span>
+                                        <span class="ratings" th:style="'width: ' + ${p.rating * 20} + '%'"></span>
+                                        <span class="tooltiptext tooltip-top" th:text="${p.rating} + ' Sao'"></span>
                                     </div>
                                 </div>
 
@@ -597,16 +585,16 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <ul class="links mb-0">
-                                                    <li><a href="demo6-about.html">About us</a></li>
-                                                    <li><a href="dashboard.html">Tài khoản của tôi</a></li>
+                                                    <li><a th:href="@{/}">About us</a></li>
+                                                    <li><a th:href="@{/account}">Tài khoản của tôi</a></li>
                                                 </ul>
                                             </div>
                                             <!-- End .col-sm-6 -->
 
                                             <div class="col-sm-6">
                                                 <ul class="links">
-                                                    <li><a href="#">Lịch sử đặt hàng</a></li>
-                                                    <li><a href="login.html">Đăng ký</a></li>
+                                                    <li><a th:href="@{/order-history}">Lịch sử đặt hàng</a></li>
+                                                    <li><a th:href="@{/login}">Đăng ký</a></li>
                                                 </ul>
                                             </div>
                                             <!-- End .col-sm-6 -->
@@ -711,10 +699,10 @@
 
                 <ul class="mobile-menu">
                     <li><a th:href="@{/account}">Tài khoản</a></li>
-                    <li><a href="demo6-contact.html">Liên hệ</a></li>
-                    <li><a href="wishlist.html">Yêu thích</a></li>
-                    <li><a href="cart.html">Giỏ hàng</a></li>
-                    <li><a href="login.html" class="login-link">Đăng Nhập</a></li>
+                    <li><a th:href="@{/contact}">Liên hệ</a></li>
+                    <li><a th:href="@{/wishlist}">Yêu thích</a></li>
+                    <li><a th:href="@{/cart}">Giỏ hàng</a></li>
+                    <li><a th:href="@{/login}" class="login-link">Đăng Nhập</a></li>
                 </ul>
             </nav>
             <!-- End .mobile-nav -->

@@ -24,7 +24,7 @@ public class CartItem {
     private int quantity;
 
     @Column(name = "price_at_purchase", nullable = false)
-    private Double priceAtPurchase; // Dùng Double theo Product.java
+    private Double priceAtPurchase;
 
     public CartItem() {
     }
@@ -36,7 +36,6 @@ public class CartItem {
     }
 
 
-    // Thêm getters và setters
     public Long getId() {
         return id;
     }
@@ -77,7 +76,7 @@ public class CartItem {
         this.priceAtPurchase = priceAtPurchase;
     }
 
-    // ⭐ BỔ SUNG: Getter tính toán tổng phụ (giá * số lượng)
+    // Getter tính toán tổng phụ (giá * số lượng)
     public Double getSubTotal() {
         if (this.priceAtPurchase == null) {
             return 0.0;

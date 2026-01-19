@@ -40,7 +40,7 @@ public class AccountController {
     private OrderService orderService;
 
     @Autowired
-    private UserDetailsService userDetailsService; // Cần thêm để tải lại thông tin mới
+    private UserDetailsService userDetailsService;
 
     @GetMapping("/account")
     public String showAccountPage(Model model, Principal principal) {
@@ -68,29 +68,29 @@ public class AccountController {
         try {
             User user = userService.findByUsername(principal.getName()).get();
 
-            // 1. Kiểm tra nếu đổi tên trùng với người khác (trừ chính mình)
+            // Kiểm tra nếu đổi tên trùng với người khác (trừ chính mình)
             if (!user.getUsername().equals(newUsername) && userService.existsByUsername(newUsername)) {
                 ra.addFlashAttribute("error", "Tên đăng nhập này đã có người sử dụng!");
                 return "redirect:/account";
             }
 
-            // 2. Cập nhật thông tin vào DB
+            // Cập nhật thông tin vào DB
             user.setUsername(newUsername);
 
             if (file != null && !file.isEmpty()) {
-                String uploadDir = "src/main/resources/static/assets/img/avatars/";
+                String uploadDir = "src/main/resources/static/assets/images/avatars/";
                 String fileName = "user_" + user.getId() + "_" + System.currentTimeMillis() + ".jpg";
                 Path path = Paths.get(uploadDir + fileName);
 
                 if (!Files.exists(path.getParent())) Files.createDirectories(path.getParent());
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-                user.setAvatar("/assets/img/avatars/" + fileName);
+                user.setAvatar("/assets/images/avatars/" + fileName);
             }
 
             userService.saveUser(user);
 
-            // 3. QUAN TRỌNG: Cập nhật lại Session của Spring Security
+            // Cập nhật lại Session của Spring Security
             UserDetails userDetails = userDetailsService.loadUserByUsername(newUsername);
             Authentication newAuth = new UsernamePasswordAuthenticationToken(
                     userDetails, userDetails.getPassword(), userDetails.getAuthorities());
@@ -132,7 +132,7 @@ public class AccountController {
 
         Order order = orderService.getOrderById(id);
 
-        // Kiểm tra: Chỉ cho phép hủy nếu là đơn của chính họ và đang PENDING
+        // Kiểm tra: Chỉ cho phép hủy nếu là đơn của chính mình và đang PENDING
         if (order.getUser().getUsername().equals(principal.getName()) && "PENDING".equals(order.getStatus())) {
             orderService.updateStatus(id, "CANCELLED");
             ra.addFlashAttribute("message", "Đã hủy đơn hàng thành công!");

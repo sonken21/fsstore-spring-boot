@@ -26,7 +26,7 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    // 1. Xử lý thêm sản phẩm vào giỏ hàng (POST /cart/add)
+    // 1. Xử lý thêm sản phẩm vào giỏ hàng
     @Transactional
     @PostMapping("/add")
     public String addCartItem(@RequestParam("productId") Long productId,
@@ -58,7 +58,7 @@ public class CartController {
         }
     }
 
-    // 2. Xử lý hiển thị trang giỏ hàng (GET /cart)
+    // 2. Xử lý hiển thị trang giỏ hàng
     @Transactional
     @GetMapping
     public String viewCart(HttpSession session, Model model) {
@@ -76,7 +76,6 @@ public class CartController {
         return "cart";
     }
 
-    // ⭐ FIX CHÍNH: Thêm phương thức xử lý POST /cart/update-all
     @Transactional
     @PostMapping("/update-all")
     public String updateAllCartItems(@RequestParam("itemId") List<Long> itemIds, // Nhận list ID
@@ -96,7 +95,6 @@ public class CartController {
             Integer quantity = quantities.get(i);
 
             try {
-                // Sử dụng updateCartItemQuantity đã tạo trong CartService
                 cartService.updateCartItemQuantity(itemId, quantity);
             } catch (Exception e) {
                 System.err.println("❌ LỖI UPDATE Item ID " + itemId + ": " + e.getMessage());
@@ -110,13 +108,10 @@ public class CartController {
             redirectAttributes.addFlashAttribute("message", "Giỏ hàng đã được cập nhật thành công!");
         }
 
-        // ⭐ Lệnh chuyển hướng về /cart sẽ được thực thi
         return "redirect:/cart";
     }
 
-    // ⭐ ĐÃ LOẠI BỎ: Phương thức @PostMapping("/update") cũ
-
-    // 3. Xử lý xóa CartItem (GET /cart/remove/{itemId})
+    // 3. Xử lý xóa CartItem
     @Transactional
     @GetMapping("/remove/{itemId}")
     public String removeCartItem(@PathVariable("itemId") Long itemId,
@@ -142,9 +137,8 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    // Trong CartController.java
     @Transactional
-    @PostMapping("/api/remove/{itemId}") // Kiểm tra kỹ đường dẫn này
+    @PostMapping("/api/remove/{itemId}")
     @ResponseBody
     public ResponseEntity<?> removeCartItemAjax(@PathVariable("itemId") Long itemId, HttpSession session) {
         Map<String, Object> response = new HashMap<>();

@@ -1,4 +1,3 @@
-// src/main/java/com/example/fsstore/repository/OrderDetailRepository.java
 
 package com.example.fsstore.repository;
 

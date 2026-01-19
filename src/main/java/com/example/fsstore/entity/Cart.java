@@ -3,19 +3,19 @@ package com.example.fsstore.entity;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter; // ⬅️ THÊM LOMBOK
-import lombok.Setter; // ⬅️ THÊM LOMBOK
-import lombok.NoArgsConstructor; // ⬅️ THÊM LOMBOK
-import lombok.ToString; // ⬅️ THÊM LOMBOK
-import lombok.EqualsAndHashCode; // ⬅️ THÊM LOMBOK
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "cart")
 @Getter // Tạo getters
 @Setter // Tạo setters
 @NoArgsConstructor // Thêm constructor mặc định
-@ToString(callSuper = false) // Ngăn toString gọi superclass
-@EqualsAndHashCode(callSuper = false) // Ngăn equals/hashCode gọi superclass
+@ToString(callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 public class Cart {
 
     @Id
@@ -28,7 +28,7 @@ public class Cart {
     @EqualsAndHashCode.Exclude // ⭐ FIX LOMBOK: Ngăn equals/hashCode truy cập Collection này
     private List<CartItem> items = new ArrayList<>();
 
-    // ⭐ FIX: Bổ sung phương thức tính TỔNG TIỀN (Thymeleaf gọi là ${cart.total})
+    // Bổ sung phương thức tính TỔNG TIỀN
     public Double getTotal() {
         if (this.items == null || this.items.isEmpty()) {
             return 0.0;
@@ -40,10 +40,7 @@ public class Cart {
                 .sum();
     }
 
-    // Lưu ý: Các phương thức Getter/Setter thủ công của bạn đã bị loại bỏ
-    // vì @Getter/@Setter của Lombok đã bao gồm chúng và an toàn hơn.
 
-    // Nếu bạn vẫn muốn các phương thức thủ công (ít cần thiết khi dùng Lombok), bạn có thể thêm lại:
     /*
     public Long getId() {
         return id;

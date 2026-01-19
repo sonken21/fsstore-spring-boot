@@ -1,5 +1,3 @@
-// src/main/java/com/example/fsstore/repository/CartItemRepository.java
-
 package com.example.fsstore.repository;
 
 import com.example.fsstore.entity.CartItem;

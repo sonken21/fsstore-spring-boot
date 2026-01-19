@@ -27,13 +27,13 @@ public class OrderDetail {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    // --- THÔNG TIN SẢN PHẨM TẠI THỜI ĐIỂM ĐẶT HÀNG (Dùng Double) ---
+    // --- THÔNG TIN SẢN PHẨM TẠI THỜI ĐIỂM ĐẶT HÀNG ---
 
     @Column(nullable = false)
     private int quantity;
 
     @Column(nullable = false)
-    private Double price; // Lấy từ priceAtPurchase của CartItem
+    private Double price;
 
     @Column(nullable = false)
     private Double subTotal; // subTotal = price * quantity

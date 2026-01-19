@@ -35,7 +35,6 @@ public class Order {
     @Column(columnDefinition = "TEXT")
     private String orderNotes;
 
-    // --- TÍNH TOÁN VÀ TRẠNG THÁI (Dùng Double) ---
 
     @Column(nullable = false)
     private String status = "PENDING";
@@ -56,7 +55,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user; // Giả sử Entity User có tồn tại
+    private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderDetail> orderDetails = new HashSet<>();

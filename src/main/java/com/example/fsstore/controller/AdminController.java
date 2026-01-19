@@ -56,13 +56,13 @@ public class AdminController {
             model.addAttribute("totalProducts", productService.getAllProducts().size());
             model.addAttribute("totalOrders", allOrders.size());
 
-            // 1. Tính tổng doanh thu
+            // Tính tổng doanh thu
             double totalRevenue = allOrders.stream()
                     .mapToDouble(o -> o.getOrderTotal() != null ? o.getOrderTotal() : 0.0)
                     .sum();
             model.addAttribute("totalRevenue", totalRevenue);
 
-            // 2. Doanh thu tháng trước
+            // Doanh thu tháng trước
             LocalDate firstDayLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
             LocalDate lastDayLastMonth = LocalDate.now().withDayOfMonth(1).minusDays(1);
             double lastMonthRevenue = allOrders.stream()
@@ -75,7 +75,7 @@ public class AdminController {
                     .sum();
             model.addAttribute("lastMonthRevenue", lastMonthRevenue);
 
-            // 3. Phân tích trạng thái đơn hàng (MỚI)
+            // Phân tích trạng thái đơn hàng
             long pendingCount = allOrders.stream().filter(o -> "PENDING".equalsIgnoreCase(o.getStatus())).count();
             long confirmedCount = allOrders.stream().filter(o -> "CONFIRMED".equalsIgnoreCase(o.getStatus())).count();
             long shippingCount = allOrders.stream().filter(o -> "SHIPPED".equalsIgnoreCase(o.getStatus())).count();
@@ -84,12 +84,12 @@ public class AdminController {
             model.addAttribute("confirmedCount", confirmedCount);
             model.addAttribute("shippingCount", shippingCount);
 
-            // 4. Cảnh báo kho hàng (MỚI)
+            // Cảnh báo kho hàng
             // Lấy các sản phẩm có stock < 10, sắp xếp tăng dần
             List<Product> lowStockProducts = productRepository.findByStockLessThanOrderByStockAsc(10);
             model.addAttribute("lowStockProducts", lowStockProducts);
 
-            // 5. Dữ liệu biểu đồ
+            // Dữ liệu biểu đồ
             List<String> labels = new ArrayList<>();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
             for (int i = days - 1; i >= 0; i--) {
@@ -100,7 +100,7 @@ public class AdminController {
             model.addAttribute("orderData", orderService.getOrderCountsByDays(days));
             model.addAttribute("selectedDays", days);
 
-            // 6. Best Sellers
+            // Best Sellers
             List<Object[]> bestSellersData = orderRepository.findTop10BestSellers();
             model.addAttribute("bestSellers", bestSellersData != null ? bestSellersData : new ArrayList<>());
 
@@ -161,9 +161,8 @@ public class AdminController {
             @RequestParam(name = "page", defaultValue = "1") int page,
             Model model) {
 
-        int pageSize = 10; // Bạn có thể thay đổi số lượng hiển thị tại đây
+        int pageSize = 10; // Có thể thay đổi số lượng hiển thị tại đây
 
-        // Sử dụng phương thức tập trung trong Service để xử lý cả phân trang và tìm kiếm
         Page<Product> productPage = productService.getAllProductsPaged(page, pageSize, keyword);
 
         model.addAttribute("products", productPage.getContent()); // Danh sách sản phẩm trang hiện tại
@@ -196,7 +195,6 @@ public class AdminController {
 
     @GetMapping("/products/detail/{id}")
     public String productDetail(@PathVariable Long id, Model model) {
-        // Sử dụng phương thức findProductById có sẵn trong Service của bạn
         Product product = productService.findProductById(id);
 
         if (product == null) {
@@ -206,7 +204,7 @@ public class AdminController {
         return "admin/product-detail";
     }
 
-    // 1. Hiển thị form chỉnh sửa với dữ liệu cũ
+    // Hiển thị form chỉnh sửa với dữ liệu cũ
     @GetMapping("/products/edit/{id}")
     public String showEditProductForm(@PathVariable Long id, Model model) {
         Product product = productService.findProductById(id);
@@ -217,7 +215,7 @@ public class AdminController {
         return "admin/product-edit"; // Chúng ta sẽ tạo file này
     }
 
-    // 2. Xử lý lưu sản phẩm sau khi sửa
+    // Xử lý lưu sản phẩm sau khi sửa
     @PostMapping("/products/update")
     public String updateProduct(@ModelAttribute("product") Product product,
                                 @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
@@ -244,7 +242,7 @@ public class AdminController {
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id, RedirectAttributes ra) {
         try {
-            // Đảm bảo sản phẩm tồn tại trước khi xóa (tùy chọn)
+            // Đảm bảo sản phẩm tồn tại trước khi xóa
             Product product = productService.findProductById(id);
             if (product != null) {
                 productService.deleteProduct(id);
@@ -281,9 +279,8 @@ public class AdminController {
             orderService.updateStatus(orderId, status);
             ra.addFlashAttribute("message", "Cập nhật trạng thái thành công!");
         } catch (RuntimeException e) {
-            // Bắt lỗi từ Service (ví dụ: lỗi hết hàng) và gửi thông báo lỗi về giao diện
+            // Bắt lỗi từ Service và gửi thông báo lỗi về giao diện
             ra.addFlashAttribute("error", "Lỗi: " + e.getMessage());
-            // Quay lại trang chi tiết của chính đơn hàng đó thay vì dừng ở trang trắng
             return "redirect:/admin/orders/detail/" + orderId;
         }
         return "redirect:/admin/orders";

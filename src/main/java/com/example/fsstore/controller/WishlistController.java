@@ -26,13 +26,13 @@ public class WishlistController {
     @Autowired private ProductRepository productRepository;
     @Autowired private UserRepository userRepository;
 
-    // Hàm lấy User đang đăng nhập dựa trên username
+
     private User getLoggedInUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
             return null;
         }
-        // Sử dụng findByUsername khớp với Repository của bạn
+
         return userRepository.findByUsername(auth.getName()).orElse(null);
     }
 
@@ -60,10 +60,10 @@ public class WishlistController {
         if (product != null) {
             var existing = wishlistRepository.findByUserAndProduct(user, product);
             if (existing.isPresent()) {
-                // Nếu đã thích rồi thì click lại sẽ là Bỏ thích (Unlike)
+
                 wishlistRepository.deleteByUserAndProduct(user, product);
             } else {
-                // Nếu chưa có thì Thêm vào (Like)
+
                 Wishlist wishlist = new Wishlist();
                 wishlist.setUser(user);
                 wishlist.setProduct(product);
