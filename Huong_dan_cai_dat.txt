@@ -1,0 +1,48 @@
+Hướng dẫn cài đặt và chạy dự án Spring Boot (FSStore)
+1. Yêu cầu hệ thống
+
+• Java SDK (JDK): Phiên bản 17 trở lên.
+
+• IDE: IntelliJ IDEA (khuyên dùng) hoặc Eclipse.
+
+• Hệ quản trị CSDL: MySQL (phiên bản 8.0 trở lên).
+
+• Công cụ build: Maven (thường đi kèm sẵn trong IDE).
+
+2. Cài đặt Cơ sở dữ liệu
+
+- Mở MySQL Workbench hoặc dòng lệnh.
+
+- Tạo một database mới: `CREATE DATABASE fsstore;`.
+
+- Kiểm tra file `src/main/resources/application.properties`, cập nhật `username` và `password` của MySQL cho đúng với máy của bạn.
+
+3. Cài đặt và Chạy dự án
+
+- Mở dự án: Mở IntelliJ IDEA -> Open -> Chọn thư mục chứa dự án (nơi có file `pom.xml`).
+
+- Tải thư viện: IDE sẽ tự động nhận diện Maven và tải các thư viện cần thiết. Chờ cho đến khi quá trình "Indexing" hoàn tất.
+
+3. Build dự án:
+
+  • Mở terminal trong IDE.
+
+  • Chạy lệnh: `mvn clean install` để đảm bảo code sạch và tải đủ dependency.
+
+4. Chạy ứng dụng:
+
+  • Tìm file có chứa hàm `main` (thường là `FsStoreApplication.java`).
+
+  • Chuột phải và chọn Run 'FsStoreApplication'.
+
+5. Truy cập giao diện
+
+• Mở trình duyệt web và truy cập địa chỉ: `http://localhost:8080`
+
+• Tài khoản admin: `admin` ,password: `admin123`.
+
+6. Lưu ý quan trọng
+
+• Nếu gặp lỗi Timeout hoặc Port 8080 already in use, hãy kiểm tra xem có ứng dụng nào khác đang chạy cổng này không hoặc đổi cổng trong file `application.properties` bằng dòng `server.port=8081`.
+
+• Đừng quên xóa thư mục `target/` trước khi nén dự án để giảm dung lượng khi di chuyển file.
